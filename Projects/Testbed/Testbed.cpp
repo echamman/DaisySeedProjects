@@ -8,6 +8,13 @@ static DaisySeed  hw;
 static Oscillator osc;
 Switch button1;
 
+enum AdcChannel {
+    pitchKnob = 0,
+    octKnob,
+    gainKnob,
+    NUM_ADC_CHANNELS
+};
+
 int wf1 = 0;
 
 static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
@@ -18,8 +25,11 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 
     for(size_t i = 0; i < size; i += 2)
     {
-        float knob = hw.adc.GetFloat(0);
-        osc.SetFreq((knob * 440.0f)+220.0f);
+        float pKnob = hw.adc.GetFloat(pitchKnob);
+        float oKnob = hw.adc.GetFloat(octKnob) * 440.0f;
+        float gKnob = hw.adc.GetFloat(gainKnob);
+        osc.SetFreq((pKnob * 440.0f) + oKnob);
+        osc.SetAmp(gKnob);
 
         button1.Debounce();
         //osc.SetAmp(button1.Pressed());
@@ -70,9 +80,11 @@ int main(void)
     osc.Init(sample_rate);
 
     //knob
-    AdcChannelConfig adcConfig;
-    adcConfig.InitSingle(hw.GetPin(21));
-    hw.adc.Init(&adcConfig, 1);
+    AdcChannelConfig adcConfig[NUM_ADC_CHANNELS];
+    adcConfig[pitchKnob].InitSingle(hw.GetPin(21));
+    adcConfig[octKnob].InitSingle(hw.GetPin(20));
+    adcConfig[gainKnob].InitSingle(hw.GetPin(19));
+    hw.adc.Init(adcConfig, NUM_ADC_CHANNELS);
 
     //button
     button1.Init(hw.GetPin(28),1000);

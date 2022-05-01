@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   41              		.thumb_set _ZN7daisysp10OscillatorD1Ev,_ZN7daisysp10OscillatorD2Ev
   42 0002 00BF     		.section	.text._ZN5daisy6SwitchD2Ev,"axG",%progbits,_ZN5daisy6SwitchD5Ev,comdat
   43              		.align	1
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 2
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 2
 
 
   44              		.p2align 2,,3
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   57              		@ args = 0, pretend = 0, frame = 0
   58              		@ frame_needed = 0, uses_anonymous_args = 0
   59              		@ link register save eliminated.
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 3
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 3
 
 
   60              		.loc 2 42 16 is_stmt 0 view .LVU3
@@ -166,8 +166,8 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   82              		@ args = 0, pretend = 0, frame = 0
   83              		@ frame_needed = 0, uses_anonymous_args = 0
   84              		@ link register save eliminated.
-  85              	.LBB90:
-  86              	.LBI90:
+  85              	.LBB92:
+  86              	.LBI92:
   87              		.file 4 "../../libDaisy/src/sys/system.h"
    1:../../libDaisy/src/sys/system.h **** #ifndef DSY_SYSTEM_H
    2:../../libDaisy/src/sys/system.h **** #define DSY_SYSTEM_H
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
    7:../../libDaisy/src/sys/system.h **** #include "per/tim.h"
    8:../../libDaisy/src/sys/system.h **** 
    9:../../libDaisy/src/sys/system.h **** namespace daisy
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 4
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 4
 
 
   10:../../libDaisy/src/sys/system.h **** {
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   64:../../libDaisy/src/sys/system.h ****     enum MemoryRegion
   65:../../libDaisy/src/sys/system.h ****     {
   66:../../libDaisy/src/sys/system.h ****         INTERNAL_FLASH = 0,
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 5
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 5
 
 
   67:../../libDaisy/src/sys/system.h ****         ITCMRAM,
@@ -255,9 +255,9 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   78:../../libDaisy/src/sys/system.h ****     ~System() {}
   88              		.loc 4 78 5 view .LVU5
   89              		.loc 4 78 5 is_stmt 0 view .LVU6
-  90              	.LBE90:
-  91              	.LBB91:
-  92              	.LBI91:
+  90              	.LBE92:
+  91              	.LBB93:
+  92              	.LBI93:
   93              		.file 5 "../../libDaisy/src/hid/usb.h"
    1:../../libDaisy/src/hid/usb.h **** #pragma once
    2:../../libDaisy/src/hid/usb.h **** #ifndef DSY_HID_USB_H
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   37:../../libDaisy/src/hid/usb.h ****     /** Function called upon reception of a buffer */
   38:../../libDaisy/src/hid/usb.h ****     typedef void (*ReceiveCallback)(uint8_t* buff, uint32_t* len);
   39:../../libDaisy/src/hid/usb.h **** 
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 6
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 6
 
 
   40:../../libDaisy/src/hid/usb.h ****     UsbHandle() {}
@@ -306,9 +306,9 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   42:../../libDaisy/src/hid/usb.h ****     ~UsbHandle() {}
   94              		.loc 5 42 5 is_stmt 1 view .LVU7
   95              		.loc 5 42 5 is_stmt 0 view .LVU8
-  96              	.LBE91:
-  97              	.LBB92:
-  98              	.LBI92:
+  96              	.LBE93:
+  97              	.LBB94:
+  98              	.LBI94:
   99              		.file 6 "../../libDaisy/src/per/adc.h"
    1:../../libDaisy/src/per/adc.h **** #pragma once
    2:../../libDaisy/src/per/adc.h **** #ifndef DSY_ADC_H
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   46:../../libDaisy/src/per/adc.h **** 
   47:../../libDaisy/src/per/adc.h ****     /** 
   48:../../libDaisy/src/per/adc.h ****     Initializes a single ADC pin as a Multiplexed ADC.
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 7
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 7
 
 
   49:../../libDaisy/src/per/adc.h ****     Requires a CD405X Multiplexer connected to the pin.
@@ -408,9 +408,9 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   93:../../libDaisy/src/per/adc.h ****     ~AdcHandle() {}
  100              		.loc 6 93 5 is_stmt 1 view .LVU9
  101              		.loc 6 93 5 is_stmt 0 view .LVU10
- 102              	.LBE92:
- 103              	.LBB93:
- 104              	.LBI93:
+ 102              	.LBE94:
+ 103              	.LBB95:
+ 104              	.LBI95:
  105              		.file 7 "../../libDaisy/src/hid/audio.h"
    1:../../libDaisy/src/hid/audio.h **** #ifndef DSY_AUDIO_H
    2:../../libDaisy/src/hid/audio.h **** #define DSY_AUDIO_H /**< & */
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
    4:../../libDaisy/src/hid/audio.h **** #include "per/sai.h"
    5:../../libDaisy/src/hid/audio.h **** 
    6:../../libDaisy/src/hid/audio.h **** namespace daisy
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 8
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 8
 
 
    7:../../libDaisy/src/hid/audio.h **** {
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   61:../../libDaisy/src/hid/audio.h ****     */
   62:../../libDaisy/src/hid/audio.h ****     typedef const float* InterleavingInputBuffer;
   63:../../libDaisy/src/hid/audio.h **** 
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 9
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 9
 
 
   64:../../libDaisy/src/hid/audio.h ****     /** Interleaving Output buffer 
@@ -497,7 +497,7 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   77:../../libDaisy/src/hid/audio.h ****     ~AudioHandle() {}
  106              		.loc 7 77 5 is_stmt 1 view .LVU11
  107              		.loc 7 77 5 is_stmt 0 view .LVU12
- 108              	.LBE93:
+ 108              	.LBE95:
  109              		.loc 3 22 19 view .LVU13
  110 0000 7047     		bx	lr
  111              		.cfi_endproc
@@ -525,34 +525,41 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
    8:Testbed.cpp   **** static Oscillator osc;
    9:Testbed.cpp   **** Switch button1;
   10:Testbed.cpp   **** 
-  11:Testbed.cpp   **** int wf1 = 0;
-  12:Testbed.cpp   **** 
-  13:Testbed.cpp   **** static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
-  14:Testbed.cpp   ****                           AudioHandle::InterleavingOutputBuffer out,
-  15:Testbed.cpp   ****                           size_t                                size)
-  16:Testbed.cpp   **** {
- 128              		.loc 8 16 1 is_stmt 1 view -0
+  11:Testbed.cpp   **** enum AdcChannel {
+  12:Testbed.cpp   ****     pitchKnob = 0,
+  13:Testbed.cpp   ****     octKnob,
+  14:Testbed.cpp   ****     gainKnob,
+  15:Testbed.cpp   ****     NUM_ADC_CHANNELS
+  16:Testbed.cpp   **** };
+  17:Testbed.cpp   **** 
+  18:Testbed.cpp   **** int wf1 = 0;
+  19:Testbed.cpp   **** 
+  20:Testbed.cpp   **** static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
+  21:Testbed.cpp   ****                           AudioHandle::InterleavingOutputBuffer out,
+  22:Testbed.cpp   ****                           size_t                                size)
+  23:Testbed.cpp   **** {
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 10
+
+
+ 128              		.loc 8 23 1 is_stmt 1 view -0
  129              		.cfi_startproc
  130              		@ args = 0, pretend = 0, frame = 0
  131              		@ frame_needed = 0, uses_anonymous_args = 0
-  17:Testbed.cpp   ****     float sig;
- 132              		.loc 8 17 5 view .LVU15
-  18:Testbed.cpp   **** 
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 10
-
-
-  19:Testbed.cpp   ****     for(size_t i = 0; i < size; i += 2)
- 133              		.loc 8 19 5 view .LVU16
- 134              	.LBB94:
- 135              		.loc 8 19 25 view .LVU17
+  24:Testbed.cpp   ****     float sig;
+ 132              		.loc 8 24 5 view .LVU15
+  25:Testbed.cpp   **** 
+  26:Testbed.cpp   ****     for(size_t i = 0; i < size; i += 2)
+ 133              		.loc 8 26 5 view .LVU16
+ 134              	.LBB96:
+ 135              		.loc 8 26 25 view .LVU17
  136 0000 002A     		cmp	r2, #0
- 137 0002 64D0     		beq	.L23
+ 137 0002 78D0     		beq	.L23
  138 0004 013A     		subs	r2, r2, #1
  139              	.LVL4:
- 140              		.loc 8 19 25 is_stmt 0 view .LVU18
- 141              	.LBE94:
-  16:Testbed.cpp   ****     float sig;
- 142              		.loc 8 16 1 view .LVU19
+ 140              		.loc 8 26 25 is_stmt 0 view .LVU18
+ 141              	.LBE96:
+  23:Testbed.cpp   ****     float sig;
+ 142              		.loc 8 23 1 view .LVU19
  143 0006 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
  144              		.cfi_def_cfa_offset 32
  145              		.cfi_offset 3, -32
@@ -564,31 +571,64 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
  151              		.cfi_offset 9, -8
  152              		.cfi_offset 14, -4
  153 000a 0C46     		mov	r4, r1
- 154              	.LBB123:
- 155              		.loc 8 19 25 view .LVU20
- 156 000c 0025     		movs	r5, #0
- 157 000e 304E     		ldr	r6, .L26
+ 154              	.LBB129:
+ 155              		.loc 8 26 25 view .LVU20
+ 156 000c 0026     		movs	r6, #0
+ 157 000e 3A4D     		ldr	r5, .L26
  158 0010 5708     		lsrs	r7, r2, #1
- 159 0012 DFF8CC80 		ldr	r8, .L26+16
- 160 0016 DFF8D090 		ldr	r9, .L26+24
- 161              	.LVL5:
- 162              	.L18:
- 163              	.LBB95:
-  20:Testbed.cpp   ****     {
-  21:Testbed.cpp   ****         float knob = hw.adc.GetFloat(0);
- 164              		.loc 8 21 9 is_stmt 1 view .LVU21
- 165              		.loc 8 21 37 is_stmt 0 view .LVU22
- 166 001a 0021     		movs	r1, #0
- 167 001c 2D48     		ldr	r0, .L26+4
- 168 001e FFF7FEFF 		bl	_ZNK5daisy9AdcHandle8GetFloatEh
- 169              	.LVL6:
-  22:Testbed.cpp   ****         osc.SetFreq((knob * 440.0f)+220.0f);
- 170              		.loc 8 22 9 is_stmt 1 view .LVU23
- 171              		.loc 8 22 20 is_stmt 0 view .LVU24
- 172 0022 9FED2D7A 		vldr.32	s14, .L26+8
- 173 0026 DFED2D7A 		vldr.32	s15, .L26+12
- 174              	.LBB96:
- 175              	.LBB97:
+ 159 0012 DFF8F080 		ldr	r8, .L26+12
+ 160 0016 DFF8F490 		ldr	r9, .L26+20
+ 161              	.LBE129:
+  23:Testbed.cpp   ****     float sig;
+ 162              		.loc 8 23 1 view .LVU21
+ 163 001a 2DED028B 		vpush.64	{d8}
+ 164              		.cfi_def_cfa_offset 40
+ 165              		.cfi_offset 80, -40
+ 166              		.cfi_offset 81, -36
+ 167              	.LVL5:
+ 168              	.L18:
+ 169              	.LBB130:
+ 170              	.LBB97:
+  27:Testbed.cpp   ****     {
+  28:Testbed.cpp   ****         float pKnob = hw.adc.GetFloat(pitchKnob);
+ 171              		.loc 8 28 9 is_stmt 1 view .LVU22
+ 172              		.loc 8 28 38 is_stmt 0 view .LVU23
+ 173 001e 0021     		movs	r1, #0
+ 174 0020 3648     		ldr	r0, .L26+4
+ 175 0022 FFF7FEFF 		bl	_ZNK5daisy9AdcHandle8GetFloatEh
+ 176              	.LVL6:
+  29:Testbed.cpp   ****         float oKnob = hw.adc.GetFloat(octKnob) * 440.0f;
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 11
+
+
+ 177              		.loc 8 29 38 view .LVU24
+ 178 0026 0121     		movs	r1, #1
+ 179 0028 3448     		ldr	r0, .L26+4
+  28:Testbed.cpp   ****         float oKnob = hw.adc.GetFloat(octKnob) * 440.0f;
+ 180              		.loc 8 28 38 view .LVU25
+ 181 002a B0EE408A 		vmov.f32	s16, s0
+ 182              	.LVL7:
+ 183              		.loc 8 29 9 is_stmt 1 view .LVU26
+ 184              		.loc 8 29 38 is_stmt 0 view .LVU27
+ 185 002e FFF7FEFF 		bl	_ZNK5daisy9AdcHandle8GetFloatEh
+ 186              	.LVL8:
+  30:Testbed.cpp   ****         float gKnob = hw.adc.GetFloat(gainKnob);
+ 187              		.loc 8 30 38 view .LVU28
+ 188 0032 0221     		movs	r1, #2
+ 189 0034 3148     		ldr	r0, .L26+4
+  29:Testbed.cpp   ****         float oKnob = hw.adc.GetFloat(octKnob) * 440.0f;
+ 190              		.loc 8 29 38 view .LVU29
+ 191 0036 F0EE408A 		vmov.f32	s17, s0
+ 192              	.LVL9:
+ 193              		.loc 8 30 9 is_stmt 1 view .LVU30
+ 194              		.loc 8 30 38 is_stmt 0 view .LVU31
+ 195 003a FFF7FEFF 		bl	_ZNK5daisy9AdcHandle8GetFloatEh
+ 196              	.LVL10:
+  31:Testbed.cpp   ****         osc.SetFreq((pKnob * 440.0f) + oKnob);
+ 197              		.loc 8 31 28 view .LVU32
+ 198 003e 9FED307A 		vldr.32	s14, .L26+8
+ 199              	.LBB98:
+ 200              	.LBB99:
   17:../../DaisySP/Source/Synthesis/oscillator.h ****     /** Choices for output waveforms, POLYBLEP are appropriately labeled. Others are naive forms.
   18:../../DaisySP/Source/Synthesis/oscillator.h ****     */
   19:../../DaisySP/Source/Synthesis/oscillator.h ****     enum
@@ -598,9 +638,6 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   23:../../DaisySP/Source/Synthesis/oscillator.h ****         WAVE_SAW,
   24:../../DaisySP/Source/Synthesis/oscillator.h ****         WAVE_RAMP,
   25:../../DaisySP/Source/Synthesis/oscillator.h ****         WAVE_SQUARE,
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 11
-
-
   26:../../DaisySP/Source/Synthesis/oscillator.h ****         WAVE_POLYBLEP_TRI,
   27:../../DaisySP/Source/Synthesis/oscillator.h ****         WAVE_POLYBLEP_SAW,
   28:../../DaisySP/Source/Synthesis/oscillator.h ****         WAVE_POLYBLEP_SQUARE,
@@ -621,6 +658,9 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   43:../../DaisySP/Source/Synthesis/oscillator.h ****     {
   44:../../DaisySP/Source/Synthesis/oscillator.h ****         sr_        = sample_rate;
   45:../../DaisySP/Source/Synthesis/oscillator.h ****         sr_recip_  = 1.0f / sample_rate;
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 12
+
+
   46:../../DaisySP/Source/Synthesis/oscillator.h ****         freq_      = 100.0f;
   47:../../DaisySP/Source/Synthesis/oscillator.h ****         amp_       = 0.5f;
   48:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_     = 0.0f;
@@ -637,57 +677,89 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   59:../../DaisySP/Source/Synthesis/oscillator.h ****     {
   60:../../DaisySP/Source/Synthesis/oscillator.h ****         freq_      = f;
   61:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_inc_ = CalcPhaseInc(f);
- 176              		.loc 1 61 34 view .LVU25
- 177 002a 2948     		ldr	r0, .L26
- 178              	.LBE97:
- 179              	.LBE96:
- 180              		.loc 8 22 20 view .LVU26
- 181 002c E0EE077A 		vfma.f32	s15, s0, s14
- 182              	.LVL7:
- 183              	.LBB100:
- 184              	.LBI96:
+ 201              		.loc 1 61 34 view .LVU33
+ 202 0042 2D48     		ldr	r0, .L26
+ 203              	.LBE99:
+ 204              	.LBE98:
+ 205              		.loc 8 31 28 view .LVU34
+ 206 0044 68EE077A 		vmul.f32	s15, s16, s14
+  30:Testbed.cpp   ****         osc.SetFreq((pKnob * 440.0f) + oKnob);
+ 207              		.loc 8 30 38 view .LVU35
+ 208 0048 B0EE408A 		vmov.f32	s16, s0
+ 209              	.LVL11:
+ 210              		.loc 8 31 9 is_stmt 1 view .LVU36
+ 211              		.loc 8 31 20 is_stmt 0 view .LVU37
+ 212 004c E8EE877A 		vfma.f32	s15, s17, s14
+ 213              	.LVL12:
+ 214              	.LBB102:
+ 215              	.LBI98:
   58:../../DaisySP/Source/Synthesis/oscillator.h ****     {
- 185              		.loc 1 58 17 is_stmt 1 view .LVU27
- 186              	.LBB98:
+ 216              		.loc 1 58 17 is_stmt 1 view .LVU38
+ 217              	.LBB100:
   60:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_inc_ = CalcPhaseInc(f);
- 187              		.loc 1 60 9 view .LVU28
- 188              		.loc 1 61 34 is_stmt 0 view .LVU29
- 189 0030 B0EE670A 		vmov.f32	s0, s15
- 190              	.LVL8:
+ 218              		.loc 1 60 9 view .LVU39
+ 219              		.loc 1 61 34 is_stmt 0 view .LVU40
+ 220 0050 B0EE670A 		vmov.f32	s0, s15
+ 221              	.LVL13:
   60:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_inc_ = CalcPhaseInc(f);
- 191              		.loc 1 60 20 view .LVU30
- 192 0034 C6ED027A 		vstr.32	s15, [r6, #8]
- 193              		.loc 1 61 9 is_stmt 1 view .LVU31
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 12
+ 222              		.loc 1 60 20 view .LVU41
+ 223 0054 C5ED027A 		vstr.32	s15, [r5, #8]
+ 224              		.loc 1 61 9 is_stmt 1 view .LVU42
+ 225              		.loc 1 61 34 is_stmt 0 view .LVU43
+ 226 0058 FFF7FEFF 		bl	_ZN7daisysp10Oscillator12CalcPhaseIncEf
+ 227              	.LVL14:
+ 228              		.loc 1 61 34 view .LVU44
+ 229              	.LBE100:
+ 230              	.LBE102:
+  32:Testbed.cpp   ****         osc.SetAmp(gKnob);
+  33:Testbed.cpp   **** 
+  34:Testbed.cpp   ****         button1.Debounce();
+ 231              		.loc 8 34 25 view .LVU45
+ 232 005c 2948     		ldr	r0, .L26+12
+ 233              	.LBB103:
+ 234              	.LBB104:
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 13
 
 
- 194              		.loc 1 61 34 is_stmt 0 view .LVU32
- 195 0038 FFF7FEFF 		bl	_ZN7daisysp10Oscillator12CalcPhaseIncEf
- 196              	.LVL9:
- 197              		.loc 1 61 34 view .LVU33
- 198              	.LBE98:
- 199              	.LBE100:
-  23:Testbed.cpp   **** 
-  24:Testbed.cpp   ****         button1.Debounce();
- 200              		.loc 8 24 25 view .LVU34
- 201 003c 2848     		ldr	r0, .L26+16
- 202              	.LBB101:
- 203              	.LBB99:
- 204              		.loc 1 61 20 view .LVU35
- 205 003e 86ED060A 		vstr.32	s0, [r6, #24]
- 206              	.LVL10:
- 207              		.loc 1 61 20 view .LVU36
- 208              	.LBE99:
- 209              	.LBE101:
- 210              		.loc 8 24 9 is_stmt 1 view .LVU37
- 211              		.loc 8 24 25 is_stmt 0 view .LVU38
- 212 0042 FFF7FEFF 		bl	_ZN5daisy6Switch8DebounceEv
- 213              	.LVL11:
-  25:Testbed.cpp   ****         //osc.SetAmp(button1.Pressed());
-  26:Testbed.cpp   ****         if(button1.FallingEdge()){
- 214              		.loc 8 26 9 is_stmt 1 view .LVU39
- 215              	.LBB102:
- 216              	.LBI102:
+  62:../../DaisySP/Source/Synthesis/oscillator.h ****     }
+  63:../../DaisySP/Source/Synthesis/oscillator.h **** 
+  64:../../DaisySP/Source/Synthesis/oscillator.h **** 
+  65:../../DaisySP/Source/Synthesis/oscillator.h ****     /** Sets the amplitude of the waveform.
+  66:../../DaisySP/Source/Synthesis/oscillator.h ****     */
+  67:../../DaisySP/Source/Synthesis/oscillator.h ****     inline void SetAmp(const float a) { amp_ = a; }
+ 235              		.loc 1 67 46 view .LVU46
+ 236 005e 85ED018A 		vstr.32	s16, [r5, #4]
+ 237              	.LBE104:
+ 238              	.LBE103:
+ 239              	.LBB106:
+ 240              	.LBB101:
+  61:../../DaisySP/Source/Synthesis/oscillator.h ****     }
+ 241              		.loc 1 61 20 view .LVU47
+ 242 0062 85ED060A 		vstr.32	s0, [r5, #24]
+ 243              	.LVL15:
+  61:../../DaisySP/Source/Synthesis/oscillator.h ****     }
+ 244              		.loc 1 61 20 view .LVU48
+ 245              	.LBE101:
+ 246              	.LBE106:
+  32:Testbed.cpp   ****         osc.SetAmp(gKnob);
+ 247              		.loc 8 32 9 is_stmt 1 view .LVU49
+ 248              	.LBB107:
+ 249              	.LBI103:
+ 250              		.loc 1 67 17 view .LVU50
+ 251              	.LBB105:
+ 252              		.loc 1 67 41 view .LVU51
+ 253              		.loc 1 67 41 is_stmt 0 view .LVU52
+ 254              	.LBE105:
+ 255              	.LBE107:
+ 256              		.loc 8 34 9 is_stmt 1 view .LVU53
+ 257              		.loc 8 34 25 is_stmt 0 view .LVU54
+ 258 0066 FFF7FEFF 		bl	_ZN5daisy6Switch8DebounceEv
+ 259              	.LVL16:
+  35:Testbed.cpp   ****         //osc.SetAmp(button1.Pressed());
+  36:Testbed.cpp   ****         if(button1.FallingEdge()){
+ 260              		.loc 8 36 9 is_stmt 1 view .LVU55
+ 261              	.LBB108:
+ 262              	.LBI108:
   43:../../libDaisy/src/hid/switch.h **** 
   44:../../libDaisy/src/hid/switch.h ****     /** 
   45:../../libDaisy/src/hid/switch.h ****     Initializes the switch object with a given port/pin combo.
@@ -706,6 +778,9 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   58:../../libDaisy/src/hid/switch.h ****        \param update_rate Left for backwards compatibility until next breaking change.
   59:../../libDaisy/src/hid/switch.h ****     */
   60:../../libDaisy/src/hid/switch.h ****     void Init(dsy_gpio_pin pin, float update_rate = 0.f);
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 14
+
+
   61:../../libDaisy/src/hid/switch.h **** 
   62:../../libDaisy/src/hid/switch.h ****     /** 
   63:../../libDaisy/src/hid/switch.h ****     Called at update_rate to debounce and handle timing for the switch.
@@ -718,710 +793,733 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   70:../../libDaisy/src/hid/switch.h ****     inline bool RisingEdge() const { return updated_ ? state_ == 0x7f : false; }
   71:../../libDaisy/src/hid/switch.h **** 
   72:../../libDaisy/src/hid/switch.h ****     /** \return true if the button was just released */
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 13
-
-
   73:../../libDaisy/src/hid/switch.h ****     inline bool FallingEdge() const
- 217              		.loc 2 73 17 view .LVU40
- 218              	.LBB103:
+ 263              		.loc 2 73 17 view .LVU56
+ 264              	.LBB109:
   74:../../libDaisy/src/hid/switch.h ****     {
   75:../../libDaisy/src/hid/switch.h ****         return updated_ ? state_ == 0x80 : false;
- 219              		.loc 2 75 9 view .LVU41
- 220              		.loc 2 75 25 is_stmt 0 view .LVU42
- 221 0046 98F80430 		ldrb	r3, [r8, #4]	@ zero_extendqisi2
- 222 004a 002B     		cmp	r3, #0
- 223 004c 3AD0     		beq	.L7
- 224              	.LVL12:
- 225              		.loc 2 75 25 view .LVU43
- 226              	.LBE103:
- 227              	.LBE102:
- 228              		.loc 8 26 9 view .LVU44
- 229 004e 98F80A30 		ldrb	r3, [r8, #10]	@ zero_extendqisi2
- 230 0052 802B     		cmp	r3, #128
- 231 0054 36D1     		bne	.L7
-  27:Testbed.cpp   ****             if(wf1 < 3){
- 232              		.loc 8 27 13 is_stmt 1 view .LVU45
- 233              		.loc 8 27 20 is_stmt 0 view .LVU46
- 234 0056 D9F80030 		ldr	r3, [r9]
- 235              		.loc 8 27 13 view .LVU47
- 236 005a 022B     		cmp	r3, #2
- 237 005c 1BDC     		bgt	.L10
-  28:Testbed.cpp   ****                 wf1++;
- 238              		.loc 8 28 17 is_stmt 1 view .LVU48
- 239              		.loc 8 28 20 is_stmt 0 view .LVU49
- 240 005e 0133     		adds	r3, r3, #1
- 241 0060 C9F80030 		str	r3, [r9]
- 242              	.L9:
-  29:Testbed.cpp   ****             }else{
-  30:Testbed.cpp   ****                 wf1 = 0;
-  31:Testbed.cpp   ****             }
-  32:Testbed.cpp   ****         }
-  33:Testbed.cpp   **** 
-  34:Testbed.cpp   ****         switch(wf1){
- 243              		.loc 8 34 9 is_stmt 1 view .LVU50
- 244 0064 032B     		cmp	r3, #3
- 245 0066 08D8     		bhi	.L12
- 246 0068 DFE803F0 		tbb	[pc, r3]
- 247              	.L14:
- 248 006c 18       		.byte	(.L11-.L14)/2
- 249 006d 25       		.byte	(.L16-.L14)/2
- 250 006e 1E       		.byte	(.L15-.L14)/2
- 251 006f 02       		.byte	(.L13-.L14)/2
- 252              		.p2align 1
- 253              	.L13:
-  35:Testbed.cpp   ****             case 0:
-  36:Testbed.cpp   ****                 osc.SetWaveform(osc.WAVE_SIN);
-  37:Testbed.cpp   ****                 hw.SetLed(false);
-  38:Testbed.cpp   ****                 break;
-  39:Testbed.cpp   ****             case 1:
-  40:Testbed.cpp   ****                 osc.SetWaveform(osc.WAVE_SAW);
-  41:Testbed.cpp   ****                 hw.SetLed(true);
-  42:Testbed.cpp   ****                 break;
-  43:Testbed.cpp   ****             case 2:
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 14
+ 265              		.loc 2 75 9 view .LVU57
+ 266              		.loc 2 75 25 is_stmt 0 view .LVU58
+ 267 006a 98F80430 		ldrb	r3, [r8, #4]	@ zero_extendqisi2
+ 268 006e 002B     		cmp	r3, #0
+ 269 0070 3AD0     		beq	.L7
+ 270              	.LVL17:
+ 271              		.loc 2 75 25 view .LVU59
+ 272              	.LBE109:
+ 273              	.LBE108:
+ 274              		.loc 8 36 9 view .LVU60
+ 275 0072 98F80A30 		ldrb	r3, [r8, #10]	@ zero_extendqisi2
+ 276 0076 802B     		cmp	r3, #128
+ 277 0078 36D1     		bne	.L7
+  37:Testbed.cpp   ****             if(wf1 < 3){
+ 278              		.loc 8 37 13 is_stmt 1 view .LVU61
+ 279              		.loc 8 37 20 is_stmt 0 view .LVU62
+ 280 007a D9F80030 		ldr	r3, [r9]
+ 281              		.loc 8 37 13 view .LVU63
+ 282 007e 022B     		cmp	r3, #2
+ 283 0080 1BDC     		bgt	.L10
+  38:Testbed.cpp   ****                 wf1++;
+ 284              		.loc 8 38 17 is_stmt 1 view .LVU64
+ 285              		.loc 8 38 20 is_stmt 0 view .LVU65
+ 286 0082 0133     		adds	r3, r3, #1
+ 287 0084 C9F80030 		str	r3, [r9]
+ 288              	.L9:
+  39:Testbed.cpp   ****             }else{
+  40:Testbed.cpp   ****                 wf1 = 0;
+  41:Testbed.cpp   ****             }
+  42:Testbed.cpp   ****         }
+  43:Testbed.cpp   **** 
+  44:Testbed.cpp   ****         switch(wf1){
+ 289              		.loc 8 44 9 is_stmt 1 view .LVU66
+ 290 0088 032B     		cmp	r3, #3
+ 291 008a 08D8     		bhi	.L12
+ 292 008c DFE803F0 		tbb	[pc, r3]
+ 293              	.L14:
+ 294 0090 18       		.byte	(.L11-.L14)/2
+ 295 0091 25       		.byte	(.L16-.L14)/2
+ 296 0092 1E       		.byte	(.L15-.L14)/2
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 15
 
 
-  44:Testbed.cpp   ****                 osc.SetWaveform(osc.WAVE_SQUARE);
-  45:Testbed.cpp   ****                 hw.SetLed(false);
-  46:Testbed.cpp   ****                 break;
-  47:Testbed.cpp   ****             case 3:
- 254              		.loc 8 47 13 view .LVU51
-  48:Testbed.cpp   ****                 osc.SetWaveform(osc.WAVE_TRI);
- 255              		.loc 8 48 17 view .LVU52
- 256              	.LVL13:
- 257              	.LBB104:
- 258              	.LBI104:
-  62:../../DaisySP/Source/Synthesis/oscillator.h ****     }
-  63:../../DaisySP/Source/Synthesis/oscillator.h **** 
-  64:../../DaisySP/Source/Synthesis/oscillator.h **** 
-  65:../../DaisySP/Source/Synthesis/oscillator.h ****     /** Sets the amplitude of the waveform.
-  66:../../DaisySP/Source/Synthesis/oscillator.h ****     */
-  67:../../DaisySP/Source/Synthesis/oscillator.h ****     inline void SetAmp(const float a) { amp_ = a; }
+ 297 0093 02       		.byte	(.L13-.L14)/2
+ 298              		.p2align 1
+ 299              	.L13:
+  45:Testbed.cpp   ****             case 0:
+  46:Testbed.cpp   ****                 osc.SetWaveform(osc.WAVE_SIN);
+  47:Testbed.cpp   ****                 hw.SetLed(false);
+  48:Testbed.cpp   ****                 break;
+  49:Testbed.cpp   ****             case 1:
+  50:Testbed.cpp   ****                 osc.SetWaveform(osc.WAVE_SAW);
+  51:Testbed.cpp   ****                 hw.SetLed(true);
+  52:Testbed.cpp   ****                 break;
+  53:Testbed.cpp   ****             case 2:
+  54:Testbed.cpp   ****                 osc.SetWaveform(osc.WAVE_SQUARE);
+  55:Testbed.cpp   ****                 hw.SetLed(false);
+  56:Testbed.cpp   ****                 break;
+  57:Testbed.cpp   ****             case 3:
+ 300              		.loc 8 57 13 view .LVU67
+  58:Testbed.cpp   ****                 osc.SetWaveform(osc.WAVE_TRI);
+ 301              		.loc 8 58 17 view .LVU68
+ 302              	.LVL18:
+ 303              	.LBB110:
+ 304              	.LBI110:
   68:../../DaisySP/Source/Synthesis/oscillator.h ****     /** Sets the waveform to be synthesized by the Process() function.
   69:../../DaisySP/Source/Synthesis/oscillator.h ****     */
   70:../../DaisySP/Source/Synthesis/oscillator.h ****     inline void SetWaveform(const uint8_t wf)
- 259              		.loc 1 70 17 view .LVU53
- 260              	.LBB105:
+ 305              		.loc 1 70 17 view .LVU69
+ 306              	.LBB111:
   71:../../DaisySP/Source/Synthesis/oscillator.h ****     {
   72:../../DaisySP/Source/Synthesis/oscillator.h ****         waveform_ = wf < WAVE_LAST ? wf : WAVE_SIN;
- 261              		.loc 1 72 9 view .LVU54
- 262              		.loc 1 72 19 is_stmt 0 view .LVU55
- 263 0070 0121     		movs	r1, #1
- 264              	.LBE105:
- 265              	.LBE104:
-  49:Testbed.cpp   ****                 hw.SetLed(true);
- 266              		.loc 8 49 26 view .LVU56
- 267 0072 1C48     		ldr	r0, .L26+20
- 268              	.LBB107:
- 269              	.LBB106:
- 270              		.loc 1 72 19 view .LVU57
- 271 0074 3170     		strb	r1, [r6]
- 272              	.LVL14:
- 273              		.loc 1 72 19 view .LVU58
- 274              	.LBE106:
- 275              	.LBE107:
- 276              		.loc 8 49 17 is_stmt 1 view .LVU59
- 277              		.loc 8 49 26 is_stmt 0 view .LVU60
- 278 0076 FFF7FEFF 		bl	_ZN5daisy9DaisySeed6SetLedEb
- 279              	.LVL15:
-  50:Testbed.cpp   ****                 break;
- 280              		.loc 8 50 17 is_stmt 1 view .LVU61
- 281              	.L12:
-  51:Testbed.cpp   ****         }
-  52:Testbed.cpp   ****         sig = osc.Process();
- 282              		.loc 8 52 9 discriminator 2 view .LVU62
- 283              		.loc 8 52 26 is_stmt 0 discriminator 2 view .LVU63
- 284 007a 1548     		ldr	r0, .L26
- 285              	.LBE95:
-  19:Testbed.cpp   ****     {
- 286              		.loc 8 19 25 discriminator 2 view .LVU64
- 287 007c 0834     		adds	r4, r4, #8
- 288              	.LBB120:
- 289              		.loc 8 52 26 discriminator 2 view .LVU65
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 15
+ 307              		.loc 1 72 9 view .LVU70
+ 308              		.loc 1 72 19 is_stmt 0 view .LVU71
+ 309 0094 0121     		movs	r1, #1
+ 310              	.LBE111:
+ 311              	.LBE110:
+  59:Testbed.cpp   ****                 hw.SetLed(true);
+ 312              		.loc 8 59 26 view .LVU72
+ 313 0096 1C48     		ldr	r0, .L26+16
+ 314              	.LBB113:
+ 315              	.LBB112:
+ 316              		.loc 1 72 19 view .LVU73
+ 317 0098 2970     		strb	r1, [r5]
+ 318              	.LVL19:
+ 319              		.loc 1 72 19 view .LVU74
+ 320              	.LBE112:
+ 321              	.LBE113:
+ 322              		.loc 8 59 17 is_stmt 1 view .LVU75
+ 323              		.loc 8 59 26 is_stmt 0 view .LVU76
+ 324 009a FFF7FEFF 		bl	_ZN5daisy9DaisySeed6SetLedEb
+ 325              	.LVL20:
+  60:Testbed.cpp   ****                 break;
+ 326              		.loc 8 60 17 is_stmt 1 view .LVU77
+ 327              	.L12:
+  61:Testbed.cpp   ****         }
+  62:Testbed.cpp   ****         sig = osc.Process();
+ 328              		.loc 8 62 9 discriminator 2 view .LVU78
+ 329              		.loc 8 62 26 is_stmt 0 discriminator 2 view .LVU79
+ 330 009e 1648     		ldr	r0, .L26
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 16
 
 
- 290 007e FFF7FEFF 		bl	_ZN7daisysp10Oscillator7ProcessEv
- 291              	.LVL16:
- 292              	.LBE120:
-  19:Testbed.cpp   ****     {
- 293              		.loc 8 19 25 discriminator 2 view .LVU66
- 294 0082 BD42     		cmp	r5, r7
- 295 0084 05F10103 		add	r3, r5, #1
- 296              	.LVL17:
- 297              	.LBB121:
-  53:Testbed.cpp   **** 
-  54:Testbed.cpp   ****         // left out
-  55:Testbed.cpp   ****         out[i] = sig;
- 298              		.loc 8 55 9 is_stmt 1 discriminator 2 view .LVU67
- 299              		.loc 8 55 16 is_stmt 0 discriminator 2 view .LVU68
- 300 0088 04ED020A 		vstr.32	s0, [r4, #-8]
-  56:Testbed.cpp   **** 
-  57:Testbed.cpp   ****         // right out
-  58:Testbed.cpp   ****         out[i + 1] = sig;
- 301              		.loc 8 58 9 is_stmt 1 discriminator 2 view .LVU69
- 302              		.loc 8 58 20 is_stmt 0 discriminator 2 view .LVU70
- 303 008c 04ED010A 		vstr.32	s0, [r4, #-4]
- 304              	.LBE121:
-  19:Testbed.cpp   ****     {
- 305              		.loc 8 19 5 is_stmt 1 discriminator 2 view .LVU71
- 306              	.LVL18:
-  19:Testbed.cpp   ****     {
- 307              		.loc 8 19 25 discriminator 2 view .LVU72
- 308 0090 1BD0     		beq	.L5
- 309 0092 1D46     		mov	r5, r3
- 310              	.LVL19:
-  19:Testbed.cpp   ****     {
- 311              		.loc 8 19 25 is_stmt 0 discriminator 2 view .LVU73
- 312 0094 C1E7     		b	.L18
- 313              	.LVL20:
- 314              	.L10:
- 315              	.LBB122:
-  30:Testbed.cpp   ****             }
- 316              		.loc 8 30 17 is_stmt 1 view .LVU74
-  30:Testbed.cpp   ****             }
- 317              		.loc 8 30 21 is_stmt 0 view .LVU75
- 318 0096 0023     		movs	r3, #0
- 319 0098 C9F80030 		str	r3, [r9]
-  34:Testbed.cpp   ****             case 0:
- 320              		.loc 8 34 9 is_stmt 1 view .LVU76
- 321              	.L11:
-  35:Testbed.cpp   ****                 osc.SetWaveform(osc.WAVE_SIN);
- 322              		.loc 8 35 13 view .LVU77
-  36:Testbed.cpp   ****                 hw.SetLed(false);
- 323              		.loc 8 36 17 view .LVU78
- 324              	.LVL21:
- 325              	.LBB108:
- 326              	.LBI108:
+ 331              	.LBE97:
+  26:Testbed.cpp   ****     {
+ 332              		.loc 8 26 25 discriminator 2 view .LVU80
+ 333 00a0 0834     		adds	r4, r4, #8
+ 334              	.LBB126:
+ 335              		.loc 8 62 26 discriminator 2 view .LVU81
+ 336 00a2 FFF7FEFF 		bl	_ZN7daisysp10Oscillator7ProcessEv
+ 337              	.LVL21:
+ 338              	.LBE126:
+  26:Testbed.cpp   ****     {
+ 339              		.loc 8 26 25 discriminator 2 view .LVU82
+ 340 00a6 BE42     		cmp	r6, r7
+ 341 00a8 06F10103 		add	r3, r6, #1
+ 342              	.LVL22:
+ 343              	.LBB127:
+  63:Testbed.cpp   **** 
+  64:Testbed.cpp   ****         // left out
+  65:Testbed.cpp   ****         out[i] = sig;
+ 344              		.loc 8 65 9 is_stmt 1 discriminator 2 view .LVU83
+ 345              		.loc 8 65 16 is_stmt 0 discriminator 2 view .LVU84
+ 346 00ac 04ED020A 		vstr.32	s0, [r4, #-8]
+  66:Testbed.cpp   **** 
+  67:Testbed.cpp   ****         // right out
+  68:Testbed.cpp   ****         out[i + 1] = sig;
+ 347              		.loc 8 68 9 is_stmt 1 discriminator 2 view .LVU85
+ 348              		.loc 8 68 20 is_stmt 0 discriminator 2 view .LVU86
+ 349 00b0 04ED010A 		vstr.32	s0, [r4, #-4]
+ 350              	.LBE127:
+  26:Testbed.cpp   ****     {
+ 351              		.loc 8 26 5 is_stmt 1 discriminator 2 view .LVU87
+ 352              	.LVL23:
+  26:Testbed.cpp   ****     {
+ 353              		.loc 8 26 25 discriminator 2 view .LVU88
+ 354 00b4 1BD0     		beq	.L5
+ 355 00b6 1E46     		mov	r6, r3
+ 356              	.LVL24:
+  26:Testbed.cpp   ****     {
+ 357              		.loc 8 26 25 is_stmt 0 discriminator 2 view .LVU89
+ 358 00b8 B1E7     		b	.L18
+ 359              	.LVL25:
+ 360              	.L10:
+ 361              	.LBB128:
+  40:Testbed.cpp   ****             }
+ 362              		.loc 8 40 17 is_stmt 1 view .LVU90
+  40:Testbed.cpp   ****             }
+ 363              		.loc 8 40 21 is_stmt 0 view .LVU91
+ 364 00ba 0023     		movs	r3, #0
+ 365 00bc C9F80030 		str	r3, [r9]
+  44:Testbed.cpp   ****             case 0:
+ 366              		.loc 8 44 9 is_stmt 1 view .LVU92
+ 367              	.L11:
+  45:Testbed.cpp   ****                 osc.SetWaveform(osc.WAVE_SIN);
+ 368              		.loc 8 45 13 view .LVU93
+  46:Testbed.cpp   ****                 hw.SetLed(false);
+ 369              		.loc 8 46 17 view .LVU94
+ 370              	.LVL26:
+ 371              	.LBB114:
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 17
+
+
+ 372              	.LBI114:
   70:../../DaisySP/Source/Synthesis/oscillator.h ****     {
- 327              		.loc 1 70 17 view .LVU79
- 328              	.LBB109:
- 329              		.loc 1 72 9 view .LVU80
- 330              		.loc 1 72 19 is_stmt 0 view .LVU81
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 16
-
-
- 331 009c 0021     		movs	r1, #0
- 332              	.LBE109:
- 333              	.LBE108:
-  37:Testbed.cpp   ****                 break;
- 334              		.loc 8 37 26 view .LVU82
- 335 009e 1148     		ldr	r0, .L26+20
- 336              	.LBB111:
- 337              	.LBB110:
- 338              		.loc 1 72 19 view .LVU83
- 339 00a0 3170     		strb	r1, [r6]
- 340              	.LVL22:
- 341              		.loc 1 72 19 view .LVU84
- 342              	.LBE110:
- 343              	.LBE111:
-  37:Testbed.cpp   ****                 break;
- 344              		.loc 8 37 17 is_stmt 1 view .LVU85
-  37:Testbed.cpp   ****                 break;
- 345              		.loc 8 37 26 is_stmt 0 view .LVU86
- 346 00a2 FFF7FEFF 		bl	_ZN5daisy9DaisySeed6SetLedEb
- 347              	.LVL23:
-  38:Testbed.cpp   ****             case 1:
- 348              		.loc 8 38 17 is_stmt 1 view .LVU87
- 349 00a6 E8E7     		b	.L12
- 350              	.L15:
-  43:Testbed.cpp   ****                 osc.SetWaveform(osc.WAVE_SQUARE);
- 351              		.loc 8 43 13 view .LVU88
-  44:Testbed.cpp   ****                 hw.SetLed(false);
- 352              		.loc 8 44 17 view .LVU89
- 353              	.LVL24:
- 354              	.LBB112:
- 355              	.LBI112:
+ 373              		.loc 1 70 17 view .LVU95
+ 374              	.LBB115:
+ 375              		.loc 1 72 9 view .LVU96
+ 376              		.loc 1 72 19 is_stmt 0 view .LVU97
+ 377 00c0 0021     		movs	r1, #0
+ 378              	.LBE115:
+ 379              	.LBE114:
+  47:Testbed.cpp   ****                 break;
+ 380              		.loc 8 47 26 view .LVU98
+ 381 00c2 1148     		ldr	r0, .L26+16
+ 382              	.LBB117:
+ 383              	.LBB116:
+ 384              		.loc 1 72 19 view .LVU99
+ 385 00c4 2970     		strb	r1, [r5]
+ 386              	.LVL27:
+ 387              		.loc 1 72 19 view .LVU100
+ 388              	.LBE116:
+ 389              	.LBE117:
+  47:Testbed.cpp   ****                 break;
+ 390              		.loc 8 47 17 is_stmt 1 view .LVU101
+  47:Testbed.cpp   ****                 break;
+ 391              		.loc 8 47 26 is_stmt 0 view .LVU102
+ 392 00c6 FFF7FEFF 		bl	_ZN5daisy9DaisySeed6SetLedEb
+ 393              	.LVL28:
+  48:Testbed.cpp   ****             case 1:
+ 394              		.loc 8 48 17 is_stmt 1 view .LVU103
+ 395 00ca E8E7     		b	.L12
+ 396              	.L15:
+  53:Testbed.cpp   ****                 osc.SetWaveform(osc.WAVE_SQUARE);
+ 397              		.loc 8 53 13 view .LVU104
+  54:Testbed.cpp   ****                 hw.SetLed(false);
+ 398              		.loc 8 54 17 view .LVU105
+ 399              	.LVL29:
+ 400              	.LBB118:
+ 401              	.LBI118:
   70:../../DaisySP/Source/Synthesis/oscillator.h ****     {
- 356              		.loc 1 70 17 view .LVU90
- 357              	.LBB113:
- 358              		.loc 1 72 9 view .LVU91
- 359              		.loc 1 72 19 is_stmt 0 view .LVU92
- 360 00a8 0423     		movs	r3, #4
- 361              	.LBE113:
- 362              	.LBE112:
-  45:Testbed.cpp   ****                 break;
- 363              		.loc 8 45 26 view .LVU93
- 364 00aa 0021     		movs	r1, #0
- 365 00ac 0D48     		ldr	r0, .L26+20
- 366              	.LBB115:
- 367              	.LBB114:
- 368              		.loc 1 72 19 view .LVU94
- 369 00ae 3370     		strb	r3, [r6]
- 370              	.LVL25:
- 371              		.loc 1 72 19 view .LVU95
- 372              	.LBE114:
- 373              	.LBE115:
-  45:Testbed.cpp   ****                 break;
- 374              		.loc 8 45 17 is_stmt 1 view .LVU96
-  45:Testbed.cpp   ****                 break;
- 375              		.loc 8 45 26 is_stmt 0 view .LVU97
- 376 00b0 FFF7FEFF 		bl	_ZN5daisy9DaisySeed6SetLedEb
- 377              	.LVL26:
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 17
+ 402              		.loc 1 70 17 view .LVU106
+ 403              	.LBB119:
+ 404              		.loc 1 72 9 view .LVU107
+ 405              		.loc 1 72 19 is_stmt 0 view .LVU108
+ 406 00cc 0423     		movs	r3, #4
+ 407              	.LBE119:
+ 408              	.LBE118:
+  55:Testbed.cpp   ****                 break;
+ 409              		.loc 8 55 26 view .LVU109
+ 410 00ce 0021     		movs	r1, #0
+ 411 00d0 0D48     		ldr	r0, .L26+16
+ 412              	.LBB121:
+ 413              	.LBB120:
+ 414              		.loc 1 72 19 view .LVU110
+ 415 00d2 2B70     		strb	r3, [r5]
+ 416              	.LVL30:
+ 417              		.loc 1 72 19 view .LVU111
+ 418              	.LBE120:
+ 419              	.LBE121:
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 18
 
 
-  46:Testbed.cpp   ****             case 3:
- 378              		.loc 8 46 17 is_stmt 1 view .LVU98
- 379 00b4 E1E7     		b	.L12
- 380              	.L16:
-  39:Testbed.cpp   ****                 osc.SetWaveform(osc.WAVE_SAW);
- 381              		.loc 8 39 13 view .LVU99
-  40:Testbed.cpp   ****                 hw.SetLed(true);
- 382              		.loc 8 40 17 view .LVU100
- 383              	.LVL27:
- 384              	.LBB116:
- 385              	.LBI116:
+  55:Testbed.cpp   ****                 break;
+ 420              		.loc 8 55 17 is_stmt 1 view .LVU112
+  55:Testbed.cpp   ****                 break;
+ 421              		.loc 8 55 26 is_stmt 0 view .LVU113
+ 422 00d4 FFF7FEFF 		bl	_ZN5daisy9DaisySeed6SetLedEb
+ 423              	.LVL31:
+  56:Testbed.cpp   ****             case 3:
+ 424              		.loc 8 56 17 is_stmt 1 view .LVU114
+ 425 00d8 E1E7     		b	.L12
+ 426              	.L16:
+  49:Testbed.cpp   ****                 osc.SetWaveform(osc.WAVE_SAW);
+ 427              		.loc 8 49 13 view .LVU115
+  50:Testbed.cpp   ****                 hw.SetLed(true);
+ 428              		.loc 8 50 17 view .LVU116
+ 429              	.LVL32:
+ 430              	.LBB122:
+ 431              	.LBI122:
   70:../../DaisySP/Source/Synthesis/oscillator.h ****     {
- 386              		.loc 1 70 17 view .LVU101
- 387              	.LBB117:
- 388              		.loc 1 72 9 view .LVU102
- 389              		.loc 1 72 19 is_stmt 0 view .LVU103
- 390 00b6 0223     		movs	r3, #2
- 391              	.LBE117:
- 392              	.LBE116:
-  41:Testbed.cpp   ****                 break;
- 393              		.loc 8 41 26 view .LVU104
- 394 00b8 0121     		movs	r1, #1
- 395 00ba 0A48     		ldr	r0, .L26+20
- 396              	.LBB119:
- 397              	.LBB118:
- 398              		.loc 1 72 19 view .LVU105
- 399 00bc 3370     		strb	r3, [r6]
- 400              	.LVL28:
- 401              		.loc 1 72 19 view .LVU106
- 402              	.LBE118:
- 403              	.LBE119:
-  41:Testbed.cpp   ****                 break;
- 404              		.loc 8 41 17 is_stmt 1 view .LVU107
-  41:Testbed.cpp   ****                 break;
- 405              		.loc 8 41 26 is_stmt 0 view .LVU108
- 406 00be FFF7FEFF 		bl	_ZN5daisy9DaisySeed6SetLedEb
- 407              	.LVL29:
-  42:Testbed.cpp   ****             case 2:
- 408              		.loc 8 42 17 is_stmt 1 view .LVU109
- 409 00c2 DAE7     		b	.L12
- 410              	.L7:
-  34:Testbed.cpp   ****             case 0:
- 411              		.loc 8 34 9 is_stmt 0 view .LVU110
- 412 00c4 D9F80030 		ldr	r3, [r9]
- 413 00c8 CCE7     		b	.L9
- 414              	.LVL30:
- 415              	.L5:
-  34:Testbed.cpp   ****             case 0:
- 416              		.loc 8 34 9 view .LVU111
- 417              	.LBE122:
- 418              	.LBE123:
-  59:Testbed.cpp   ****     }
-  60:Testbed.cpp   **** }
- 419              		.loc 8 60 1 view .LVU112
- 420 00ca BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
- 421              	.LVL31:
- 422              	.L23:
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 18
+ 432              		.loc 1 70 17 view .LVU117
+ 433              	.LBB123:
+ 434              		.loc 1 72 9 view .LVU118
+ 435              		.loc 1 72 19 is_stmt 0 view .LVU119
+ 436 00da 0223     		movs	r3, #2
+ 437              	.LBE123:
+ 438              	.LBE122:
+  51:Testbed.cpp   ****                 break;
+ 439              		.loc 8 51 26 view .LVU120
+ 440 00dc 0121     		movs	r1, #1
+ 441 00de 0A48     		ldr	r0, .L26+16
+ 442              	.LBB125:
+ 443              	.LBB124:
+ 444              		.loc 1 72 19 view .LVU121
+ 445 00e0 2B70     		strb	r3, [r5]
+ 446              	.LVL33:
+ 447              		.loc 1 72 19 view .LVU122
+ 448              	.LBE124:
+ 449              	.LBE125:
+  51:Testbed.cpp   ****                 break;
+ 450              		.loc 8 51 17 is_stmt 1 view .LVU123
+  51:Testbed.cpp   ****                 break;
+ 451              		.loc 8 51 26 is_stmt 0 view .LVU124
+ 452 00e2 FFF7FEFF 		bl	_ZN5daisy9DaisySeed6SetLedEb
+ 453              	.LVL34:
+  52:Testbed.cpp   ****             case 2:
+ 454              		.loc 8 52 17 is_stmt 1 view .LVU125
+ 455 00e6 DAE7     		b	.L12
+ 456              	.L7:
+  44:Testbed.cpp   ****             case 0:
+ 457              		.loc 8 44 9 is_stmt 0 view .LVU126
+ 458 00e8 D9F80030 		ldr	r3, [r9]
+ 459 00ec CCE7     		b	.L9
+ 460              	.LVL35:
+ 461              	.L5:
+  44:Testbed.cpp   ****             case 0:
+ 462              		.loc 8 44 9 view .LVU127
+ 463              	.LBE128:
+ 464              	.LBE130:
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 19
 
 
- 423              		.cfi_def_cfa_offset 0
- 424              		.cfi_restore 3
- 425              		.cfi_restore 4
- 426              		.cfi_restore 5
- 427              		.cfi_restore 6
- 428              		.cfi_restore 7
- 429              		.cfi_restore 8
- 430              		.cfi_restore 9
- 431              		.cfi_restore 14
- 432              		.loc 8 60 1 view .LVU113
- 433 00ce 7047     		bx	lr
- 434              	.L27:
- 435              		.align	2
- 436              	.L26:
- 437 00d0 00000000 		.word	.LANCHOR1
- 438 00d4 18000000 		.word	.LANCHOR0+24
- 439 00d8 0000DC43 		.word	1138491392
- 440 00dc 00005C43 		.word	1130102784
- 441 00e0 00000000 		.word	.LANCHOR2
- 442 00e4 00000000 		.word	.LANCHOR0
- 443 00e8 00000000 		.word	.LANCHOR3
- 444              		.cfi_endproc
- 445              	.LFE4418:
- 447              		.section	.text.startup.main,"ax",%progbits
- 448              		.align	1
- 449              		.p2align 2,,3
- 450              		.global	main
- 451              		.syntax unified
- 452              		.thumb
- 453              		.thumb_func
- 454              		.fpu fpv5-d16
- 456              	main:
- 457              	.LFB4419:
-  61:Testbed.cpp   **** 
-  62:Testbed.cpp   **** int main(void)
-  63:Testbed.cpp   **** {
- 458              		.loc 8 63 1 is_stmt 1 view -0
- 459              		.cfi_startproc
- 460              		@ args = 0, pretend = 0, frame = 32
- 461              		@ frame_needed = 0, uses_anonymous_args = 0
-  64:Testbed.cpp   ****     // initialize seed hardware and oscillator daisysp module
-  65:Testbed.cpp   ****     float sample_rate;
- 462              		.loc 8 65 5 view .LVU115
-  66:Testbed.cpp   ****     hw.Configure();
- 463              		.loc 8 66 5 view .LVU116
-  63:Testbed.cpp   ****     // initialize seed hardware and oscillator daisysp module
- 464              		.loc 8 63 1 is_stmt 0 view .LVU117
- 465 0000 30B5     		push	{r4, r5, lr}
- 466              		.cfi_def_cfa_offset 12
- 467              		.cfi_offset 4, -12
- 468              		.cfi_offset 5, -8
- 469              		.cfi_offset 14, -4
- 470              		.loc 8 66 17 view .LVU118
- 471 0002 3048     		ldr	r0, .L31
-  63:Testbed.cpp   ****     // initialize seed hardware and oscillator daisysp module
- 472              		.loc 8 63 1 view .LVU119
- 473 0004 89B0     		sub	sp, sp, #36
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 19
-
-
- 474              		.cfi_def_cfa_offset 48
- 475              		.loc 8 66 17 view .LVU120
- 476 0006 FFF7FEFF 		bl	_ZN5daisy9DaisySeed9ConfigureEv
- 477              	.LVL32:
-  67:Testbed.cpp   ****     hw.Init();
- 478              		.loc 8 67 5 is_stmt 1 view .LVU121
- 479              		.loc 8 67 12 is_stmt 0 view .LVU122
- 480 000a 0021     		movs	r1, #0
- 481 000c 2D48     		ldr	r0, .L31
- 482              	.LBB132:
- 483              	.LBB133:
-  50:../../DaisySP/Source/Synthesis/oscillator.h ****         eoc_       = true;
- 484              		.loc 1 50 20 view .LVU123
- 485 000e 0D46     		mov	r5, r1
- 486              	.LBE133:
- 487              	.LBE132:
- 488              		.loc 8 67 12 view .LVU124
- 489 0010 FFF7FEFF 		bl	_ZN5daisy9DaisySeed4InitEb
- 490              	.LVL33:
-  68:Testbed.cpp   ****     hw.SetAudioBlockSize(4);
- 491              		.loc 8 68 5 is_stmt 1 view .LVU125
- 492              		.loc 8 68 25 is_stmt 0 view .LVU126
- 493 0014 0421     		movs	r1, #4
- 494 0016 2B48     		ldr	r0, .L31
- 495 0018 FFF7FEFF 		bl	_ZN5daisy9DaisySeed17SetAudioBlockSizeEj
- 496              	.LVL34:
-  69:Testbed.cpp   ****     sample_rate = hw.AudioSampleRate();
- 497              		.loc 8 69 5 is_stmt 1 view .LVU127
- 498              		.loc 8 69 37 is_stmt 0 view .LVU128
- 499 001c 2948     		ldr	r0, .L31
- 500 001e FFF7FEFF 		bl	_ZN5daisy9DaisySeed15AudioSampleRateEv
- 501              	.LVL35:
- 502              	.LBB138:
- 503              	.LBB134:
-  45:../../DaisySP/Source/Synthesis/oscillator.h ****         freq_      = 100.0f;
- 504              		.loc 1 45 27 view .LVU129
- 505 0022 B7EE006A 		vmov.f32	s12, #1.0e+0
- 506              	.LBE134:
- 507              	.LBE138:
- 508              		.loc 8 69 37 view .LVU130
- 509 0026 F0EE407A 		vmov.f32	s15, s0
- 510              	.LVL36:
-  70:Testbed.cpp   ****     osc.Init(sample_rate);
- 511              		.loc 8 70 5 is_stmt 1 view .LVU131
- 512              	.LBB139:
- 513              	.LBI132:
-  42:../../DaisySP/Source/Synthesis/oscillator.h ****     {
- 514              		.loc 1 42 10 view .LVU132
- 515              	.LBB135:
-  44:../../DaisySP/Source/Synthesis/oscillator.h ****         sr_recip_  = 1.0f / sample_rate;
- 516              		.loc 1 44 9 view .LVU133
-  44:../../DaisySP/Source/Synthesis/oscillator.h ****         sr_recip_  = 1.0f / sample_rate;
- 517              		.loc 1 44 20 is_stmt 0 view .LVU134
- 518 002a 274C     		ldr	r4, .L31+4
-  46:../../DaisySP/Source/Synthesis/oscillator.h ****         amp_       = 0.5f;
- 519              		.loc 1 46 20 view .LVU135
- 520 002c 9FED277A 		vldr.32	s14, .L31+8
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 20
-
-
-  47:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_     = 0.0f;
- 521              		.loc 1 47 20 view .LVU136
- 522 0030 4FF07C52 		mov	r2, #1056964608
-  48:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_inc_ = CalcPhaseInc(freq_);
- 523              		.loc 1 48 20 view .LVU137
- 524 0034 0023     		movs	r3, #0
-  49:../../DaisySP/Source/Synthesis/oscillator.h ****         waveform_  = WAVE_SIN;
- 525              		.loc 1 49 34 view .LVU138
- 526 0036 2046     		mov	r0, r4
-  45:../../DaisySP/Source/Synthesis/oscillator.h ****         freq_      = 100.0f;
- 527              		.loc 1 45 27 view .LVU139
- 528 0038 C6EE276A 		vdiv.f32	s13, s12, s15
-  44:../../DaisySP/Source/Synthesis/oscillator.h ****         sr_recip_  = 1.0f / sample_rate;
- 529              		.loc 1 44 20 view .LVU140
- 530 003c C4ED037A 		vstr.32	s15, [r4, #12]
-  45:../../DaisySP/Source/Synthesis/oscillator.h ****         freq_      = 100.0f;
- 531              		.loc 1 45 9 is_stmt 1 view .LVU141
-  46:../../DaisySP/Source/Synthesis/oscillator.h ****         amp_       = 0.5f;
- 532              		.loc 1 46 20 is_stmt 0 view .LVU142
- 533 0040 84ED027A 		vstr.32	s14, [r4, #8]
-  47:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_     = 0.0f;
- 534              		.loc 1 47 20 view .LVU143
- 535 0044 6260     		str	r2, [r4, #4]	@ float
-  48:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_inc_ = CalcPhaseInc(freq_);
- 536              		.loc 1 48 20 view .LVU144
- 537 0046 6361     		str	r3, [r4, #20]	@ float
-  49:../../DaisySP/Source/Synthesis/oscillator.h ****         waveform_  = WAVE_SIN;
- 538              		.loc 1 49 34 view .LVU145
- 539 0048 B0EE470A 		vmov.f32	s0, s14
- 540              	.LVL37:
-  45:../../DaisySP/Source/Synthesis/oscillator.h ****         freq_      = 100.0f;
- 541              		.loc 1 45 20 view .LVU146
- 542 004c C4ED046A 		vstr.32	s13, [r4, #16]
-  46:../../DaisySP/Source/Synthesis/oscillator.h ****         amp_       = 0.5f;
- 543              		.loc 1 46 9 is_stmt 1 view .LVU147
-  47:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_     = 0.0f;
- 544              		.loc 1 47 9 view .LVU148
-  48:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_inc_ = CalcPhaseInc(freq_);
- 545              		.loc 1 48 9 view .LVU149
-  49:../../DaisySP/Source/Synthesis/oscillator.h ****         waveform_  = WAVE_SIN;
- 546              		.loc 1 49 9 view .LVU150
-  49:../../DaisySP/Source/Synthesis/oscillator.h ****         waveform_  = WAVE_SIN;
- 547              		.loc 1 49 34 is_stmt 0 view .LVU151
- 548 0050 FFF7FEFF 		bl	_ZN7daisysp10Oscillator12CalcPhaseIncEf
- 549              	.LVL38:
-  52:../../DaisySP/Source/Synthesis/oscillator.h ****     }
- 550              		.loc 1 52 20 view .LVU152
- 551 0054 40F20113 		movw	r3, #257
- 552              	.LBE135:
- 553              	.LBE139:
+  69:Testbed.cpp   ****     }
+  70:Testbed.cpp   **** }
+ 465              		.loc 8 70 1 view .LVU128
+ 466 00ee BDEC028B 		vldm	sp!, {d8}
+ 467              		.cfi_restore 80
+ 468              		.cfi_restore 81
+ 469              		.cfi_def_cfa_offset 32
+ 470              	.LVL36:
+ 471              		.loc 8 70 1 view .LVU129
+ 472 00f2 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 473              	.LVL37:
+ 474              	.L23:
+ 475              		.cfi_def_cfa_offset 0
+ 476              		.cfi_restore 3
+ 477              		.cfi_restore 4
+ 478              		.cfi_restore 5
+ 479              		.cfi_restore 6
+ 480              		.cfi_restore 7
+ 481              		.cfi_restore 8
+ 482              		.cfi_restore 9
+ 483              		.cfi_restore 14
+ 484              		.loc 8 70 1 view .LVU130
+ 485 00f6 7047     		bx	lr
+ 486              	.L27:
+ 487              		.align	2
+ 488              	.L26:
+ 489 00f8 00000000 		.word	.LANCHOR1
+ 490 00fc 18000000 		.word	.LANCHOR0+24
+ 491 0100 0000DC43 		.word	1138491392
+ 492 0104 00000000 		.word	.LANCHOR2
+ 493 0108 00000000 		.word	.LANCHOR0
+ 494 010c 00000000 		.word	.LANCHOR3
+ 495              		.cfi_endproc
+ 496              	.LFE4418:
+ 498              		.section	.text.startup.main,"ax",%progbits
+ 499              		.align	1
+ 500              		.p2align 2,,3
+ 501              		.global	main
+ 502              		.syntax unified
+ 503              		.thumb
+ 504              		.thumb_func
+ 505              		.fpu fpv5-d16
+ 507              	main:
+ 508              	.LFB4419:
   71:Testbed.cpp   **** 
-  72:Testbed.cpp   ****     //knob
-  73:Testbed.cpp   ****     AdcChannelConfig adcConfig;
-  74:Testbed.cpp   ****     adcConfig.InitSingle(hw.GetPin(21));
- 554              		.loc 8 74 25 view .LVU153
- 555 0058 1520     		movs	r0, #21
- 556              	.LBB140:
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 21
+  72:Testbed.cpp   **** int main(void)
+  73:Testbed.cpp   **** {
+ 509              		.loc 8 73 1 is_stmt 1 view -0
+ 510              		.cfi_startproc
+ 511              		@ args = 0, pretend = 0, frame = 72
+ 512              		@ frame_needed = 0, uses_anonymous_args = 0
+  74:Testbed.cpp   ****     // initialize seed hardware and oscillator daisysp module
+  75:Testbed.cpp   ****     float sample_rate;
+ 513              		.loc 8 75 5 view .LVU132
+  76:Testbed.cpp   ****     hw.Configure();
+ 514              		.loc 8 76 5 view .LVU133
+  73:Testbed.cpp   ****     // initialize seed hardware and oscillator daisysp module
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 20
 
 
- 557              	.LBB136:
+ 515              		.loc 8 73 1 is_stmt 0 view .LVU134
+ 516 0000 30B5     		push	{r4, r5, lr}
+ 517              		.cfi_def_cfa_offset 12
+ 518              		.cfi_offset 4, -12
+ 519              		.cfi_offset 5, -8
+ 520              		.cfi_offset 14, -4
+ 521              		.loc 8 76 17 view .LVU135
+ 522 0002 3B48     		ldr	r0, .L31
+  73:Testbed.cpp   ****     // initialize seed hardware and oscillator daisysp module
+ 523              		.loc 8 73 1 view .LVU136
+ 524 0004 93B0     		sub	sp, sp, #76
+ 525              		.cfi_def_cfa_offset 88
+ 526              		.loc 8 76 17 view .LVU137
+ 527 0006 FFF7FEFF 		bl	_ZN5daisy9DaisySeed9ConfigureEv
+ 528              	.LVL38:
+  77:Testbed.cpp   ****     hw.Init();
+ 529              		.loc 8 77 5 is_stmt 1 view .LVU138
+ 530              		.loc 8 77 12 is_stmt 0 view .LVU139
+ 531 000a 0021     		movs	r1, #0
+ 532 000c 3848     		ldr	r0, .L31
+ 533              	.LBB139:
+ 534              	.LBB140:
+  50:../../DaisySP/Source/Synthesis/oscillator.h ****         eoc_       = true;
+ 535              		.loc 1 50 20 view .LVU140
+ 536 000e 0D46     		mov	r5, r1
+ 537              	.LBE140:
+ 538              	.LBE139:
+ 539              		.loc 8 77 12 view .LVU141
+ 540 0010 FFF7FEFF 		bl	_ZN5daisy9DaisySeed4InitEb
+ 541              	.LVL39:
+  78:Testbed.cpp   ****     hw.SetAudioBlockSize(4);
+ 542              		.loc 8 78 5 is_stmt 1 view .LVU142
+ 543              		.loc 8 78 25 is_stmt 0 view .LVU143
+ 544 0014 0421     		movs	r1, #4
+ 545 0016 3648     		ldr	r0, .L31
+ 546 0018 FFF7FEFF 		bl	_ZN5daisy9DaisySeed17SetAudioBlockSizeEj
+ 547              	.LVL40:
+  79:Testbed.cpp   ****     sample_rate = hw.AudioSampleRate();
+ 548              		.loc 8 79 5 is_stmt 1 view .LVU144
+ 549              		.loc 8 79 37 is_stmt 0 view .LVU145
+ 550 001c 3448     		ldr	r0, .L31
+ 551 001e FFF7FEFF 		bl	_ZN5daisy9DaisySeed15AudioSampleRateEv
+ 552              	.LVL41:
+ 553              	.LBB145:
+ 554              	.LBB141:
+  45:../../DaisySP/Source/Synthesis/oscillator.h ****         freq_      = 100.0f;
+ 555              		.loc 1 45 27 view .LVU146
+ 556 0022 B7EE006A 		vmov.f32	s12, #1.0e+0
+ 557              	.LBE141:
+ 558              	.LBE145:
+ 559              		.loc 8 79 37 view .LVU147
+ 560 0026 F0EE407A 		vmov.f32	s15, s0
+ 561              	.LVL42:
+  80:Testbed.cpp   ****     osc.Init(sample_rate);
+ 562              		.loc 8 80 5 is_stmt 1 view .LVU148
+ 563              	.LBB146:
+ 564              	.LBI139:
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 21
+
+
+  42:../../DaisySP/Source/Synthesis/oscillator.h ****     {
+ 565              		.loc 1 42 10 view .LVU149
+ 566              	.LBB142:
+  44:../../DaisySP/Source/Synthesis/oscillator.h ****         sr_recip_  = 1.0f / sample_rate;
+ 567              		.loc 1 44 9 view .LVU150
+  44:../../DaisySP/Source/Synthesis/oscillator.h ****         sr_recip_  = 1.0f / sample_rate;
+ 568              		.loc 1 44 20 is_stmt 0 view .LVU151
+ 569 002a 324C     		ldr	r4, .L31+4
+  46:../../DaisySP/Source/Synthesis/oscillator.h ****         amp_       = 0.5f;
+ 570              		.loc 1 46 20 view .LVU152
+ 571 002c 9FED327A 		vldr.32	s14, .L31+8
+  47:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_     = 0.0f;
+ 572              		.loc 1 47 20 view .LVU153
+ 573 0030 4FF07C52 		mov	r2, #1056964608
+  48:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_inc_ = CalcPhaseInc(freq_);
+ 574              		.loc 1 48 20 view .LVU154
+ 575 0034 0023     		movs	r3, #0
   49:../../DaisySP/Source/Synthesis/oscillator.h ****         waveform_  = WAVE_SIN;
- 558              		.loc 1 49 20 view .LVU154
- 559 005a 84ED060A 		vstr.32	s0, [r4, #24]
+ 576              		.loc 1 49 34 view .LVU155
+ 577 0036 2046     		mov	r0, r4
+  45:../../DaisySP/Source/Synthesis/oscillator.h ****         freq_      = 100.0f;
+ 578              		.loc 1 45 27 view .LVU156
+ 579 0038 C6EE276A 		vdiv.f32	s13, s12, s15
+  44:../../DaisySP/Source/Synthesis/oscillator.h ****         sr_recip_  = 1.0f / sample_rate;
+ 580              		.loc 1 44 20 view .LVU157
+ 581 003c C4ED037A 		vstr.32	s15, [r4, #12]
+  45:../../DaisySP/Source/Synthesis/oscillator.h ****         freq_      = 100.0f;
+ 582              		.loc 1 45 9 is_stmt 1 view .LVU158
+  46:../../DaisySP/Source/Synthesis/oscillator.h ****         amp_       = 0.5f;
+ 583              		.loc 1 46 20 is_stmt 0 view .LVU159
+ 584 0040 84ED027A 		vstr.32	s14, [r4, #8]
+  47:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_     = 0.0f;
+ 585              		.loc 1 47 20 view .LVU160
+ 586 0044 6260     		str	r2, [r4, #4]	@ float
+  48:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_inc_ = CalcPhaseInc(freq_);
+ 587              		.loc 1 48 20 view .LVU161
+ 588 0046 6361     		str	r3, [r4, #20]	@ float
+  49:../../DaisySP/Source/Synthesis/oscillator.h ****         waveform_  = WAVE_SIN;
+ 589              		.loc 1 49 34 view .LVU162
+ 590 0048 B0EE470A 		vmov.f32	s0, s14
+ 591              	.LVL43:
+  45:../../DaisySP/Source/Synthesis/oscillator.h ****         freq_      = 100.0f;
+ 592              		.loc 1 45 20 view .LVU163
+ 593 004c C4ED046A 		vstr.32	s13, [r4, #16]
+  46:../../DaisySP/Source/Synthesis/oscillator.h ****         amp_       = 0.5f;
+ 594              		.loc 1 46 9 is_stmt 1 view .LVU164
+  47:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_     = 0.0f;
+ 595              		.loc 1 47 9 view .LVU165
+  48:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_inc_ = CalcPhaseInc(freq_);
+ 596              		.loc 1 48 9 view .LVU166
+  49:../../DaisySP/Source/Synthesis/oscillator.h ****         waveform_  = WAVE_SIN;
+ 597              		.loc 1 49 9 view .LVU167
+  49:../../DaisySP/Source/Synthesis/oscillator.h ****         waveform_  = WAVE_SIN;
+ 598              		.loc 1 49 34 is_stmt 0 view .LVU168
+ 599 0050 FFF7FEFF 		bl	_ZN7daisysp10Oscillator12CalcPhaseIncEf
+ 600              	.LVL44:
+  52:../../DaisySP/Source/Synthesis/oscillator.h ****     }
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 22
+
+
+ 601              		.loc 1 52 20 view .LVU169
+ 602 0054 40F20113 		movw	r3, #257
+ 603              	.LBE142:
+ 604              	.LBE146:
+  81:Testbed.cpp   **** 
+  82:Testbed.cpp   ****     //knob
+  83:Testbed.cpp   ****     AdcChannelConfig adcConfig[NUM_ADC_CHANNELS];
+  84:Testbed.cpp   ****     adcConfig[pitchKnob].InitSingle(hw.GetPin(21));
+ 605              		.loc 8 84 36 view .LVU170
+ 606 0058 1520     		movs	r0, #21
+ 607              	.LBB147:
+ 608              	.LBB143:
+  49:../../DaisySP/Source/Synthesis/oscillator.h ****         waveform_  = WAVE_SIN;
+ 609              		.loc 1 49 20 view .LVU171
+ 610 005a 84ED060A 		vstr.32	s0, [r4, #24]
   50:../../DaisySP/Source/Synthesis/oscillator.h ****         eoc_       = true;
- 560              		.loc 1 50 9 is_stmt 1 view .LVU155
+ 611              		.loc 1 50 9 is_stmt 1 view .LVU172
   51:../../DaisySP/Source/Synthesis/oscillator.h ****         eor_       = true;
- 561              		.loc 1 51 9 view .LVU156
+ 612              		.loc 1 51 9 view .LVU173
   52:../../DaisySP/Source/Synthesis/oscillator.h ****     }
- 562              		.loc 1 52 9 view .LVU157
+ 613              		.loc 1 52 9 view .LVU174
   52:../../DaisySP/Source/Synthesis/oscillator.h ****     }
- 563              		.loc 1 52 20 is_stmt 0 view .LVU158
- 564 005e A384     		strh	r3, [r4, #36]	@ movhi
- 565              	.LVL39:
+ 614              		.loc 1 52 20 is_stmt 0 view .LVU175
+ 615 005e A384     		strh	r3, [r4, #36]	@ movhi
+ 616              	.LVL45:
   52:../../DaisySP/Source/Synthesis/oscillator.h ****     }
- 566              		.loc 1 52 20 view .LVU159
- 567              	.LBE136:
- 568              	.LBE140:
-  73:Testbed.cpp   ****     adcConfig.InitSingle(hw.GetPin(21));
- 569              		.loc 8 73 5 is_stmt 1 view .LVU160
- 570              		.loc 8 74 5 view .LVU161
- 571              	.LBB141:
- 572              	.LBB137:
-  50:../../DaisySP/Source/Synthesis/oscillator.h ****         eoc_       = true;
- 573              		.loc 1 50 20 is_stmt 0 view .LVU162
- 574 0060 2570     		strb	r5, [r4]
- 575              	.LBE137:
- 576              	.LBE141:
- 577              		.loc 8 74 25 view .LVU163
- 578 0062 FFF7FEFF 		bl	_ZN5daisy9DaisySeed6GetPinEh
- 579              	.LVL40:
- 580 0066 0346     		mov	r3, r0	@ movhi
- 581 0068 03A8     		add	r0, sp, #12
- 582 006a ADF80430 		strh	r3, [sp, #4]	@ movhi
- 583 006e 0199     		ldr	r1, [sp, #4]
- 584 0070 FFF7FEFF 		bl	_ZN5daisy16AdcChannelConfig10InitSingleE12dsy_gpio_pin
- 585              	.LVL41:
-  75:Testbed.cpp   ****     hw.adc.Init(&adcConfig, 1);
- 586              		.loc 8 75 5 is_stmt 1 view .LVU164
- 587              		.loc 8 75 16 is_stmt 0 view .LVU165
- 588 0074 0122     		movs	r2, #1
- 589 0076 0423     		movs	r3, #4
- 590 0078 03A9     		add	r1, sp, #12
- 591 007a 1548     		ldr	r0, .L31+12
- 592 007c FFF7FEFF 		bl	_ZN5daisy9AdcHandle4InitEPNS_16AdcChannelConfigEjNS0_12OverSamplingE
- 593              	.LVL42:
-  76:Testbed.cpp   **** 
-  77:Testbed.cpp   ****     //button
-  78:Testbed.cpp   ****     button1.Init(hw.GetPin(28),1000);
- 594              		.loc 8 78 5 is_stmt 1 view .LVU166
- 595              		.loc 8 78 17 is_stmt 0 view .LVU167
- 596 0080 1C20     		movs	r0, #28
- 597 0082 FFF7FEFF 		bl	_ZN5daisy9DaisySeed6GetPinEh
- 598              	.LVL43:
- 599 0086 0346     		mov	r3, r0	@ movhi
- 600 0088 9FED120A 		vldr.32	s0, .L31+16
- 601 008c ADF80830 		strh	r3, [sp, #8]	@ movhi
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 22
-
-
- 602 0090 0299     		ldr	r1, [sp, #8]
- 603 0092 1148     		ldr	r0, .L31+20
- 604 0094 FFF7FEFF 		bl	_ZN5daisy6Switch4InitE12dsy_gpio_pinf
- 605              	.LVL44:
-  79:Testbed.cpp   **** 
-  80:Testbed.cpp   ****     // Set parameters for oscillator
-  81:Testbed.cpp   ****     osc.SetWaveform(osc.WAVE_SIN);
- 606              		.loc 8 81 5 is_stmt 1 view .LVU168
- 607              	.LBB142:
- 608              	.LBI142:
-  70:../../DaisySP/Source/Synthesis/oscillator.h ****     {
- 609              		.loc 1 70 17 view .LVU169
- 610              	.LBB143:
- 611              		.loc 1 72 9 view .LVU170
- 612              	.LBE143:
- 613              	.LBE142:
- 614              	.LBB145:
- 615              	.LBB146:
-  60:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_inc_ = CalcPhaseInc(f);
- 616              		.loc 1 60 20 is_stmt 0 view .LVU171
- 617 0098 9FED100A 		vldr.32	s0, .L31+24
-  61:../../DaisySP/Source/Synthesis/oscillator.h ****     }
- 618              		.loc 1 61 34 view .LVU172
- 619 009c 2046     		mov	r0, r4
- 620              	.LBE146:
- 621              	.LBE145:
- 622              	.LBB149:
+ 617              		.loc 1 52 20 view .LVU176
+ 618              	.LBE143:
+ 619              	.LBE147:
+  83:Testbed.cpp   ****     adcConfig[pitchKnob].InitSingle(hw.GetPin(21));
+ 620              		.loc 8 83 5 is_stmt 1 view .LVU177
+ 621              		.loc 8 84 5 view .LVU178
+ 622              	.LBB148:
  623              	.LBB144:
- 624              		.loc 1 72 19 view .LVU173
- 625 009e 2570     		strb	r5, [r4]
- 626              	.LVL45:
- 627              		.loc 1 72 19 view .LVU174
- 628              	.LBE144:
- 629              	.LBE149:
-  82:Testbed.cpp   ****     osc.SetFreq(880);
- 630              		.loc 8 82 5 is_stmt 1 view .LVU175
- 631              	.LBB150:
- 632              	.LBI145:
+  50:../../DaisySP/Source/Synthesis/oscillator.h ****         eoc_       = true;
+ 624              		.loc 1 50 20 is_stmt 0 view .LVU179
+ 625 0060 2570     		strb	r5, [r4]
+ 626              	.LBE144:
+ 627              	.LBE148:
+ 628              		.loc 8 84 36 view .LVU180
+ 629 0062 FFF7FEFF 		bl	_ZN5daisy9DaisySeed6GetPinEh
+ 630              	.LVL46:
+ 631 0066 0346     		mov	r3, r0	@ movhi
+ 632 0068 05A8     		add	r0, sp, #20
+ 633 006a ADF80430 		strh	r3, [sp, #4]	@ movhi
+ 634 006e 0199     		ldr	r1, [sp, #4]
+ 635 0070 FFF7FEFF 		bl	_ZN5daisy16AdcChannelConfig10InitSingleE12dsy_gpio_pin
+ 636              	.LVL47:
+  85:Testbed.cpp   ****     adcConfig[octKnob].InitSingle(hw.GetPin(20));
+ 637              		.loc 8 85 5 is_stmt 1 view .LVU181
+ 638              		.loc 8 85 34 is_stmt 0 view .LVU182
+ 639 0074 1420     		movs	r0, #20
+ 640 0076 FFF7FEFF 		bl	_ZN5daisy9DaisySeed6GetPinEh
+ 641              	.LVL48:
+ 642 007a 0346     		mov	r3, r0	@ movhi
+ 643 007c 0DF12500 		add	r0, sp, #37
+ 644 0080 ADF80830 		strh	r3, [sp, #8]	@ movhi
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 23
+
+
+ 645 0084 0299     		ldr	r1, [sp, #8]
+ 646 0086 FFF7FEFF 		bl	_ZN5daisy16AdcChannelConfig10InitSingleE12dsy_gpio_pin
+ 647              	.LVL49:
+  86:Testbed.cpp   ****     adcConfig[gainKnob].InitSingle(hw.GetPin(19));
+ 648              		.loc 8 86 5 is_stmt 1 view .LVU183
+ 649              		.loc 8 86 35 is_stmt 0 view .LVU184
+ 650 008a 1320     		movs	r0, #19
+ 651 008c FFF7FEFF 		bl	_ZN5daisy9DaisySeed6GetPinEh
+ 652              	.LVL50:
+ 653 0090 0346     		mov	r3, r0	@ movhi
+ 654 0092 0DF13600 		add	r0, sp, #54
+ 655 0096 ADF80C30 		strh	r3, [sp, #12]	@ movhi
+ 656 009a 0399     		ldr	r1, [sp, #12]
+ 657 009c FFF7FEFF 		bl	_ZN5daisy16AdcChannelConfig10InitSingleE12dsy_gpio_pin
+ 658              	.LVL51:
+  87:Testbed.cpp   ****     hw.adc.Init(adcConfig, NUM_ADC_CHANNELS);
+ 659              		.loc 8 87 5 is_stmt 1 view .LVU185
+ 660              		.loc 8 87 16 is_stmt 0 view .LVU186
+ 661 00a0 0322     		movs	r2, #3
+ 662 00a2 0423     		movs	r3, #4
+ 663 00a4 05A9     		add	r1, sp, #20
+ 664 00a6 1548     		ldr	r0, .L31+12
+ 665 00a8 FFF7FEFF 		bl	_ZN5daisy9AdcHandle4InitEPNS_16AdcChannelConfigEjNS0_12OverSamplingE
+ 666              	.LVL52:
+  88:Testbed.cpp   **** 
+  89:Testbed.cpp   ****     //button
+  90:Testbed.cpp   ****     button1.Init(hw.GetPin(28),1000);
+ 667              		.loc 8 90 5 is_stmt 1 view .LVU187
+ 668              		.loc 8 90 17 is_stmt 0 view .LVU188
+ 669 00ac 1C20     		movs	r0, #28
+ 670 00ae FFF7FEFF 		bl	_ZN5daisy9DaisySeed6GetPinEh
+ 671              	.LVL53:
+ 672 00b2 0346     		mov	r3, r0	@ movhi
+ 673 00b4 9FED120A 		vldr.32	s0, .L31+16
+ 674 00b8 ADF81030 		strh	r3, [sp, #16]	@ movhi
+ 675 00bc 0499     		ldr	r1, [sp, #16]
+ 676 00be 1148     		ldr	r0, .L31+20
+ 677 00c0 FFF7FEFF 		bl	_ZN5daisy6Switch4InitE12dsy_gpio_pinf
+ 678              	.LVL54:
+  91:Testbed.cpp   **** 
+  92:Testbed.cpp   ****     // Set parameters for oscillator
+  93:Testbed.cpp   ****     osc.SetWaveform(osc.WAVE_SIN);
+ 679              		.loc 8 93 5 is_stmt 1 view .LVU189
+ 680              	.LBB149:
+ 681              	.LBI149:
+  70:../../DaisySP/Source/Synthesis/oscillator.h ****     {
+ 682              		.loc 1 70 17 view .LVU190
+ 683              	.LBB150:
+ 684              		.loc 1 72 9 view .LVU191
+ 685              	.LBE150:
+ 686              	.LBE149:
+ 687              	.LBB152:
+ 688              	.LBB153:
+  60:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_inc_ = CalcPhaseInc(f);
+ 689              		.loc 1 60 20 is_stmt 0 view .LVU192
+ 690 00c4 9FED100A 		vldr.32	s0, .L31+24
+  61:../../DaisySP/Source/Synthesis/oscillator.h ****     }
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 24
+
+
+ 691              		.loc 1 61 34 view .LVU193
+ 692 00c8 2046     		mov	r0, r4
+ 693              	.LBE153:
+ 694              	.LBE152:
+ 695              	.LBB156:
+ 696              	.LBB151:
+ 697              		.loc 1 72 19 view .LVU194
+ 698 00ca 2570     		strb	r5, [r4]
+ 699              	.LVL55:
+ 700              		.loc 1 72 19 view .LVU195
+ 701              	.LBE151:
+ 702              	.LBE156:
+  94:Testbed.cpp   ****     osc.SetFreq(880);
+ 703              		.loc 8 94 5 is_stmt 1 view .LVU196
+ 704              	.LBB157:
+ 705              	.LBI152:
   58:../../DaisySP/Source/Synthesis/oscillator.h ****     {
- 633              		.loc 1 58 17 view .LVU176
- 634              	.LBB147:
+ 706              		.loc 1 58 17 view .LVU197
+ 707              	.LBB154:
   60:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_inc_ = CalcPhaseInc(f);
- 635              		.loc 1 60 9 view .LVU177
+ 708              		.loc 1 60 9 view .LVU198
   60:../../DaisySP/Source/Synthesis/oscillator.h ****         phase_inc_ = CalcPhaseInc(f);
- 636              		.loc 1 60 20 is_stmt 0 view .LVU178
- 637 00a0 84ED020A 		vstr.32	s0, [r4, #8]
+ 709              		.loc 1 60 20 is_stmt 0 view .LVU199
+ 710 00cc 84ED020A 		vstr.32	s0, [r4, #8]
   61:../../DaisySP/Source/Synthesis/oscillator.h ****     }
- 638              		.loc 1 61 9 is_stmt 1 view .LVU179
+ 711              		.loc 1 61 9 is_stmt 1 view .LVU200
   61:../../DaisySP/Source/Synthesis/oscillator.h ****     }
- 639              		.loc 1 61 34 is_stmt 0 view .LVU180
- 640 00a4 FFF7FEFF 		bl	_ZN7daisysp10Oscillator12CalcPhaseIncEf
- 641              	.LVL46:
- 642              	.LBE147:
- 643              	.LBE150:
- 644              	.LBB151:
- 645              	.LBB152:
+ 712              		.loc 1 61 34 is_stmt 0 view .LVU201
+ 713 00d0 FFF7FEFF 		bl	_ZN7daisysp10Oscillator12CalcPhaseIncEf
+ 714              	.LVL56:
+ 715              	.LBE154:
+ 716              	.LBE157:
+ 717              	.LBB158:
+ 718              	.LBB159:
   67:../../DaisySP/Source/Synthesis/oscillator.h ****     /** Sets the waveform to be synthesized by the Process() function.
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 23
+ 719              		.loc 1 67 46 view .LVU202
+ 720 00d4 4FF07A53 		mov	r3, #1048576000
+ 721              	.LBE159:
+ 722              	.LBE158:
+  95:Testbed.cpp   ****     osc.SetAmp(0.25);
+  96:Testbed.cpp   **** 
+  97:Testbed.cpp   **** 
+  98:Testbed.cpp   ****     // start callback
+  99:Testbed.cpp   ****     hw.adc.Start();
+ 723              		.loc 8 99 17 view .LVU203
+ 724 00d8 0848     		ldr	r0, .L31+12
+ 725              	.LBB161:
+ 726              	.LBB155:
+  61:../../DaisySP/Source/Synthesis/oscillator.h ****     }
+ 727              		.loc 1 61 20 view .LVU204
+ 728 00da 84ED060A 		vstr.32	s0, [r4, #24]
+ 729              	.LVL57:
+  61:../../DaisySP/Source/Synthesis/oscillator.h ****     }
+ 730              		.loc 1 61 20 view .LVU205
+ 731              	.LBE155:
+ 732              	.LBE161:
+  95:Testbed.cpp   ****     osc.SetAmp(0.25);
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 25
 
 
- 646              		.loc 1 67 46 view .LVU181
- 647 00a8 4FF07A53 		mov	r3, #1048576000
- 648              	.LBE152:
- 649              	.LBE151:
-  83:Testbed.cpp   ****     osc.SetAmp(0.25);
-  84:Testbed.cpp   **** 
-  85:Testbed.cpp   **** 
-  86:Testbed.cpp   ****     // start callback
-  87:Testbed.cpp   ****     hw.adc.Start();
- 650              		.loc 8 87 17 view .LVU182
- 651 00ac 0848     		ldr	r0, .L31+12
- 652              	.LBB154:
- 653              	.LBB148:
-  61:../../DaisySP/Source/Synthesis/oscillator.h ****     }
- 654              		.loc 1 61 20 view .LVU183
- 655 00ae 84ED060A 		vstr.32	s0, [r4, #24]
- 656              	.LVL47:
-  61:../../DaisySP/Source/Synthesis/oscillator.h ****     }
- 657              		.loc 1 61 20 view .LVU184
- 658              	.LBE148:
- 659              	.LBE154:
-  83:Testbed.cpp   ****     osc.SetAmp(0.25);
- 660              		.loc 8 83 5 is_stmt 1 view .LVU185
- 661              	.LBB155:
- 662              	.LBI151:
+ 733              		.loc 8 95 5 is_stmt 1 view .LVU206
+ 734              	.LBB162:
+ 735              	.LBI158:
   67:../../DaisySP/Source/Synthesis/oscillator.h ****     /** Sets the waveform to be synthesized by the Process() function.
- 663              		.loc 1 67 17 view .LVU186
- 664              	.LBB153:
+ 736              		.loc 1 67 17 view .LVU207
+ 737              	.LBB160:
   67:../../DaisySP/Source/Synthesis/oscillator.h ****     /** Sets the waveform to be synthesized by the Process() function.
- 665              		.loc 1 67 41 view .LVU187
+ 738              		.loc 1 67 41 view .LVU208
   67:../../DaisySP/Source/Synthesis/oscillator.h ****     /** Sets the waveform to be synthesized by the Process() function.
- 666              		.loc 1 67 46 is_stmt 0 view .LVU188
- 667 00b2 6360     		str	r3, [r4, #4]	@ float
- 668              	.LVL48:
+ 739              		.loc 1 67 46 is_stmt 0 view .LVU209
+ 740 00de 6360     		str	r3, [r4, #4]	@ float
+ 741              	.LVL58:
   67:../../DaisySP/Source/Synthesis/oscillator.h ****     /** Sets the waveform to be synthesized by the Process() function.
- 669              		.loc 1 67 46 view .LVU189
- 670              	.LBE153:
- 671              	.LBE155:
- 672              		.loc 8 87 5 is_stmt 1 view .LVU190
- 673              		.loc 8 87 17 is_stmt 0 view .LVU191
- 674 00b4 FFF7FEFF 		bl	_ZN5daisy9AdcHandle5StartEv
- 675              	.LVL49:
-  88:Testbed.cpp   ****     hw.StartAudio(AudioCallback);
- 676              		.loc 8 88 5 is_stmt 1 view .LVU192
- 677              		.loc 8 88 18 is_stmt 0 view .LVU193
- 678 00b8 0949     		ldr	r1, .L31+28
- 679 00ba 0248     		ldr	r0, .L31
- 680 00bc FFF7FEFF 		bl	_ZN5daisy9DaisySeed10StartAudioEPFvPKfPfjE
- 681              	.LVL50:
- 682              	.L29:
-  89:Testbed.cpp   **** 
-  90:Testbed.cpp   **** 
-  91:Testbed.cpp   ****     while(1) {}
- 683              		.loc 8 91 5 is_stmt 1 discriminator 1 view .LVU194
- 684              		.loc 8 91 5 discriminator 1 view .LVU195
- 685              		.loc 8 91 5 discriminator 1 view .LVU196
- 686              		.loc 8 91 5 discriminator 1 view .LVU197
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 24
+ 742              		.loc 1 67 46 view .LVU210
+ 743              	.LBE160:
+ 744              	.LBE162:
+ 745              		.loc 8 99 5 is_stmt 1 view .LVU211
+ 746              		.loc 8 99 17 is_stmt 0 view .LVU212
+ 747 00e0 FFF7FEFF 		bl	_ZN5daisy9AdcHandle5StartEv
+ 748              	.LVL59:
+ 100:Testbed.cpp   ****     hw.StartAudio(AudioCallback);
+ 749              		.loc 8 100 5 is_stmt 1 view .LVU213
+ 750              		.loc 8 100 18 is_stmt 0 view .LVU214
+ 751 00e4 0949     		ldr	r1, .L31+28
+ 752 00e6 0248     		ldr	r0, .L31
+ 753 00e8 FFF7FEFF 		bl	_ZN5daisy9DaisySeed10StartAudioEPFvPKfPfjE
+ 754              	.LVL60:
+ 755              	.L29:
+ 101:Testbed.cpp   **** 
+ 102:Testbed.cpp   **** 
+ 103:Testbed.cpp   ****     while(1) {}
+ 756              		.loc 8 103 5 is_stmt 1 discriminator 1 view .LVU215
+ 757              		.loc 8 103 5 discriminator 1 view .LVU216
+ 758              		.loc 8 103 5 discriminator 1 view .LVU217
+ 759              		.loc 8 103 5 discriminator 1 view .LVU218
+ 760 00ec FEE7     		b	.L29
+ 761              	.L32:
+ 762 00ee 00BF     		.align	2
+ 763              	.L31:
+ 764 00f0 00000000 		.word	.LANCHOR0
+ 765 00f4 00000000 		.word	.LANCHOR1
+ 766 00f8 0000C842 		.word	1120403456
+ 767 00fc 18000000 		.word	.LANCHOR0+24
+ 768 0100 00007A44 		.word	1148846080
+ 769 0104 00000000 		.word	.LANCHOR2
+ 770 0108 00005C44 		.word	1146880000
+ 771 010c 00000000 		.word	_ZL13AudioCallbackPKfPfj
+ 772              		.cfi_endproc
+ 773              	.LFE4419:
+ 775              		.section	.text.startup._GLOBAL__sub_I_button1,"ax",%progbits
+ 776              		.align	1
+ 777              		.p2align 2,,3
+ 778              		.syntax unified
+ 779              		.thumb
+ 780              		.thumb_func
+ 781              		.fpu fpv5-d16
+ 783              	_GLOBAL__sub_I_button1:
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 26
 
 
- 687 00c0 FEE7     		b	.L29
- 688              	.L32:
- 689 00c2 00BF     		.align	2
- 690              	.L31:
- 691 00c4 00000000 		.word	.LANCHOR0
- 692 00c8 00000000 		.word	.LANCHOR1
- 693 00cc 0000C842 		.word	1120403456
- 694 00d0 18000000 		.word	.LANCHOR0+24
- 695 00d4 00007A44 		.word	1148846080
- 696 00d8 00000000 		.word	.LANCHOR2
- 697 00dc 00005C44 		.word	1146880000
- 698 00e0 00000000 		.word	_ZL13AudioCallbackPKfPfj
- 699              		.cfi_endproc
- 700              	.LFE4419:
- 702              		.section	.text.startup._GLOBAL__sub_I_button1,"ax",%progbits
- 703              		.align	1
- 704              		.p2align 2,,3
- 705              		.syntax unified
- 706              		.thumb
- 707              		.thumb_func
- 708              		.fpu fpv5-d16
- 710              	_GLOBAL__sub_I_button1:
- 711              	.LFB4979:
-  92:Testbed.cpp   **** }
- 712              		.loc 8 92 1 view -0
- 713              		.cfi_startproc
- 714              		@ args = 0, pretend = 0, frame = 0
- 715              		@ frame_needed = 0, uses_anonymous_args = 0
- 716              	.LBB178:
- 717              	.LBI178:
- 718              		.loc 8 92 1 view .LVU199
- 719              	.LVL51:
- 720              	.LBB179:
- 721              	.LBB180:
- 722              	.LBI180:
+ 784              	.LFB4979:
+ 104:Testbed.cpp   **** }
+ 785              		.loc 8 104 1 view -0
+ 786              		.cfi_startproc
+ 787              		@ args = 0, pretend = 0, frame = 0
+ 788              		@ frame_needed = 0, uses_anonymous_args = 0
+ 789              	.LBB185:
+ 790              	.LBI185:
+ 791              		.loc 8 104 1 view .LVU220
+ 792              	.LVL61:
+ 793              	.LBB186:
+ 794              	.LBB187:
+ 795              	.LBI187:
   21:../../libDaisy/src/daisy_seed.h ****     ~DaisySeed() {}
- 723              		.loc 3 21 5 view .LVU200
- 724              	.LBB181:
- 725              	.LBB182:
- 726              	.LBI182:
- 727              		.file 9 "../../libDaisy/src/per/qspi.h"
+ 796              		.loc 3 21 5 view .LVU221
+ 797              	.LBB188:
+ 798              	.LBB189:
+ 799              	.LBI189:
+ 800              		.file 9 "../../libDaisy/src/per/qspi.h"
    1:../../libDaisy/src/per/qspi.h **** #ifndef DSY_QSPI
    2:../../libDaisy/src/per/qspi.h **** #define DSY_QSPI /**< Macro */
    3:../../libDaisy/src/per/qspi.h **** 
@@ -1438,9 +1536,6 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   14:../../libDaisy/src/per/qspi.h ****         ".qspiflash_data"))) /**< used for reading memory in memory_mapped mode. */
   15:../../libDaisy/src/per/qspi.h **** #define DSY_QSPI_BSS        \
   16:../../libDaisy/src/per/qspi.h ****     __attribute__((section( \
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 25
-
-
   17:../../libDaisy/src/per/qspi.h ****         ".qspiflash_bss"))) /**< used for reading memory in memory_mapped mode. */
   18:../../libDaisy/src/per/qspi.h **** 
   19:../../libDaisy/src/per/qspi.h **** namespace daisy
@@ -1463,6 +1558,9 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   36:../../libDaisy/src/per/qspi.h ****         ERR
   37:../../libDaisy/src/per/qspi.h ****     };
   38:../../libDaisy/src/per/qspi.h **** 
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 27
+
+
   39:../../libDaisy/src/per/qspi.h ****     /** Indicates the current status of the module. 
   40:../../libDaisy/src/per/qspi.h ****          *  Warnings are indicated by a leading W.
   41:../../libDaisy/src/per/qspi.h ****          *  Errors are indicated by a leading E and cause an immediate exit.
@@ -1498,9 +1596,6 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   71:../../libDaisy/src/per/qspi.h ****         possible in this mode. \n 
   72:../../libDaisy/src/per/qspi.h ****         Indirect Polling mode: Device driver enabled. 
   73:../../libDaisy/src/per/qspi.h ****         */
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 26
-
-
   74:../../libDaisy/src/per/qspi.h ****         enum Mode
   75:../../libDaisy/src/per/qspi.h ****         {
   76:../../libDaisy/src/per/qspi.h ****             MEMORY_MAPPED,    /**< & */
@@ -1523,6 +1618,9 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   93:../../libDaisy/src/per/qspi.h ****         Mode   mode;
   94:../../libDaisy/src/per/qspi.h ****     };
   95:../../libDaisy/src/per/qspi.h **** 
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 28
+
+
   96:../../libDaisy/src/per/qspi.h ****     /** 
   97:../../libDaisy/src/per/qspi.h ****         Initializes QSPI peripheral, and Resets, and prepares memory for access.
   98:../../libDaisy/src/per/qspi.h ****         \param config should be populated with the mode, device and pin_config before calling this 
@@ -1558,9 +1656,6 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
  128:../../libDaisy/src/per/qspi.h ****         \param size Buffer size
  129:../../libDaisy/src/per/qspi.h ****         \param buffer Buffer to write
  130:../../libDaisy/src/per/qspi.h ****         \return Result::OK or Result::ERR
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 27
-
-
  131:../../libDaisy/src/per/qspi.h ****         */
  132:../../libDaisy/src/per/qspi.h ****     Result Write(uint32_t address, uint32_t size, uint8_t* buffer);
  133:../../libDaisy/src/per/qspi.h **** 
@@ -1583,6 +1678,9 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
  150:../../libDaisy/src/per/qspi.h ****     Result EraseSector(uint32_t address);
  151:../../libDaisy/src/per/qspi.h **** 
  152:../../libDaisy/src/per/qspi.h ****     /** Returns the current class status. Useful for debugging.
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 29
+
+
  153:../../libDaisy/src/per/qspi.h ****      *  \returns Status
  154:../../libDaisy/src/per/qspi.h ****      */
  155:../../libDaisy/src/per/qspi.h ****     Status GetStatus();
@@ -1597,75 +1695,75 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
  164:../../libDaisy/src/per/qspi.h ****     void* GetData(uint32_t offset = 0);
  165:../../libDaisy/src/per/qspi.h **** 
  166:../../libDaisy/src/per/qspi.h ****     QSPIHandle() : pimpl_(nullptr) {}
- 728              		.loc 9 166 5 view .LVU201
- 729              	.LBE182:
- 730              	.LBE181:
- 731              	.LBE180:
- 732              	.LBE179:
- 733              	.LBE178:
- 734              		.loc 8 92 1 is_stmt 0 view .LVU202
- 735 0000 08B5     		push	{r3, lr}
- 736              		.cfi_def_cfa_offset 8
- 737              		.cfi_offset 3, -8
- 738              		.cfi_offset 14, -4
- 739              	.LBB206:
- 740              	.LBB204:
- 741              	.LBB200:
- 742              	.LBB198:
- 743              	.LBB187:
- 744              	.LBB183:
- 745              	.LBB184:
- 746              		.loc 9 166 34 view .LVU203
- 747 0002 0A48     		ldr	r0, .L35
- 748 0004 0023     		movs	r3, #0
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 28
-
-
- 749              	.LBE184:
- 750              	.LBE183:
- 751              	.LBE187:
- 752              	.LBE198:
- 753              	.LBE200:
+ 801              		.loc 9 166 5 view .LVU222
+ 802              	.LBE189:
+ 803              	.LBE188:
+ 804              	.LBE187:
+ 805              	.LBE186:
+ 806              	.LBE185:
+ 807              		.loc 8 104 1 is_stmt 0 view .LVU223
+ 808 0000 08B5     		push	{r3, lr}
+ 809              		.cfi_def_cfa_offset 8
+ 810              		.cfi_offset 3, -8
+ 811              		.cfi_offset 14, -4
+ 812              	.LBB213:
+ 813              	.LBB211:
+ 814              	.LBB207:
+ 815              	.LBB205:
+ 816              	.LBB194:
+ 817              	.LBB190:
+ 818              	.LBB191:
+ 819              		.loc 9 166 34 view .LVU224
+ 820 0002 0A48     		ldr	r0, .L35
+ 821 0004 0023     		movs	r3, #0
+ 822              	.LBE191:
+ 823              	.LBE190:
+ 824              	.LBE194:
+ 825              	.LBE205:
+ 826              	.LBE207:
    7:Testbed.cpp   **** static Oscillator osc;
- 754              		.loc 8 7 19 view .LVU204
- 755 0006 0A4A     		ldr	r2, .L35+4
- 756              	.LBB201:
- 757              	.LBB199:
- 758              	.LBB188:
- 759              	.LBB186:
- 760              	.LBB185:
- 761              		.loc 9 166 34 view .LVU205
- 762 0008 0360     		str	r3, [r0]
- 763              	.LVL52:
- 764              		.loc 9 166 34 view .LVU206
- 765              	.LBE185:
- 766              	.LBE186:
- 767              	.LBE188:
- 768              	.LBB189:
- 769              	.LBI189:
+ 827              		.loc 8 7 19 view .LVU225
+ 828 0006 0A4A     		ldr	r2, .L35+4
+ 829              	.LBB208:
+ 830              	.LBB206:
+ 831              	.LBB195:
+ 832              	.LBB193:
+ 833              	.LBB192:
+ 834              		.loc 9 166 34 view .LVU226
+ 835 0008 0360     		str	r3, [r0]
+ 836              	.LVL62:
+ 837              		.loc 9 166 34 view .LVU227
+ 838              	.LBE192:
+ 839              	.LBE193:
+ 840              	.LBE195:
+ 841              	.LBB196:
+ 842              	.LBI196:
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 30
+
+
   76:../../libDaisy/src/hid/audio.h ****     ~AudioHandle() {}
- 770              		.loc 7 76 5 is_stmt 1 view .LVU207
- 771              	.LBB190:
- 772              	.LBB191:
+ 843              		.loc 7 76 5 is_stmt 1 view .LVU228
+ 844              	.LBB197:
+ 845              	.LBB198:
   76:../../libDaisy/src/hid/audio.h ****     ~AudioHandle() {}
- 773              		.loc 7 76 35 is_stmt 0 view .LVU208
- 774 000a 4361     		str	r3, [r0, #20]
- 775              	.LVL53:
+ 846              		.loc 7 76 35 is_stmt 0 view .LVU229
+ 847 000a 4361     		str	r3, [r0, #20]
+ 848              	.LVL63:
   76:../../libDaisy/src/hid/audio.h ****     ~AudioHandle() {}
- 776              		.loc 7 76 35 view .LVU209
- 777              	.LBE191:
- 778              	.LBE190:
- 779              	.LBE189:
- 780              	.LBB192:
- 781              	.LBI192:
+ 849              		.loc 7 76 35 view .LVU230
+ 850              	.LBE198:
+ 851              	.LBE197:
+ 852              	.LBE196:
+ 853              	.LBB199:
+ 854              	.LBI199:
   92:../../libDaisy/src/per/adc.h ****     ~AdcHandle() {}
- 782              		.loc 6 92 5 is_stmt 1 view .LVU210
+ 855              		.loc 6 92 5 is_stmt 1 view .LVU231
   92:../../libDaisy/src/per/adc.h ****     ~AdcHandle() {}
- 783              		.loc 6 92 5 is_stmt 0 view .LVU211
- 784              	.LBE192:
- 785              	.LBB193:
- 786              	.LBI193:
- 787              		.file 10 "../../libDaisy/src/per/dac.h"
+ 856              		.loc 6 92 5 is_stmt 0 view .LVU232
+ 857              	.LBE199:
+ 858              	.LBB200:
+ 859              	.LBI200:
+ 860              		.file 10 "../../libDaisy/src/per/dac.h"
    1:../../libDaisy/src/per/dac.h **** #pragma once
    2:../../libDaisy/src/per/dac.h **** #ifndef DSY_DAC_H
    3:../../libDaisy/src/per/dac.h **** #define DSY_DAC_H
@@ -1678,9 +1776,6 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   10:../../libDaisy/src/per/dac.h ****  *  @ingroup per_analog
   11:../../libDaisy/src/per/dac.h ****  ** 
   12:../../libDaisy/src/per/dac.h ****  ** For now only Normal Mode is supported,
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 29
-
-
   13:../../libDaisy/src/per/dac.h ****  ** Sample and hold mode provides reduced power consumption, but requires a bit more setup.
   14:../../libDaisy/src/per/dac.h ****  **
   15:../../libDaisy/src/per/dac.h ****  ** For now connecting the DAC through other internal peripherals is also not supported.
@@ -1703,6 +1798,9 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   32:../../libDaisy/src/per/dac.h ****     enum class Channel
   33:../../libDaisy/src/per/dac.h ****     {
   34:../../libDaisy/src/per/dac.h ****         ONE,
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 31
+
+
   35:../../libDaisy/src/per/dac.h ****         TWO,
   36:../../libDaisy/src/per/dac.h ****         BOTH,
   37:../../libDaisy/src/per/dac.h ****     };
@@ -1738,9 +1836,6 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   67:../../libDaisy/src/per/dac.h ****     };
   68:../../libDaisy/src/per/dac.h **** 
   69:../../libDaisy/src/per/dac.h ****     /** Configuration structure for initializing the DAC structure. */
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 30
-
-
   70:../../libDaisy/src/per/dac.h ****     struct Config
   71:../../libDaisy/src/per/dac.h ****     {
   72:../../libDaisy/src/per/dac.h ****         /** Target Samplerate in Hz used to configure the internal 
@@ -1756,216 +1851,216 @@ ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 1
   82:../../libDaisy/src/per/dac.h ****     };
   83:../../libDaisy/src/per/dac.h **** 
   84:../../libDaisy/src/per/dac.h ****     DacHandle() : pimpl_(nullptr) {}
- 788              		.loc 10 84 5 is_stmt 1 view .LVU212
- 789              	.LBB194:
- 790              	.LBB195:
- 791              		.loc 10 84 33 is_stmt 0 view .LVU213
- 792 000c 0362     		str	r3, [r0, #32]
- 793              	.LVL54:
- 794              		.loc 10 84 33 view .LVU214
- 795              	.LBE195:
- 796              	.LBE194:
- 797              	.LBE193:
- 798              	.LBB196:
- 799              	.LBI196:
+ 861              		.loc 10 84 5 is_stmt 1 view .LVU233
+ 862              	.LBB201:
+ 863              	.LBB202:
+ 864              		.loc 10 84 33 is_stmt 0 view .LVU234
+ 865 000c 0362     		str	r3, [r0, #32]
+ 866              	.LVL64:
+ 867              		.loc 10 84 33 view .LVU235
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 32
+
+
+ 868              	.LBE202:
+ 869              	.LBE201:
+ 870              	.LBE200:
+ 871              	.LBB203:
+ 872              	.LBI203:
   40:../../libDaisy/src/hid/usb.h **** 
- 800              		.loc 5 40 5 is_stmt 1 view .LVU215
+ 873              		.loc 5 40 5 is_stmt 1 view .LVU236
   40:../../libDaisy/src/hid/usb.h **** 
- 801              		.loc 5 40 5 is_stmt 0 view .LVU216
- 802              	.LBE196:
- 803              	.LBB197:
- 804              	.LBI197:
+ 874              		.loc 5 40 5 is_stmt 0 view .LVU237
+ 875              	.LBE203:
+ 876              	.LBB204:
+ 877              	.LBI204:
   77:../../libDaisy/src/sys/system.h ****     ~System() {}
- 805              		.loc 4 77 5 is_stmt 1 view .LVU217
+ 878              		.loc 4 77 5 is_stmt 1 view .LVU238
   77:../../libDaisy/src/sys/system.h ****     ~System() {}
- 806              		.loc 4 77 5 is_stmt 0 view .LVU218
- 807              	.LBE197:
- 808              	.LBE199:
- 809              	.LBE201:
+ 879              		.loc 4 77 5 is_stmt 0 view .LVU239
+ 880              	.LBE204:
+ 881              	.LBE206:
+ 882              	.LBE208:
    7:Testbed.cpp   **** static Oscillator osc;
- 810              		.loc 8 7 19 view .LVU219
- 811 000e 0949     		ldr	r1, .L35+8
- 812 0010 FFF7FEFF 		bl	__aeabi_atexit
- 813              	.LVL55:
- 814              	.LBB202:
- 815              	.LBI202:
+ 883              		.loc 8 7 19 view .LVU240
+ 884 000e 0949     		ldr	r1, .L35+8
+ 885 0010 FFF7FEFF 		bl	__aeabi_atexit
+ 886              	.LVL65:
+ 887              	.LBB209:
+ 888              	.LBI209:
   15:../../DaisySP/Source/Synthesis/oscillator.h ****     ~Oscillator() {}
- 816              		.loc 1 15 5 is_stmt 1 view .LVU220
+ 889              		.loc 1 15 5 is_stmt 1 view .LVU241
   15:../../DaisySP/Source/Synthesis/oscillator.h ****     ~Oscillator() {}
- 817              		.loc 1 15 5 is_stmt 0 view .LVU221
- 818              	.LBE202:
+ 890              		.loc 1 15 5 is_stmt 0 view .LVU242
+ 891              	.LBE209:
    8:Testbed.cpp   **** Switch button1;
- 819              		.loc 8 8 19 view .LVU222
- 820 0014 064A     		ldr	r2, .L35+4
- 821 0016 0849     		ldr	r1, .L35+12
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 31
-
-
- 822 0018 0848     		ldr	r0, .L35+16
- 823 001a FFF7FEFF 		bl	__aeabi_atexit
- 824              	.LVL56:
- 825              	.LBB203:
- 826              	.LBI203:
+ 892              		.loc 8 8 19 view .LVU243
+ 893 0014 064A     		ldr	r2, .L35+4
+ 894 0016 0849     		ldr	r1, .L35+12
+ 895 0018 0848     		ldr	r0, .L35+16
+ 896 001a FFF7FEFF 		bl	__aeabi_atexit
+ 897              	.LVL66:
+ 898              	.LBB210:
+ 899              	.LBI210:
   41:../../libDaisy/src/hid/switch.h ****     ~Switch() {}
- 827              		.loc 2 41 5 is_stmt 1 view .LVU223
+ 900              		.loc 2 41 5 is_stmt 1 view .LVU244
   41:../../libDaisy/src/hid/switch.h ****     ~Switch() {}
- 828              		.loc 2 41 5 is_stmt 0 view .LVU224
- 829              	.LBE203:
+ 901              		.loc 2 41 5 is_stmt 0 view .LVU245
+ 902              	.LBE210:
    9:Testbed.cpp   **** 
- 830              		.loc 8 9 8 view .LVU225
- 831 001e 044A     		ldr	r2, .L35+4
- 832 0020 0749     		ldr	r1, .L35+20
- 833 0022 0848     		ldr	r0, .L35+24
- 834              	.LBE204:
- 835              	.LBE206:
- 836              		.loc 8 92 1 view .LVU226
- 837 0024 BDE80840 		pop	{r3, lr}
- 838              		.cfi_restore 14
- 839              		.cfi_restore 3
- 840              		.cfi_def_cfa_offset 0
- 841              	.LBB207:
- 842              	.LBB205:
+ 903              		.loc 8 9 8 view .LVU246
+ 904 001e 044A     		ldr	r2, .L35+4
+ 905 0020 0749     		ldr	r1, .L35+20
+ 906 0022 0848     		ldr	r0, .L35+24
+ 907              	.LBE211:
+ 908              	.LBE213:
+ 909              		.loc 8 104 1 view .LVU247
+ 910 0024 BDE80840 		pop	{r3, lr}
+ 911              		.cfi_restore 14
+ 912              		.cfi_restore 3
+ 913              		.cfi_def_cfa_offset 0
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 33
+
+
+ 914              	.LBB214:
+ 915              	.LBB212:
    9:Testbed.cpp   **** 
- 843              		.loc 8 9 8 view .LVU227
- 844 0028 FFF7FEBF 		b	__aeabi_atexit
- 845              	.LVL57:
- 846              	.L36:
- 847              		.align	2
- 848              	.L35:
- 849 002c 00000000 		.word	.LANCHOR0
- 850 0030 00000000 		.word	__dso_handle
- 851 0034 00000000 		.word	_ZN5daisy9DaisySeedD1Ev
- 852 0038 00000000 		.word	_ZN7daisysp10OscillatorD1Ev
- 853 003c 00000000 		.word	.LANCHOR1
- 854 0040 00000000 		.word	_ZN5daisy6SwitchD1Ev
- 855 0044 00000000 		.word	.LANCHOR2
- 856              	.LBE205:
- 857              	.LBE207:
- 858              		.cfi_endproc
- 859              	.LFE4979:
- 861              		.section	.init_array,"aw",%init_array
- 862              		.align	2
- 863 0000 00000000 		.word	_GLOBAL__sub_I_button1(target1)
- 864              		.global	wf1
- 865              		.global	button1
- 866              		.section	.bss._ZL2hw,"aw",%nobits
- 867              		.align	2
- 868              		.set	.LANCHOR0,. + 0
- 871              	_ZL2hw:
- 872 0000 00000000 		.space	60
- 872      00000000 
- 872      00000000 
- 872      00000000 
- 872      00000000 
- 873              		.section	.bss._ZL3osc,"aw",%nobits
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 32
+ 916              		.loc 8 9 8 view .LVU248
+ 917 0028 FFF7FEBF 		b	__aeabi_atexit
+ 918              	.LVL67:
+ 919              	.L36:
+ 920              		.align	2
+ 921              	.L35:
+ 922 002c 00000000 		.word	.LANCHOR0
+ 923 0030 00000000 		.word	__dso_handle
+ 924 0034 00000000 		.word	_ZN5daisy9DaisySeedD1Ev
+ 925 0038 00000000 		.word	_ZN7daisysp10OscillatorD1Ev
+ 926 003c 00000000 		.word	.LANCHOR1
+ 927 0040 00000000 		.word	_ZN5daisy6SwitchD1Ev
+ 928 0044 00000000 		.word	.LANCHOR2
+ 929              	.LBE212:
+ 930              	.LBE214:
+ 931              		.cfi_endproc
+ 932              	.LFE4979:
+ 934              		.section	.init_array,"aw",%init_array
+ 935              		.align	2
+ 936 0000 00000000 		.word	_GLOBAL__sub_I_button1(target1)
+ 937              		.global	wf1
+ 938              		.global	button1
+ 939              		.section	.bss._ZL2hw,"aw",%nobits
+ 940              		.align	2
+ 941              		.set	.LANCHOR0,. + 0
+ 944              	_ZL2hw:
+ 945 0000 00000000 		.space	60
+ 945      00000000 
+ 945      00000000 
+ 945      00000000 
+ 945      00000000 
+ 946              		.section	.bss._ZL3osc,"aw",%nobits
+ 947              		.align	2
+ 948              		.set	.LANCHOR1,. + 0
+ 951              	_ZL3osc:
+ 952 0000 00000000 		.space	40
+ 952      00000000 
+ 952      00000000 
+ 952      00000000 
+ 952      00000000 
+ 953              		.section	.bss.button1,"aw",%nobits
+ 954              		.align	2
+ 955              		.set	.LANCHOR2,. + 0
+ 958              	button1:
+ 959 0000 00000000 		.space	16
+ 959      00000000 
+ 959      00000000 
+ 959      00000000 
+ 960              		.section	.bss.wf1,"aw",%nobits
+ 961              		.align	2
+ 962              		.set	.LANCHOR3,. + 0
+ 965              	wf1:
+ 966 0000 00000000 		.space	4
+ 967              		.text
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 34
 
 
- 874              		.align	2
- 875              		.set	.LANCHOR1,. + 0
- 878              	_ZL3osc:
- 879 0000 00000000 		.space	40
- 879      00000000 
- 879      00000000 
- 879      00000000 
- 879      00000000 
- 880              		.section	.bss.button1,"aw",%nobits
- 881              		.align	2
- 882              		.set	.LANCHOR2,. + 0
- 885              	button1:
- 886 0000 00000000 		.space	16
- 886      00000000 
- 886      00000000 
- 886      00000000 
- 887              		.section	.bss.wf1,"aw",%nobits
- 888              		.align	2
- 889              		.set	.LANCHOR3,. + 0
- 892              	wf1:
- 893 0000 00000000 		.space	4
- 894              		.text
- 895              	.Letext0:
- 896              		.file 11 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\mach
- 897              		.file 12 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\sys\
- 898              		.file 13 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\stdi
- 899              		.file 14 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\lib\\gcc\\arm-none-eabi\\10.
- 900              		.file 15 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 901              		.file 16 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 902              		.file 17 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 903              		.file 18 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 904              		.file 19 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 905              		.file 20 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 906              		.file 21 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 907              		.file 22 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 908              		.file 23 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 909              		.file 24 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 910              		.file 25 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 911              		.file 26 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 912              		.file 27 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 913              		.file 28 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 914              		.file 29 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 915              		.file 30 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 916              		.file 31 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 917              		.file 32 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 918              		.file 33 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\sys\
- 919              		.file 34 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\sys\
- 920              		.file 35 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\sys\
- 921              		.file 36 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\math
- 922              		.file 37 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\stdl
- 923              		.file 38 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 924              		.file 39 "../../DaisySP/Source/Control/adenv.h"
- 925              		.file 40 "../../DaisySP/Source/Utility/dsp.h"
- 926              		.file 41 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\lib\\gcc\\arm-none-eabi\\10.
- 927              		.file 42 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\wcha
- 928              		.file 43 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\loca
- 929              		.file 44 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\stdi
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 33
-
-
- 930              		.file 45 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
- 931              		.file 46 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\stri
- 932              		.file 47 "../../libDaisy/src/daisy_core.h"
- 933              		.file 48 "../../libDaisy/src/per/tim.h"
- 934              		.file 49 "../../libDaisy/src/per/sai.h"
- 935              		.file 50 "../../libDaisy/src/util/wav_format.h"
- 936              		.file 51 "../../libDaisy/src/dev/max11300.h"
- 937              		.file 52 "../../libDaisy/src/per/gpio.h"
- 938              		.file 53 "../../libDaisy/src/dev/sdram.h"
- 939              		.file 54 "../../libDaisy/src/dev/sr_595.h"
- 940              		.file 55 "<built-in>"
-ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s 			page 34
+ 968              	.Letext0:
+ 969              		.file 11 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\mach
+ 970              		.file 12 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\sys\
+ 971              		.file 13 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\stdi
+ 972              		.file 14 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\lib\\gcc\\arm-none-eabi\\10.
+ 973              		.file 15 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 974              		.file 16 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 975              		.file 17 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 976              		.file 18 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 977              		.file 19 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 978              		.file 20 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 979              		.file 21 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 980              		.file 22 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 981              		.file 23 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 982              		.file 24 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 983              		.file 25 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 984              		.file 26 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 985              		.file 27 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 986              		.file 28 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 987              		.file 29 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 988              		.file 30 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 989              		.file 31 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 990              		.file 32 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 991              		.file 33 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\sys\
+ 992              		.file 34 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\sys\
+ 993              		.file 35 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\sys\
+ 994              		.file 36 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\math
+ 995              		.file 37 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\stdl
+ 996              		.file 38 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 997              		.file 39 "../../DaisySP/Source/Control/adenv.h"
+ 998              		.file 40 "../../DaisySP/Source/Utility/dsp.h"
+ 999              		.file 41 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\lib\\gcc\\arm-none-eabi\\10.
+ 1000              		.file 42 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\wcha
+ 1001              		.file 43 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\loca
+ 1002              		.file 44 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\stdi
+ 1003              		.file 45 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\c++\
+ 1004              		.file 46 "c:\\users\\ethan\\documents\\daisytoolchain-0.3.2\\windows\\arm-none-eabi\\include\\stri
+ 1005              		.file 47 "../../libDaisy/src/daisy_core.h"
+ 1006              		.file 48 "../../libDaisy/src/per/tim.h"
+ 1007              		.file 49 "../../libDaisy/src/per/sai.h"
+ 1008              		.file 50 "../../libDaisy/src/util/wav_format.h"
+ 1009              		.file 51 "../../libDaisy/src/dev/max11300.h"
+ 1010              		.file 52 "../../libDaisy/src/per/gpio.h"
+ 1011              		.file 53 "../../libDaisy/src/dev/sdram.h"
+ 1012              		.file 54 "../../libDaisy/src/dev/sr_595.h"
+ 1013              		.file 55 "<built-in>"
+ARM GAS  C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s 			page 35
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 Testbed.cpp
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:17     .text._ZN7daisysp10OscillatorD2Ev:00000000 $t
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:26     .text._ZN7daisysp10OscillatorD2Ev:00000000 _ZN7daisysp10OscillatorD2Ev
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:26     .text._ZN7daisysp10OscillatorD2Ev:00000000 _ZN7daisysp10OscillatorD1Ev
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:43     .text._ZN5daisy6SwitchD2Ev:00000000 $t
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:51     .text._ZN5daisy6SwitchD2Ev:00000000 _ZN5daisy6SwitchD2Ev
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:51     .text._ZN5daisy6SwitchD2Ev:00000000 _ZN5daisy6SwitchD1Ev
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:68     .text._ZN5daisy9DaisySeedD2Ev:00000000 $t
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:76     .text._ZN5daisy9DaisySeedD2Ev:00000000 _ZN5daisy9DaisySeedD2Ev
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:76     .text._ZN5daisy9DaisySeedD2Ev:00000000 _ZN5daisy9DaisySeedD1Ev
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:117    .text._ZL13AudioCallbackPKfPfj:00000000 $t
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:124    .text._ZL13AudioCallbackPKfPfj:00000000 _ZL13AudioCallbackPKfPfj
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:248    .text._ZL13AudioCallbackPKfPfj:0000006c $d
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:252    .text._ZL13AudioCallbackPKfPfj:00000070 $t
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:437    .text._ZL13AudioCallbackPKfPfj:000000d0 $d
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:448    .text.startup.main:00000000 $t
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:456    .text.startup.main:00000000 main
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:691    .text.startup.main:000000c4 $d
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:703    .text.startup._GLOBAL__sub_I_button1:00000000 $t
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:710    .text.startup._GLOBAL__sub_I_button1:00000000 _GLOBAL__sub_I_button1
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:849    .text.startup._GLOBAL__sub_I_button1:0000002c $d
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:862    .init_array:00000000 $d
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:892    .bss.wf1:00000000 wf1
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:885    .bss.button1:00000000 button1
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:867    .bss._ZL2hw:00000000 $d
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:871    .bss._ZL2hw:00000000 _ZL2hw
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:874    .bss._ZL3osc:00000000 $d
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:878    .bss._ZL3osc:00000000 _ZL3osc
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:881    .bss.button1:00000000 $d
-C:\Users\Ethan\AppData\Local\Temp\ccvTTnkl.s:888    .bss.wf1:00000000 $d
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:17     .text._ZN7daisysp10OscillatorD2Ev:00000000 $t
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:26     .text._ZN7daisysp10OscillatorD2Ev:00000000 _ZN7daisysp10OscillatorD2Ev
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:26     .text._ZN7daisysp10OscillatorD2Ev:00000000 _ZN7daisysp10OscillatorD1Ev
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:43     .text._ZN5daisy6SwitchD2Ev:00000000 $t
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:51     .text._ZN5daisy6SwitchD2Ev:00000000 _ZN5daisy6SwitchD2Ev
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:51     .text._ZN5daisy6SwitchD2Ev:00000000 _ZN5daisy6SwitchD1Ev
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:68     .text._ZN5daisy9DaisySeedD2Ev:00000000 $t
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:76     .text._ZN5daisy9DaisySeedD2Ev:00000000 _ZN5daisy9DaisySeedD2Ev
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:76     .text._ZN5daisy9DaisySeedD2Ev:00000000 _ZN5daisy9DaisySeedD1Ev
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:117    .text._ZL13AudioCallbackPKfPfj:00000000 $t
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:124    .text._ZL13AudioCallbackPKfPfj:00000000 _ZL13AudioCallbackPKfPfj
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:294    .text._ZL13AudioCallbackPKfPfj:00000090 $d
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:298    .text._ZL13AudioCallbackPKfPfj:00000094 $t
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:489    .text._ZL13AudioCallbackPKfPfj:000000f8 $d
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:499    .text.startup.main:00000000 $t
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:507    .text.startup.main:00000000 main
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:764    .text.startup.main:000000f0 $d
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:776    .text.startup._GLOBAL__sub_I_button1:00000000 $t
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:783    .text.startup._GLOBAL__sub_I_button1:00000000 _GLOBAL__sub_I_button1
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:922    .text.startup._GLOBAL__sub_I_button1:0000002c $d
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:935    .init_array:00000000 $d
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:965    .bss.wf1:00000000 wf1
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:958    .bss.button1:00000000 button1
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:940    .bss._ZL2hw:00000000 $d
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:944    .bss._ZL2hw:00000000 _ZL2hw
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:947    .bss._ZL3osc:00000000 $d
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:951    .bss._ZL3osc:00000000 _ZL3osc
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:954    .bss.button1:00000000 $d
+C:\Users\Ethan\AppData\Local\Temp\ccXDr5yn.s:961    .bss.wf1:00000000 $d
                            .group:00000000 _ZN7daisysp10OscillatorD5Ev
                            .group:00000000 _ZN5daisy6SwitchD5Ev
                            .group:00000000 _ZN5daisy9DaisySeedD5Ev
