@@ -6,7 +6,11 @@ using namespace daisy;
 
 static DaisySeed  hw;
 static Oscillator osc;
-Switch button1;
+static Switch button1;
+static Switch button2;
+static Switch dip[4];
+
+static GPIO disp[2];
 
 enum AdcChannel {
     pitchKnob = 0,
@@ -22,17 +26,29 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
                           size_t                                size)
 {
     float sig;
-
+    float octave;
     for(size_t i = 0; i < size; i += 2)
     {
+        //Get status of knobs and mute button, set frequency and amplitude
+        button2.Debounce();
+        dip[0].Debounce();
         float pKnob = hw.adc.GetFloat(pitchKnob);
-        float oKnob = hw.adc.GetFloat(octKnob) * 440.0f;
+        float oKnob = hw.adc.GetFloat(octKnob);
         float gKnob = hw.adc.GetFloat(gainKnob);
-        osc.SetFreq((pKnob * 440.0f) + oKnob);
-        osc.SetAmp(gKnob);
 
+        //Mod the octave knob from 1 to 5
+        octave = fmod((oKnob * 5.0f),5) + 1.0f;
+        osc.SetFreq((pKnob * 32.70f*(pow(2,octave))) + 32.70f*(pow(2,octave)));
+
+        //Dip 1 toggles mute functionality
+        if(button2.Pressed() ^ dip[0].Pressed()){
+            osc.SetAmp(0);
+        }else{
+            osc.SetAmp(gKnob);
+        }
+
+        //Wave Selector 
         button1.Debounce();
-        //osc.SetAmp(button1.Pressed());
         if(button1.FallingEdge()){
             if(wf1 < 3){
                 wf1++;
@@ -44,21 +60,27 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         switch(wf1){
             case 0:
                 osc.SetWaveform(osc.WAVE_SIN);
-                hw.SetLed(false);
+                disp[0].Write(false);
+                disp[1].Write(false);
                 break;
             case 1:
                 osc.SetWaveform(osc.WAVE_SAW);
-                hw.SetLed(true);
+                disp[0].Write(true);
+                disp[1].Write(false);
                 break;
             case 2:
                 osc.SetWaveform(osc.WAVE_SQUARE);
-                hw.SetLed(false);
+                disp[0].Write(false);
+                disp[1].Write(true);
                 break;
             case 3:
                 osc.SetWaveform(osc.WAVE_TRI);
-                hw.SetLed(true);
+                disp[0].Write(true);
+                disp[1].Write(true);
                 break;
         }
+
+
         sig = osc.Process();
 
         // left out
@@ -79,15 +101,26 @@ int main(void)
     sample_rate = hw.AudioSampleRate();
     osc.Init(sample_rate);
 
-    //knob
+    //LED Display
+    disp[0].Init(Pin(PORTD, 11),GPIO::Mode::OUTPUT); //Pin D26
+    disp[1].Init(Pin(PORTA, 0),GPIO::Mode::OUTPUT); //Pin D25
+
+    //knobs
     AdcChannelConfig adcConfig[NUM_ADC_CHANNELS];
     adcConfig[pitchKnob].InitSingle(hw.GetPin(21));
     adcConfig[octKnob].InitSingle(hw.GetPin(20));
     adcConfig[gainKnob].InitSingle(hw.GetPin(19));
     hw.adc.Init(adcConfig, NUM_ADC_CHANNELS);
 
-    //button
+    //buttons
     button1.Init(hw.GetPin(28),1000);
+    button2.Init(hw.GetPin(27),1000);
+
+    //DIPSwitch
+    dip[0].Init(hw.GetPin(24),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
+    dip[1].Init(hw.GetPin(23),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_NORMAL,Switch::Pull::PULL_UP);
+    dip[2].Init(hw.GetPin(22),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
+    dip[3].Init(hw.GetPin(18),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_NORMAL,Switch::Pull::PULL_UP);
 
     // Set parameters for oscillator
     osc.SetWaveform(osc.WAVE_SIN);
