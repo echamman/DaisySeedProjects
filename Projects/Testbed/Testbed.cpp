@@ -8,7 +8,10 @@ static DaisySeed  hw;
 static Oscillator osc;
 static Switch button1;
 static Switch button2;
-static Switch dip[4];
+static Switch dip[4];  
+
+static AdEnv env;
+static Metro tick;
 
 static GPIO disp[2];
 
@@ -32,19 +35,23 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         //Get status of knobs and mute button, set frequency and amplitude
         button2.Debounce();
         dip[0].Debounce();
+        dip[1].Debounce();
+        dip[2].Debounce();
+        dip[3].Debounce();
+
         float pKnob = hw.adc.GetFloat(pitchKnob);
         float oKnob = hw.adc.GetFloat(octKnob);
         float gKnob = hw.adc.GetFloat(gainKnob);
 
-        //Mod the octave knob from 1 to 5
-        octave = fmod((oKnob * 5.0f),5) + 1.0f;
-        osc.SetFreq((pKnob * 32.70f*(pow(2,octave))) + 32.70f*(pow(2,octave)));
-
-        //Dip 1 toggles mute functionality
-        if(button2.Pressed() ^ dip[0].Pressed()){
-            osc.SetAmp(0);
+        //DIP 2 toggles freq control and envelope control
+        if(!dip[1].Pressed()){
+            //Mod the octave knob from 1 to 5
+            octave = fmod((oKnob * 5.0f),5) + 1.0f;
+            osc.SetFreq((pKnob * 32.70f*(pow(2,octave))) + 32.70f*(pow(2,octave)));
         }else{
-            osc.SetAmp(gKnob);
+            //Update envelope attack and decay
+            env.SetTime(ADENV_SEG_ATTACK,pKnob+0.01);
+            env.SetTime(ADENV_SEG_DECAY,oKnob+0.01);
         }
 
         //Wave Selector 
@@ -80,7 +87,27 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
                 break;
         }
 
-
+        //Dip 1 toggles mute functionality, DIP 3 toggles whether using envelope
+        if(!dip[2].Pressed()){
+            if(button2.Pressed() ^ dip[0].Pressed()){
+                osc.SetAmp(0);
+            }else{
+                osc.SetAmp(gKnob);
+            }
+        }else{
+            //Dip 4 will add an auto trigger
+            if(dip[3].Pressed()){
+                tick.SetFreq(gKnob*5.0f);
+                if(tick.Process()){
+                    env.Trigger();
+                }
+            }
+            if(button2.RisingEdge()){
+                env.Trigger();
+            }
+            osc.SetAmp(env.Process());
+        }
+        
         sig = osc.Process();
 
         // left out
@@ -100,6 +127,15 @@ int main(void)
     hw.SetAudioBlockSize(4);
     sample_rate = hw.AudioSampleRate();
     osc.Init(sample_rate);
+
+    //Initialize Envelope and Metro
+    env.Init(sample_rate);
+    env.SetTime(ADENV_SEG_ATTACK,0.01);
+    env.SetTime(ADENV_SEG_DECAY,0.5);
+    env.SetMin(0.0);
+    env.SetMax(1.0);
+    env.SetCurve(0); // linear
+    tick.Init(1.0f, sample_rate);
 
     //LED Display
     disp[0].Init(Pin(PORTD, 11),GPIO::Mode::OUTPUT); //Pin D26
