@@ -13,7 +13,7 @@ static Switch dip[4];
 static AdEnv env;
 static Metro tick;
 
-static GPIO disp[2];
+static GPIO disp[4];
 
 enum AdcChannel {
     pitchKnob = 0,
@@ -22,7 +22,15 @@ enum AdcChannel {
     NUM_ADC_CHANNELS
 };
 
+enum menu {
+    basic = 0,
+    fx,
+    NUM_MENUS
+};
+
 int wf1 = 0;
+int fCount = 0;
+int menuScreen = basic;
 
 static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
                           AudioHandle::InterleavingOutputBuffer out,
@@ -30,84 +38,108 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 {
     float sig;
     float octave;
+    bool menuChange = false;
+
     for(size_t i = 0; i < size; i += 2)
     {
-        //Get status of knobs and mute button, set frequency and amplitude
+        //Debounce buttons together
+        button1.Debounce();
         button2.Debounce();
         dip[0].Debounce();
         dip[1].Debounce();
         dip[2].Debounce();
         dip[3].Debounce();
 
-        float pKnob = hw.adc.GetFloat(pitchKnob);
-        float oKnob = hw.adc.GetFloat(octKnob);
-        float gKnob = hw.adc.GetFloat(gainKnob);
+        //Get status of knobs and mute button, set frequency and amplitude
+        float knob1 = hw.adc.GetFloat(pitchKnob);
+        float knob2 = hw.adc.GetFloat(octKnob);
+        float knob3 = hw.adc.GetFloat(gainKnob);
 
-        //DIP 2 toggles freq control and envelope control
-        if(!dip[1].Pressed()){
-            //Mod the octave knob from 1 to 5
-            octave = fmod((oKnob * 5.0f),5) + 1.0f;
-            osc.SetFreq((pKnob * 32.70f*(pow(2,octave))) + 32.70f*(pow(2,octave)));
-        }else{
-            //Update envelope attack and decay
-            env.SetTime(ADENV_SEG_ATTACK,pKnob+0.01);
-            env.SetTime(ADENV_SEG_DECAY,oKnob+0.01);
-        }
-
-        //Wave Selector 
-        button1.Debounce();
-        if(button1.FallingEdge()){
-            if(wf1 < 3){
-                wf1++;
-            }else{
-                wf1 = 0;
-            }
-        }
-
-        switch(wf1){
-            case 0:
-                osc.SetWaveform(osc.WAVE_SIN);
-                disp[0].Write(false);
-                disp[1].Write(false);
-                break;
-            case 1:
-                osc.SetWaveform(osc.WAVE_SAW);
-                disp[0].Write(true);
-                disp[1].Write(false);
-                break;
-            case 2:
-                osc.SetWaveform(osc.WAVE_SQUARE);
-                disp[0].Write(false);
-                disp[1].Write(true);
-                break;
-            case 3:
-                osc.SetWaveform(osc.WAVE_TRI);
-                disp[0].Write(true);
-                disp[1].Write(true);
-                break;
-        }
-
-        //Dip 1 toggles mute functionality, DIP 3 toggles whether using envelope
-        if(!dip[2].Pressed()){
-            if(button2.Pressed() ^ dip[0].Pressed()){
-                osc.SetAmp(0);
-            }else{
-                osc.SetAmp(gKnob);
+        if(button1.TimeHeldMs() > 800.0f){
+            if(!menuChange){
+                menuScreen = (menuScreen + 1) % NUM_MENUS;
+                menuChange = true;
             }
         }else{
-            //Dip 4 will add an auto trigger
-            if(dip[3].Pressed()){
-                tick.SetFreq(gKnob*5.0f);
-                if(tick.Process()){
-                    env.Trigger();
+            menuChange = false;
+        }
+
+        if(menuScreen == basic){
+            
+            //Display menu select bits
+            disp[2].Write(false);
+            disp[3].Write(false);
+            
+            //DIP 2 toggles freq control and envelope control
+            if(!dip[1].Pressed()){
+                //Mod the octave knob from 1 to 5
+                octave = fmod((knob2 * 5.0f),5) + 1.0f;
+                osc.SetFreq((knob1 * 32.70f*(pow(2,octave))) + 32.70f*(pow(2,octave)));
+            }else{
+                //Update envelope attack and decay
+                env.SetTime(ADENV_SEG_ATTACK,knob1+0.01);
+                env.SetTime(ADENV_SEG_DECAY,knob2+0.01);
+            }
+
+            //Wave Selector 
+            if(button1.FallingEdge() && !menuChange){
+                if(wf1 < 3){
+                    wf1++;
+                }else{
+                    wf1 = 0;
                 }
             }
-            if(button2.RisingEdge()){
-                env.Trigger();
+
+            switch(wf1){
+                case 0:
+                    osc.SetWaveform(osc.WAVE_SIN);
+                    disp[0].Write(false);
+                    disp[1].Write(false);
+                    break;
+                case 1:
+                    osc.SetWaveform(osc.WAVE_SAW);
+                    disp[0].Write(true);
+                    disp[1].Write(false);
+                    break;
+                case 2:
+                    osc.SetWaveform(osc.WAVE_SQUARE);
+                    disp[0].Write(false);
+                    disp[1].Write(true);
+                    break;
+                case 3:
+                    osc.SetWaveform(osc.WAVE_TRI);
+                    disp[0].Write(true);
+                    disp[1].Write(true);
+                    break;
             }
-            osc.SetAmp(env.Process());
+
+            //Dip 1 toggles mute functionality, DIP 3 toggles whether using envelope
+            if(!dip[2].Pressed()){
+                if(button2.Pressed() ^ dip[0].Pressed()){
+                    osc.SetAmp(0);
+                }else{
+                    osc.SetAmp(knob3);
+                }
+            }else{
+                //Dip 4 will add an auto trigger
+                if(dip[3].Pressed()){
+                    tick.SetFreq(knob3*5.0f);
+                    if(tick.Process()){
+                        env.Trigger();
+                        hw.SetLed((fCount++)%2);
+                    }
+                }
+                if(button2.RisingEdge()){
+                    env.Trigger();
+                }
+                osc.SetAmp(env.Process());
+            }
+        }else if(menuScreen == fx){
+            //Display menu select bits
+            disp[2].Write(false);
+            disp[3].Write(true);
         }
-        
+
         sig = osc.Process();
 
         // left out
@@ -140,6 +172,8 @@ int main(void)
     //LED Display
     disp[0].Init(Pin(PORTD, 11),GPIO::Mode::OUTPUT); //Pin D26
     disp[1].Init(Pin(PORTA, 0),GPIO::Mode::OUTPUT); //Pin D25
+    disp[2].Init(Pin(PORTB, 1),GPIO::Mode::OUTPUT); //Pin D17
+    disp[3].Init(Pin(PORTA, 3),GPIO::Mode::OUTPUT); //Pin D16
 
     //knobs
     AdcChannelConfig adcConfig[NUM_ADC_CHANNELS];
