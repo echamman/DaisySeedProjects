@@ -31,6 +31,8 @@ enum menu {
 int wf1 = 0;
 int fCount = 0;
 int menuScreen = basic;
+bool menuChange = false;
+float timeReleased = 0.0f;
 
 static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
                           AudioHandle::InterleavingOutputBuffer out,
@@ -38,7 +40,7 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 {
     float sig;
     float octave;
-    bool menuChange = false;
+
 
     for(size_t i = 0; i < size; i += 2)
     {
@@ -55,15 +57,18 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         float knob2 = hw.adc.GetFloat(octKnob);
         float knob3 = hw.adc.GetFloat(gainKnob);
 
+        //Count 0.8seconds hold on button1 to change the menu. Wait 200ms after releasing to allow button to resume function
         if(button1.TimeHeldMs() > 800.0f){
             if(!menuChange){
                 menuScreen = (menuScreen + 1) % NUM_MENUS;
                 menuChange = true;
             }
-        }else{
+            timeReleased = System::GetNow();
+        }else if(System::GetNow() > timeReleased + 200.0f){
             menuChange = false;
         }
 
+    
         if(menuScreen == basic){
             
             //Display menu select bits
@@ -136,8 +141,8 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
             }
         }else if(menuScreen == fx){
             //Display menu select bits
-            disp[2].Write(false);
-            disp[3].Write(true);
+            disp[2].Write(true);
+            disp[3].Write(false);
         }
 
         sig = osc.Process();
