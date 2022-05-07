@@ -55,12 +55,13 @@ int main(void)
 {
 
     //Declarations for while loop
-    float new_oct, octave;
+    float newOct, octave, currNote = 0;
     int wf1 = 0;
     float fCount = 0;
     int menuScreen = basic;
     bool menuChange = false;
     float timeReleased = 0.0f;
+    bool gateRisingEdge = false;
 
     // initialize seed hardware and oscillator daisysp module
     float sample_rate;
@@ -127,8 +128,7 @@ int main(void)
     float K4;
     float K5;
     float cvPitch;
-
-
+    float cvGate;
 
     while(1) {
         //Debounce buttons together
@@ -146,6 +146,7 @@ int main(void)
         K4 = 1.0f - hw.adc.GetFloat(Knob4);
         K5 = 1.0f - hw.adc.GetFloat(Knob5);
         cvPitch = hw.adc.GetFloat(CVIN);
+        cvGate = hw.adc.GetFloat(CVGATE);
 
         //Count 0.8 seconds hold on button1 to change the menu. Wait 200ms after releasing to allow button to resume function
         if(button1.TimeHeldMs() > 800.0f){
@@ -165,18 +166,13 @@ int main(void)
             disp[2].Write(false);
             disp[3].Write(false);
             
-            //DIP 2 toggles freq control and envelope control
-            if(!dip[1].Pressed()){
-                //Mod the octave knob from 1 to 5
-                //octave = fmod((K2 * 5.0f),5) + 1.0f;
-                //osc.SetFreq((K1 * 32.70f*(pow(2,octave))) + 32.70f*(pow(2,octave)));
-                octave = cvPitch * 5.0f + 1.0f;
-                osc.SetFreq(32.70f*(pow(2,octave)));
-            }else{
-                //Update envelope attack and decay
-                env.SetTime(ADENV_SEG_ATTACK,K1*5.0f+0.01);
-                env.SetTime(ADENV_SEG_DECAY,K2*5.0f+0.01);
-            }
+            //Translate CV In to pitch
+            octave = cvPitch * 5.0f + 1.0f;
+            osc.SetFreq(16.35f*(pow(2,octave)));
+
+            //Update envelope attack and decay
+            env.SetTime(ADENV_SEG_ATTACK,K0*5.0f+0.01);
+            env.SetTime(ADENV_SEG_DECAY,K1*5.0f+0.01);
 
             //Wave Selector 
             if(button1.FallingEdge() && !menuChange){
@@ -210,28 +206,32 @@ int main(void)
                     break;
             }
 
-            //Dip 1 toggles mute functionality, DIP 3 toggles whether using envelope
-            if(!dip[2].Pressed()){
-                if(button2.Pressed() ^ dip[0].Pressed()){
-                    osc.SetAmp(0);
-                }else{
-                    osc.SetAmp(100);
-                }
-            }else{
-                //Dip 4 will add an auto trigger
-                if(dip[3].Pressed()){
-                    tick.SetFreq(K3+0.2f);
-                    if(tick.Process()){
-                        env.Trigger();
-                        hw.SetLed(true);
-                        fCount = System::GetNow();
-                    }
-                }
-                if(button2.RisingEdge()){
+            //Dip 4 will add an auto trigger
+            if(dip[3].Pressed()){
+                tick.SetFreq(K3+0.2f);
+                if(tick.Process()){
                     env.Trigger();
+                    hw.SetLed(true);
+                    fCount = System::GetNow();
                 }
-                osc.SetAmp(env.Process());
             }
+
+            if(cvGate < 0.1f && !gateRisingEdge){
+                env.Trigger();
+                currNote = octave;
+                gateRisingEdge = true;
+            }else if(cvGate < 0.1f && ((currNote - octave) > 0.1)){
+                env.Trigger();
+                currNote = octave;
+            }else if(cvGate > 0.1f){
+                gateRisingEdge = false;
+            }
+            
+            if(button2.RisingEdge()){
+                
+            }
+            osc.SetAmp(env.Process());
+
         }else if(menuScreen == fx){
             //Display menu select bits
             disp[2].Write(true);
