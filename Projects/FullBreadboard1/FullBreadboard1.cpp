@@ -8,7 +8,7 @@ static DaisySeed  hw;
 static Oscillator osc;
 static Switch button1;
 static Switch button2;
-static Switch dip[4];  
+static Switch dip[6];  
 
 static AdEnv env;
 static Metro tick;
@@ -16,10 +16,14 @@ static Metro tick;
 static GPIO disp[4];
 
 enum AdcChannel {
-    pitchKnob = 0,
-    octKnob,
-    gainKnob,
-    cvIn,
+    Knob0 = 0,
+    Knob1,
+    Knob2,
+    Knob3,
+    Knob4,
+    Knob5,
+    CVIN,
+    CVGATE,
     NUM_ADC_CHANNELS
 };
 
@@ -28,12 +32,6 @@ enum menu {
     fx,
     NUM_MENUS
 };
-
-int wf1 = 0;
-float fCount = 0;
-int menuScreen = basic;
-bool menuChange = false;
-float timeReleased = 0.0f;
 
 static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
                           AudioHandle::InterleavingOutputBuffer out,
@@ -55,6 +53,15 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 
 int main(void)
 {
+
+    //Declarations for while loop
+    float new_oct, octave;
+    int wf1 = 0;
+    float fCount = 0;
+    int menuScreen = basic;
+    bool menuChange = false;
+    float timeReleased = 0.0f;
+
     // initialize seed hardware and oscillator daisysp module
     float sample_rate;
     hw.Configure();
@@ -73,34 +80,38 @@ int main(void)
     tick.Init(1.0f, sample_rate);
 
     //LED Display
-    disp[0].Init(Pin(PORTD, 11),GPIO::Mode::OUTPUT); //Pin D26
-    disp[1].Init(Pin(PORTA, 0),GPIO::Mode::OUTPUT); //Pin D25
-    disp[2].Init(Pin(PORTB, 6),GPIO::Mode::OUTPUT); //Pin D17
-    disp[3].Init(Pin(PORTB, 7),GPIO::Mode::OUTPUT); //Pin D16
+    disp[0].Init(Pin(PORTC, 8),GPIO::Mode::OUTPUT); //Pin D4
+    disp[1].Init(Pin(PORTC, 9),GPIO::Mode::OUTPUT); //Pin D3
+    disp[2].Init(Pin(PORTB, 6),GPIO::Mode::OUTPUT); //Pin D6
+    disp[3].Init(Pin(PORTD, 2),GPIO::Mode::OUTPUT); //Pin D5
 
-    //knobs
+    //Analog Inputs
     AdcChannelConfig adcConfig[NUM_ADC_CHANNELS];
-    adcConfig[pitchKnob].InitSingle(hw.GetPin(21));
-    adcConfig[octKnob].InitSingle(hw.GetPin(20));
-    adcConfig[gainKnob].InitSingle(hw.GetPin(19));
-
-    //CV In
-    adcConfig[cvIn].InitSingle(hw.GetPin(17));
+    adcConfig[Knob0].InitSingle(hw.GetPin(25));
+    adcConfig[Knob1].InitSingle(hw.GetPin(24));
+    adcConfig[Knob2].InitSingle(hw.GetPin(23));
+    adcConfig[Knob3].InitSingle(hw.GetPin(22));
+    adcConfig[Knob4].InitSingle(hw.GetPin(21));
+    adcConfig[Knob5].InitSingle(hw.GetPin(20));
+    adcConfig[CVIN].InitSingle(hw.GetPin(15));
+    adcConfig[CVGATE].InitSingle(hw.GetPin(16));
     hw.adc.Init(adcConfig, NUM_ADC_CHANNELS);
 
     //buttons
-    button1.Init(hw.GetPin(28),1000);
-    button2.Init(hw.GetPin(27),1000);
+    button1.Init(hw.GetPin(7),1000); //Green button
+    button2.Init(hw.GetPin(8),1000); //Purple button
 
     //DIPSwitch
-    dip[0].Init(hw.GetPin(24),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
-    dip[1].Init(hw.GetPin(23),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_NORMAL,Switch::Pull::PULL_UP);
-    dip[2].Init(hw.GetPin(22),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
-    dip[3].Init(hw.GetPin(18),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_NORMAL,Switch::Pull::PULL_UP);
+    dip[0].Init(hw.GetPin(13),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
+    dip[1].Init(hw.GetPin(12),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
+    dip[2].Init(hw.GetPin(14),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
+    dip[3].Init(hw.GetPin(11),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
+    dip[4].Init(hw.GetPin(10),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
+    dip[5].Init(hw.GetPin(9),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
 
     // Set parameters for oscillator
     osc.SetWaveform(osc.WAVE_SIN);
-    osc.SetFreq(880);
+    osc.SetFreq(440);
     osc.SetAmp(0.25);
 
 
@@ -108,28 +119,35 @@ int main(void)
     hw.adc.Start();
     hw.StartAudio(AudioCallback);
 
-    float octave;
-    float knob1;
-    float knob2;
-    float knob3;
+    //Analog input vars
+    float K0;
+    float K1;
+    float K2;
+    float K3;
+    float K4;
+    float K5;
     float cvPitch;
+
+
 
     while(1) {
         //Debounce buttons together
         button1.Debounce();
         button2.Debounce();
-        dip[0].Debounce();
-        dip[1].Debounce();
-        dip[2].Debounce();
-        dip[3].Debounce();
+        for(int i=0; i<6; i++){
+            dip[i].Debounce();
+        }
     
-        //Get status of knobs and mute button, set frequency and amplitude
-        knob1 = hw.adc.GetFloat(pitchKnob);
-        knob2 = hw.adc.GetFloat(octKnob);
-        knob3 = hw.adc.GetFloat(gainKnob);
-        cvPitch = hw.adc.GetFloat(cvIn);
+        //Get Analog input readings
+        K0 = 1.0f - hw.adc.GetFloat(Knob0);
+        K1 = 1.0f - hw.adc.GetFloat(Knob1);
+        K2 = 1.0f - hw.adc.GetFloat(Knob2);
+        K3 = 1.0f - hw.adc.GetFloat(Knob3);
+        K4 = 1.0f - hw.adc.GetFloat(Knob4);
+        K5 = 1.0f - hw.adc.GetFloat(Knob5);
+        cvPitch = hw.adc.GetFloat(CVIN);
 
-        //Count 0.8seconds hold on button1 to change the menu. Wait 200ms after releasing to allow button to resume function
+        //Count 0.8 seconds hold on button1 to change the menu. Wait 200ms after releasing to allow button to resume function
         if(button1.TimeHeldMs() > 800.0f){
             if(!menuChange){
                 menuScreen = (menuScreen + 1) % NUM_MENUS;
@@ -150,13 +168,14 @@ int main(void)
             //DIP 2 toggles freq control and envelope control
             if(!dip[1].Pressed()){
                 //Mod the octave knob from 1 to 5
-                octave = fmod((knob2 * 5.0f),5) + 1.0f;
-                osc.SetFreq((knob1 * 32.70f*(pow(2,octave))) + 32.70f*(pow(2,octave)));
-                //osc.SetFreq(cvPitch);
+                //octave = fmod((K2 * 5.0f),5) + 1.0f;
+                //osc.SetFreq((K1 * 32.70f*(pow(2,octave))) + 32.70f*(pow(2,octave)));
+                octave = cvPitch * 5.0f + 1.0f;
+                osc.SetFreq(32.70f*(pow(2,octave)));
             }else{
                 //Update envelope attack and decay
-                env.SetTime(ADENV_SEG_ATTACK,knob1*5.0f+0.01);
-                env.SetTime(ADENV_SEG_DECAY,knob2*5.0f+0.01);
+                env.SetTime(ADENV_SEG_ATTACK,K1*5.0f+0.01);
+                env.SetTime(ADENV_SEG_DECAY,K2*5.0f+0.01);
             }
 
             //Wave Selector 
@@ -201,7 +220,7 @@ int main(void)
             }else{
                 //Dip 4 will add an auto trigger
                 if(dip[3].Pressed()){
-                    tick.SetFreq(knob3+0.2f);
+                    tick.SetFreq(K3+0.2f);
                     if(tick.Process()){
                         env.Trigger();
                         hw.SetLed(true);
