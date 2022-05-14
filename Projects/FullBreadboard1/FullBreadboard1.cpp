@@ -1,8 +1,14 @@
+#include <stdio.h>
+#include <string.h>
 #include "daisysp.h"
 #include "daisy_seed.h"
+#include "dev/oled_ssd130x.h"
 
 using namespace daisysp;
 using namespace daisy;
+using MyOledDisplay = OledDisplay<SSD130xI2c128x64Driver>;
+
+MyOledDisplay display;
 
 static DaisySeed  hw;
 static Oscillator osc;
@@ -53,6 +59,16 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 
 int main(void)
 {
+    /** Configure the Display */
+    MyOledDisplay::Config disp_cfg;
+    disp_cfg.driver_config.transport_config.i2c_config.pin_config.sda = hw.GetPin(12);
+    disp_cfg.driver_config.transport_config.i2c_config.pin_config.scl = hw.GetPin(11);
+    /** And Initialize */
+    display.Init(disp_cfg);
+
+    uint8_t message_idx;
+    message_idx = 0;
+    char strbuff[128];
 
     //Declarations for while loop
     float newOct, octave, currNote = 0;
@@ -104,11 +120,11 @@ int main(void)
 
     //DIPSwitch
     dip[0].Init(hw.GetPin(13),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
-    dip[1].Init(hw.GetPin(12),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
+    dip[1].Init(hw.GetPin(10),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
     dip[2].Init(hw.GetPin(14),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
-    dip[3].Init(hw.GetPin(11),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
-    dip[4].Init(hw.GetPin(10),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
-    dip[5].Init(hw.GetPin(9),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
+    dip[3].Init(hw.GetPin(9),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
+    dip[4].Init(hw.GetPin(1),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
+    dip[5].Init(hw.GetPin(2),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
 
     // Set parameters for oscillator
     osc.SetWaveform(osc.WAVE_SIN);
@@ -242,5 +258,22 @@ int main(void)
         if(dip[3].Pressed() && System::GetNow() > fCount + 100.0f){
             hw.SetLed(false);
         }
+
+        //Print message to display
+        System::Delay(500);
+        switch(message_idx)
+        {
+            case 0: sprintf(strbuff, "Testing. . ."); break;
+            case 1: sprintf(strbuff, "Daisy. . ."); break;
+            case 2: sprintf(strbuff, "1. . ."); break;
+            case 3: sprintf(strbuff, "2. . ."); break;
+            case 4: sprintf(strbuff, "3. . ."); break;
+            default: break;
+        }
+        message_idx = (message_idx + 1) % 5;
+        display.Fill(true);
+        display.SetCursor(0, 0);
+        display.WriteString(strbuff, Font_11x18, false);
+        display.Update();
     }
 }
