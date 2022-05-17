@@ -17,7 +17,6 @@ static DaisySeed  hw;
 static Oscillator osc;
 static Switch button1;
 static Switch button2;
-static Switch dip[6];  
 
 static AdEnv env;
 static Metro tick;
@@ -37,7 +36,8 @@ enum AdcChannel {
 };
 
 enum menu {
-    basic = 0,
+    wave = 0,
+    envelope,
     fx,
     NUM_MENUS
 };
@@ -64,7 +64,7 @@ int main(void)
 {
 
     //Allow the OLED to start up
-    System::Delay(1000);
+    //System::Delay(1000);
 
     /** Configure the Display */
     MyOledDisplay::Config disp_cfg;
@@ -72,19 +72,24 @@ int main(void)
     disp_cfg.driver_config.transport_config.i2c_config.pin_config.scl = hw.GetPin(11);
     /** And Initialize */
     display.Init(disp_cfg);
-
-    uint8_t message_idx;
-    message_idx = 0;
     char strbuff[128];
 
     //Declarations for while loop
-    float newOct, octave, currNote = 0;
+    float newOct, note, currNote = 0;
     int wf1 = 0;
     float fCount = 0;
-    int menuScreen = basic;
+    int menuScreen = wave, oldmenu = wave;
     bool menuChange = false;
     float timeReleased = 0.0f;
     bool gateRisingEdge = false;
+
+    //Menu Variables
+    bool k1lock = false, k2lock=false;
+    int offset = 0;
+    float attack, newAttack;
+    float decay, newDecay;
+    float reverb, newReverb;
+    float delay, newDelay;
 
     // initialize seed hardware and oscillator daisysp module
     float sample_rate;
@@ -108,7 +113,7 @@ int main(void)
     disp[1].Init(Pin(PORTC, 9),GPIO::Mode::OUTPUT); //Pin D3
     disp[2].Init(Pin(PORTB, 6),GPIO::Mode::OUTPUT); //Pin D6
     disp[3].Init(Pin(PORTD, 2),GPIO::Mode::OUTPUT); //Pin D5
-    string dLines[3]; //Create a 2D Array of strings for the OLED display
+    string dLines[5]; //Create an Array of strings for the OLED display
 
 
     //Analog Inputs
@@ -126,14 +131,6 @@ int main(void)
     //buttons
     button1.Init(hw.GetPin(7),1000); //Green button
     button2.Init(hw.GetPin(8),1000); //Purple button
-
-    //DIPSwitch
-    dip[0].Init(hw.GetPin(13),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
-    dip[1].Init(hw.GetPin(10),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
-    dip[2].Init(hw.GetPin(14),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
-    dip[3].Init(hw.GetPin(9),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
-    dip[4].Init(hw.GetPin(1),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
-    dip[5].Init(hw.GetPin(2),1000,Switch::Type::TYPE_TOGGLE,Switch::Polarity::POLARITY_INVERTED,Switch::Pull::PULL_UP);
 
     // Set parameters for oscillator
     osc.SetWaveform(osc.WAVE_SIN);
@@ -159,9 +156,6 @@ int main(void)
         //Debounce buttons together
         button1.Debounce();
         button2.Debounce();
-        for(int i=0; i<6; i++){
-            dip[i].Debounce();
-        }
     
         //Get Analog input readings
         K0 = 1.0f - hw.adc.GetFloat(Knob0);
@@ -173,34 +167,25 @@ int main(void)
         cvPitch = hw.adc.GetFloat(CVIN);
         cvGate = hw.adc.GetFloat(CVGATE);
 
-        //Count 0.8 seconds hold on button1 to change the menu. Wait 200ms after releasing to allow button to resume function
-        if(button1.TimeHeldMs() > 800.0f){
-            if(!menuChange){
-                menuScreen = (menuScreen + 1) % NUM_MENUS;
-                menuChange = true;
-            }
-            timeReleased = System::GetNow();
-        }else if(System::GetNow() > timeReleased + 200.0f){
-            menuChange = false;
+        //Cycle through menu screens
+        menuScreen = (fmod(floor(K5*NUM_MENUS),NUM_MENUS));
+        if(oldmenu != menuScreen){
+            k1lock = true;
+            k2lock = true;
+            oldmenu = menuScreen;
         }
-
     
-        if(menuScreen == basic){
-            
-            //Display menu select bits
-            disp[2].Write(false);
-            disp[3].Write(false);
-            
-            //Translate CV In to pitch
-            octave = cvPitch * 5.0f + 1.0f;
-            osc.SetFreq(16.35f*(pow(2,octave)));
+        if(menuScreen == wave){
+            dLines[1] = "Wave";
+            dLines[4] = "";
 
-            //Update envelope attack and decay
-            env.SetTime(ADENV_SEG_ATTACK,K0*5.0f+0.01);
-            env.SetTime(ADENV_SEG_DECAY,K1*5.0f+0.01);
+            if(!k1lock){
+                offset = (int)floor(K0*100.00f);
+            }
+            dLines[3] = "Offset: " + std::to_string(offset);
 
             //Wave Selector 
-            if(button1.FallingEdge() && !menuChange){
+            if(button1.FallingEdge()){
                 if(wf1 < 3){
                     wf1++;
                 }else{
@@ -211,72 +196,80 @@ int main(void)
             switch(wf1){
                 case 0:
                     osc.SetWaveform(osc.WAVE_SIN);
+                    dLines[2] = "Type: Sin";
                     disp[0].Write(false);
                     disp[1].Write(false);
                     break;
                 case 1:
                     osc.SetWaveform(osc.WAVE_SAW);
+                    dLines[2] = "Type: Saw";
                     disp[0].Write(true);
                     disp[1].Write(false);
                     break;
                 case 2:
                     osc.SetWaveform(osc.WAVE_SQUARE);
+                    dLines[2] = "Type: Square";
                     disp[0].Write(false);
                     disp[1].Write(true);
                     break;
                 case 3:
                     osc.SetWaveform(osc.WAVE_TRI);
+                    dLines[2] = "Type: Triangle";
                     disp[0].Write(true);
                     disp[1].Write(true);
                     break;
             }
 
-            //Dip 4 will add an auto trigger
-            if(dip[3].Pressed()){
-                tick.SetFreq(K3+0.2f);
-                if(tick.Process()){
-                    env.Trigger();
-                    hw.SetLed(true);
-                    fCount = System::GetNow();
-                }
-            }
-
-            if(cvGate < 0.1f && !gateRisingEdge){
-                env.Trigger();
-                currNote = octave;
-                gateRisingEdge = true;
-            }else if(cvGate < 0.1f && ((currNote - octave) > 0.1)){
-                env.Trigger();
-                currNote = octave;
-            }else if(cvGate > 0.1f){
-                gateRisingEdge = false;
-            }
-            
-            if(button2.RisingEdge()){
-                
-            }
-            osc.SetAmp(env.Process());
-
         }else if(menuScreen == fx){
-            //Display menu select bits
-            disp[2].Write(true);
-            disp[3].Write(false);
+            //Display menu
+            dLines[1] = "Effects";
+            dLines[2] = "Reverb: " + std::to_string((int)floor(K0*100.00f));
+            dLines[3] = "Delay: " + std::to_string((int)floor(K1*100.00f));
+            dLines[4] = "";
+        }else if(menuScreen == envelope){
+            //Take care of display
+            dLines[1] = "Envelope";
+            dLines[2] = "Attack: " + std::to_string((int)floor(K0*100.00f));
+            dLines[3] = "Decay: " + std::to_string((int)floor(K1*100.00f));
+            dLines[4] = "";
+
+            //Watch for knob updates
+
+            //Update envelope attack and decay
+            env.SetTime(ADENV_SEG_ATTACK,K0*5.0f+0.01);
+            env.SetTime(ADENV_SEG_DECAY,K1*5.0f+0.01);
         }
 
-        //LED blink on auto-trigger
-        if(dip[3].Pressed() && System::GetNow() > fCount + 100.0f){
-            hw.SetLed(false);
+        //Process notes and key hits
+        //Translate CV In to pitch
+        note = cvPitch * 5.0f + 1.0f;
+        osc.SetFreq(16.35f*(pow(2,note)));    
+
+        if(cvGate < 0.1f && !gateRisingEdge){
+            env.Trigger();
+            currNote = note;
+            gateRisingEdge = true;
+        }else if(cvGate < 0.1f && ((currNote - note) > 0.1)){
+            env.Trigger();
+            currNote = note;
+        }else if(cvGate > 0.1f){
+            gateRisingEdge = false;
         }
+
+        osc.SetAmp(env.Process());
 
         //Print message to display
         dLines[0] = "Daisy Synth";
-        dLines[1] = "Knob 1: " + std::to_string((int)floor(K0*100.00f));
 
+        //Print to display
         display.Fill(false);
-        for(int d=0; d<3; d++){
-            display.SetCursor(0, d*19);
+        display.SetCursor(0, 0);
+        sprintf(strbuff, dLines[0].c_str());
+        display.WriteString(strbuff, Font_11x18, true);
+        for(int d=1; d<5; d++){
+            display.SetCursor(0, 8 + d*11);
             sprintf(strbuff, dLines[d].c_str());
-            display.WriteString(strbuff, Font_11x18, true);
+            display.WriteString(strbuff, Font_6x8, true);
         }
         display.Update();
     }
