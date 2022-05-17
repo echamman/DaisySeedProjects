@@ -84,10 +84,10 @@ int main(void)
     bool gateRisingEdge = false;
 
     //Menu Variables
-    bool k1lock = false, k2lock=false;
+    bool k0lock = false, k1lock=false;
     int offset = 0;
-    float attack, newAttack;
-    float decay, newDecay;
+    float attack = 0.1;
+    float decay = 0.1;
     float reverb, newReverb;
     float delay, newDelay;
 
@@ -170,8 +170,8 @@ int main(void)
         //Cycle through menu screens
         menuScreen = (fmod(floor(K5*NUM_MENUS),NUM_MENUS));
         if(oldmenu != menuScreen){
+            k0lock = true;
             k1lock = true;
-            k2lock = true;
             oldmenu = menuScreen;
         }
     
@@ -179,8 +179,11 @@ int main(void)
             dLines[1] = "Wave";
             dLines[4] = "";
 
-            if(!k1lock){
+            //Adjust offset based on knob, unless locked after menu change
+            if(!k0lock){
                 offset = (int)floor(K0*100.00f);
+            }else{
+                if(abs((int)floor(K0*100.00f) - offset) < 2){k0lock = false;}
             }
             dLines[3] = "Offset: " + std::to_string(offset);
 
@@ -227,17 +230,28 @@ int main(void)
             dLines[3] = "Delay: " + std::to_string((int)floor(K1*100.00f));
             dLines[4] = "";
         }else if(menuScreen == envelope){
+            //Update envelope attack and decay
+            //Adjust offset based on knob, unless locked after menu change
+            if(!k0lock){
+                attack = K0*5.0f+0.01;
+            }else{
+                if(abs(K0*5.0f+0.01 - attack) < 0.2f){k0lock = false;}
+            }
+
+            if(!k1lock){
+                decay = K1*5.0f+0.01;
+            }else{
+                if(abs(K1*5.0f+0.01 - decay) < 0.2f){k1lock = false;}
+            }
+
+            env.SetTime(ADENV_SEG_ATTACK,attack);
+            env.SetTime(ADENV_SEG_DECAY,decay);
+
             //Take care of display
             dLines[1] = "Envelope";
-            dLines[2] = "Attack: " + std::to_string((int)floor(K0*100.00f));
-            dLines[3] = "Decay: " + std::to_string((int)floor(K1*100.00f));
+            dLines[2] = "Attack: " + std::to_string((int)floor(attack*100.0f));
+            dLines[3] = "Decay: " + std::to_string((int)floor(decay*100.0f));
             dLines[4] = "";
-
-            //Watch for knob updates
-
-            //Update envelope attack and decay
-            env.SetTime(ADENV_SEG_ATTACK,K0*5.0f+0.01);
-            env.SetTime(ADENV_SEG_DECAY,K1*5.0f+0.01);
         }
 
         //Process notes and key hits
