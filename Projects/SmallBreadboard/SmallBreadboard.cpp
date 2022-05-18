@@ -50,6 +50,7 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 
     for(size_t i = 0; i < size; i += 2)
     {     
+        osc.SetAmp(env.Process());
         sig = osc.Process();
 
         // left out
@@ -62,34 +63,24 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 
 int main(void)
 {
-
-    //Allow the OLED to start up
-    //System::Delay(1000);
-
     /** Configure the Display */
     MyOledDisplay::Config disp_cfg;
     disp_cfg.driver_config.transport_config.i2c_config.pin_config.sda = hw.GetPin(12);
     disp_cfg.driver_config.transport_config.i2c_config.pin_config.scl = hw.GetPin(11);
-    /** And Initialize */
-    display.Init(disp_cfg);
-    char strbuff[128];
-
+    
     //Declarations for while loop
-    float newOct, note, currNote = 0;
+    float note;
     int wf1 = 0;
-    float fCount = 0;
     int menuScreen = wave, oldmenu = wave;
-    bool menuChange = false;
-    float timeReleased = 0.0f;
-    bool gateRisingEdge = false;
 
     //Menu Variables
     bool k0lock = false, k1lock=false;
     int offset = 0;
-    float attack = 0.1;
-    float decay = 0.1;
-    float reverb, newReverb;
-    float delay, newDelay;
+    float attack = 0.1f;
+    float decay = 0.1f;
+    float reverb = 0.0f;
+    float delay = 0.0f;
+    float drive = 0.0f;
 
     // initialize seed hardware and oscillator daisysp module
     float sample_rate;
@@ -135,7 +126,7 @@ int main(void)
     // Set parameters for oscillator
     osc.SetWaveform(osc.WAVE_SIN);
     osc.SetFreq(440);
-    osc.SetAmp(0.25);
+    osc.SetAmp(0);
 
 
     // start callback
@@ -151,6 +142,12 @@ int main(void)
     float K5;
     float cvPitch;
     float cvGate;
+
+    //Allow the OLED to start up
+    System::Delay(100);
+    /** And Initialize */
+    display.Init(disp_cfg);
+    char strbuff[128];
 
     while(1) {
         //Debounce buttons together
@@ -233,15 +230,15 @@ int main(void)
             //Update envelope attack and decay
             //Adjust offset based on knob, unless locked after menu change
             if(!k0lock){
-                attack = K0*5.0f+0.01;
+                attack = K0+0.01;
             }else{
-                if(abs(K0*5.0f+0.01 - attack) < 0.2f){k0lock = false;}
+                if(abs(K0+0.01 - attack) < 0.2f){k0lock = false;}
             }
 
             if(!k1lock){
-                decay = K1*5.0f+0.01;
+                decay = K1+0.01;
             }else{
-                if(abs(K1*5.0f+0.01 - decay) < 0.2f){k1lock = false;}
+                if(abs(K1+0.01 - decay) < 0.2f){k1lock = false;}
             }
 
             env.SetTime(ADENV_SEG_ATTACK,attack);
@@ -259,18 +256,11 @@ int main(void)
         note = cvPitch * 5.0f + 1.0f;
         osc.SetFreq(16.35f*(pow(2,note)));    
 
-        if(cvGate < 0.1f && !gateRisingEdge){
+        if(cvGate < 0.1f && !(env.GetValue() > 0.98f)){
             env.Trigger();
-            currNote = note;
-            gateRisingEdge = true;
-        }else if(cvGate < 0.1f && ((currNote - note) > 0.1)){
-            env.Trigger();
-            currNote = note;
-        }else if(cvGate > 0.1f){
-            gateRisingEdge = false;
         }
-
-        osc.SetAmp(env.Process());
+               
+        //dLines[4] = std::to_string((int)floor(env.GetValue()*100.0f));
 
         //Print message to display
         dLines[0] = "Daisy Synth";
