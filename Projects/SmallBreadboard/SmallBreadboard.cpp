@@ -21,6 +21,7 @@ static Metro tick;
 
 //Effects
 static ReverbSc verb;
+static Overdrive oDrive;
 
 enum AdcChannel {
     Knob0 = 0,
@@ -57,19 +58,20 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
                           size_t                                size)
 {
     float sig;
-    float vOut[2];
 
     for(size_t i = 0; i < size; i += 2)
     {     
         osc.SetAmp(env.Process());
-        sig = osc.Process();
-        //verb.Process(sig, sig, &vOut[i], &vOut[i + 1]);
+        sig = osc.Process() + env.Process() * oDrive.Process(osc.Process());
 
         //left out
         out[i] = sig;// + vOut[i];
 
         // right out
         out[i + 1] = sig;// + vOut[i + 1];
+
+        //Reverb add
+        //verb.Process(sig, sig, &out[i], &out[i + 1]);
     }
 }
 
@@ -115,6 +117,7 @@ int main(void)
     verb.Init(sample_rate);
     verb.SetFeedback(reverb);
     verb.SetLpFreq(18000.0f);
+    oDrive.Init();
 
     string dLines[5]; //Create an Array of strings for the OLED display
 
@@ -244,6 +247,7 @@ int main(void)
             //Display menu
             dLines[0] = "Effects";
 
+            //Reverb adjust
             if(!klock[0]){
                 reverb = K0;
             }else{
@@ -251,8 +255,15 @@ int main(void)
             }
             verb.SetFeedback(reverb);
 
-            dLines[1] = "Reverb: " + std::to_string((int)floor(K0*100.00f));
-            dLines[2] = "Delay: " + std::to_string((int)floor(K1*100.00f));
+            //OD adjust
+            if(!klock[1]){
+                drive = K1;
+            }else{
+                if(abs(K1 - drive) < 0.2f){klock[1] = false;}
+            }
+            oDrive.SetDrive(drive);
+            dLines[1] = "Reverb: " + std::to_string((int)floor(reverb*100.00f));
+            dLines[2] = "Overdrive: " + std::to_string((int)floor(drive*100.00f));
             dLines[3] = "";
             dLines[4] = "";
 
