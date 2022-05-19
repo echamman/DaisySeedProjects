@@ -15,13 +15,9 @@ MyOledDisplay display;
 
 static DaisySeed  hw;
 static Oscillator osc;
-static Switch button1;
-static Switch button2;
 
 static AdEnv env;
 static Metro tick;
-
-static GPIO disp[4];
 
 enum AdcChannel {
     Knob0 = 0,
@@ -41,6 +37,17 @@ enum menu {
     fx,
     NUM_MENUS
 };
+
+enum buttons {
+    bleft = 0,
+    bdown,
+    bright,
+    bup,
+    bsel,
+    NUM_BUTTONS
+};
+
+static Switch button[NUM_BUTTONS];
 
 static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
                           AudioHandle::InterleavingOutputBuffer out,
@@ -74,7 +81,7 @@ int main(void)
     int menuScreen = wave, oldmenu = wave;
 
     //Menu Variables
-    bool k0lock = false, k1lock=false;
+    bool klock[6] = {false};
     int offset = 0;
     float attack = 0.1f;
     float decay = 0.1f;
@@ -99,13 +106,7 @@ int main(void)
     env.SetCurve(0); // linear
     tick.Init(1.0f, sample_rate);
 
-    //LED Display
-    disp[0].Init(Pin(PORTC, 8),GPIO::Mode::OUTPUT); //Pin D4
-    disp[1].Init(Pin(PORTC, 9),GPIO::Mode::OUTPUT); //Pin D3
-    disp[2].Init(Pin(PORTB, 6),GPIO::Mode::OUTPUT); //Pin D6
-    disp[3].Init(Pin(PORTD, 2),GPIO::Mode::OUTPUT); //Pin D5
     string dLines[5]; //Create an Array of strings for the OLED display
-
 
     //Analog Inputs
     AdcChannelConfig adcConfig[NUM_ADC_CHANNELS];
@@ -120,8 +121,11 @@ int main(void)
     hw.adc.Init(adcConfig, NUM_ADC_CHANNELS);
 
     //buttons
-    button1.Init(hw.GetPin(7),1000); //Green button
-    button2.Init(hw.GetPin(8),1000); //Purple button
+    button[bleft].Init(hw.GetPin(8),1000);
+    button[bdown].Init(hw.GetPin(9),1000);
+    button[bright].Init(hw.GetPin(6),1000);
+    button[bup].Init(hw.GetPin(10),1000);
+    button[bsel].Init(hw.GetPin(7),1000);
 
     // Set parameters for oscillator
     osc.SetWaveform(osc.WAVE_SIN);
@@ -151,8 +155,9 @@ int main(void)
 
     while(1) {
         //Debounce buttons together
-        button1.Debounce();
-        button2.Debounce();
+        for(int b = 0; b < NUM_BUTTONS; b++){
+            button[b].Debounce();
+        }
     
         //Get Analog input readings
         K0 = 1.0f - hw.adc.GetFloat(Knob0);
@@ -164,12 +169,13 @@ int main(void)
         cvPitch = hw.adc.GetFloat(CVIN);
         cvGate = hw.adc.GetFloat(CVGATE);
 
-        //Cycle through menu screens
-        menuScreen = (fmod(floor(K5*NUM_MENUS),NUM_MENUS));
-        if(oldmenu != menuScreen){
-            k0lock = true;
-            k1lock = true;
-            oldmenu = menuScreen;
+        //Cycle through menu screens and parameter lock knobs on each cycle
+        if(button[bright].FallingEdge()){
+            menuScreen = (menuScreen + 1) % NUM_MENUS;
+            for(int kl = 0; kl < 6; kl++){ klock[kl] = true;}
+        }else if(button[bleft].FallingEdge()){
+            menuScreen = (menuScreen - 1) % NUM_MENUS;
+            for(int kl = 0; kl < 6; kl++){ klock[kl] = true;}
         }
     
         if(menuScreen == wave){
@@ -177,15 +183,15 @@ int main(void)
             dLines[4] = "";
 
             //Adjust offset based on knob, unless locked after menu change
-            if(!k0lock){
+            if(!klock[0]){
                 offset = (int)floor(K0*100.00f);
             }else{
-                if(abs((int)floor(K0*100.00f) - offset) < 2){k0lock = false;}
+                if(abs((int)floor(K0*100.00f) - offset) < 2){klock[0] = false;}
             }
             dLines[3] = "Offset: " + std::to_string(offset);
 
             //Wave Selector 
-            if(button1.FallingEdge()){
+            if(button[bsel].FallingEdge()){
                 if(wf1 < 3){
                     wf1++;
                 }else{
@@ -197,26 +203,18 @@ int main(void)
                 case 0:
                     osc.SetWaveform(osc.WAVE_SIN);
                     dLines[2] = "Type: Sin";
-                    disp[0].Write(false);
-                    disp[1].Write(false);
                     break;
                 case 1:
                     osc.SetWaveform(osc.WAVE_SAW);
                     dLines[2] = "Type: Saw";
-                    disp[0].Write(true);
-                    disp[1].Write(false);
                     break;
                 case 2:
                     osc.SetWaveform(osc.WAVE_SQUARE);
                     dLines[2] = "Type: Square";
-                    disp[0].Write(false);
-                    disp[1].Write(true);
                     break;
                 case 3:
                     osc.SetWaveform(osc.WAVE_TRI);
                     dLines[2] = "Type: Triangle";
-                    disp[0].Write(true);
-                    disp[1].Write(true);
                     break;
             }
 
@@ -229,16 +227,16 @@ int main(void)
         }else if(menuScreen == envelope){
             //Update envelope attack and decay
             //Adjust offset based on knob, unless locked after menu change
-            if(!k0lock){
+            if(!klock[0]){
                 attack = K0+0.01;
             }else{
-                if(abs(K0+0.01 - attack) < 0.2f){k0lock = false;}
+                if(abs(K0+0.01 - attack) < 0.2f){klock[0] = false;}
             }
 
-            if(!k1lock){
+            if(!klock[1]){
                 decay = K1+0.01;
             }else{
-                if(abs(K1+0.01 - decay) < 0.2f){k1lock = false;}
+                if(abs(K1+0.01 - decay) < 0.2f){klock[1] = false;}
             }
 
             env.SetTime(ADENV_SEG_ATTACK,attack);
