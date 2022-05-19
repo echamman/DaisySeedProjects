@@ -60,18 +60,17 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
     float sig;
 
     for(size_t i = 0; i < size; i += 2)
-    {     
-        osc.SetAmp(env.Process());
-        sig = osc.Process() + env.Process() * oDrive.Process(osc.Process());
-
-        //left out
-        out[i] = sig;// + vOut[i];
-
-        // right out
-        out[i + 1] = sig;// + vOut[i + 1];
+    { 
+        sig = env.Process() * osc.Process() + (env.Process() * oDrive.Process(osc.Process()));
 
         //Reverb add
-        //verb.Process(sig, sig, &out[i], &out[i + 1]);
+        verb.Process(sig, sig, &out[i], &out[i + 1]);
+
+        //left out
+        out[i] += sig;// + vOut[i];
+
+        // right out
+        out[i + 1] += sig;// + vOut[i + 1];
     }
 }
 
@@ -91,7 +90,7 @@ int main(void)
     bool klock[6] = {false};
     int offset = 0;
     float attack = 0.1f;
-    float decay = 0.1f;
+    float decay = 0.5f;
     float reverb = 0.0f;
     float delay = 0.0f;
     float drive = 0.0f;
@@ -106,8 +105,8 @@ int main(void)
 
     //Initialize Envelope and Metro
     env.Init(sample_rate);
-    env.SetTime(ADENV_SEG_ATTACK,0.01);
-    env.SetTime(ADENV_SEG_DECAY,0.5);
+    env.SetTime(ADENV_SEG_ATTACK,attack);
+    env.SetTime(ADENV_SEG_DECAY,decay);
     env.SetMin(0.0);
     env.SetMax(1.0);
     env.SetCurve(0); // linear
@@ -118,6 +117,7 @@ int main(void)
     verb.SetFeedback(reverb);
     verb.SetLpFreq(18000.0f);
     oDrive.Init();
+    oDrive.SetDrive(drive);
 
     string dLines[5]; //Create an Array of strings for the OLED display
 
@@ -143,8 +143,6 @@ int main(void)
     // Set parameters for oscillator
     osc.SetWaveform(osc.WAVE_SIN);
     osc.SetFreq(440);
-    osc.SetAmp(0);
-
 
     // start callback
     hw.adc.Start();
