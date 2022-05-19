@@ -19,6 +19,9 @@ static Oscillator osc;
 static AdEnv env;
 static Metro tick;
 
+//Effects
+static ReverbSc verb;
+
 enum AdcChannel {
     Knob0 = 0,
     Knob1,
@@ -54,17 +57,19 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
                           size_t                                size)
 {
     float sig;
+    float vOut[2];
 
     for(size_t i = 0; i < size; i += 2)
     {     
         osc.SetAmp(env.Process());
         sig = osc.Process();
+        //verb.Process(sig, sig, &vOut[i], &vOut[i + 1]);
 
-        // left out
-        out[i] = sig;
+        //left out
+        out[i] = sig;// + vOut[i];
 
         // right out
-        out[i + 1] = sig;
+        out[i + 1] = sig;// + vOut[i + 1];
     }
 }
 
@@ -105,6 +110,11 @@ int main(void)
     env.SetMax(1.0);
     env.SetCurve(0); // linear
     tick.Init(1.0f, sample_rate);
+
+    //Initialize Effects
+    verb.Init(sample_rate);
+    verb.SetFeedback(reverb);
+    verb.SetLpFreq(18000.0f);
 
     string dLines[5]; //Create an Array of strings for the OLED display
 
@@ -200,7 +210,7 @@ int main(void)
             }else{
                 if(abs((int)floor(K0*100.00f) - offset) < 2){klock[0] = false;}
             }
-            dLines[1] = "Offset: " + std::to_string(offset);
+            dLines[2] = "Offset: " + std::to_string(offset);
 
             //Wave Selector 
             if(button[bsel].FallingEdge()){
@@ -214,25 +224,33 @@ int main(void)
             switch(wf1){
                 case 0:
                     osc.SetWaveform(osc.WAVE_SIN);
-                    dLines[2] = "Type: Sin";
+                    dLines[1] = "Type: Sin";
                     break;
                 case 1:
                     osc.SetWaveform(osc.WAVE_SAW);
-                    dLines[2] = "Type: Saw";
+                    dLines[1] = "Type: Saw";
                     break;
                 case 2:
                     osc.SetWaveform(osc.WAVE_SQUARE);
-                    dLines[2] = "Type: Square";
+                    dLines[1] = "Type: Square";
                     break;
                 case 3:
                     osc.SetWaveform(osc.WAVE_TRI);
-                    dLines[2] = "Type: Triangle";
+                    dLines[1] = "Type: Triangle";
                     break;
             }
 
         }else if(menuScreen == fx){
             //Display menu
             dLines[0] = "Effects";
+
+            if(!klock[0]){
+                reverb = K0;
+            }else{
+                if(abs(K0 - reverb) < 0.2f){klock[0] = false;}
+            }
+            verb.SetFeedback(reverb);
+
             dLines[1] = "Reverb: " + std::to_string((int)floor(K0*100.00f));
             dLines[2] = "Delay: " + std::to_string((int)floor(K1*100.00f));
             dLines[3] = "";
