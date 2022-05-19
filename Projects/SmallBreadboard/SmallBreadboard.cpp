@@ -153,6 +153,17 @@ int main(void)
     display.Init(disp_cfg);
     char strbuff[128];
 
+    //Display startup Screen
+    display.Fill(false);
+    display.SetCursor(0, 18);
+    sprintf(strbuff, "Daisy Synth");
+    display.WriteString(strbuff, Font_11x18, true);
+    display.SetCursor(0, 36);
+    sprintf(strbuff, "By Ethan");
+    display.WriteString(strbuff, Font_7x10, true);
+    display.Update();
+    System::Delay(2000);
+
     while(1) {
         //Debounce buttons together
         for(int b = 0; b < NUM_BUTTONS; b++){
@@ -174,12 +185,13 @@ int main(void)
             menuScreen = (menuScreen + 1) % NUM_MENUS;
             for(int kl = 0; kl < 6; kl++){ klock[kl] = true;}
         }else if(button[bleft].FallingEdge()){
-            menuScreen = (menuScreen - 1) % NUM_MENUS;
+            menuScreen = menuScreen == 0 ? NUM_MENUS - 1: menuScreen - 1;
             for(int kl = 0; kl < 6; kl++){ klock[kl] = true;}
         }
     
         if(menuScreen == wave){
-            dLines[1] = "Wave";
+            dLines[0] = "Wave";
+            dLines[3] = "";
             dLines[4] = "";
 
             //Adjust offset based on knob, unless locked after menu change
@@ -188,7 +200,7 @@ int main(void)
             }else{
                 if(abs((int)floor(K0*100.00f) - offset) < 2){klock[0] = false;}
             }
-            dLines[3] = "Offset: " + std::to_string(offset);
+            dLines[1] = "Offset: " + std::to_string(offset);
 
             //Wave Selector 
             if(button[bsel].FallingEdge()){
@@ -220,10 +232,12 @@ int main(void)
 
         }else if(menuScreen == fx){
             //Display menu
-            dLines[1] = "Effects";
-            dLines[2] = "Reverb: " + std::to_string((int)floor(K0*100.00f));
-            dLines[3] = "Delay: " + std::to_string((int)floor(K1*100.00f));
+            dLines[0] = "Effects";
+            dLines[1] = "Reverb: " + std::to_string((int)floor(K0*100.00f));
+            dLines[2] = "Delay: " + std::to_string((int)floor(K1*100.00f));
+            dLines[3] = "";
             dLines[4] = "";
+
         }else if(menuScreen == envelope){
             //Update envelope attack and decay
             //Adjust offset based on knob, unless locked after menu change
@@ -243,9 +257,10 @@ int main(void)
             env.SetTime(ADENV_SEG_DECAY,decay);
 
             //Take care of display
-            dLines[1] = "Envelope";
-            dLines[2] = "Attack: " + std::to_string((int)floor(attack*100.0f));
-            dLines[3] = "Decay: " + std::to_string((int)floor(decay*100.0f));
+            dLines[0] = "Envelope";
+            dLines[1] = "Attack: " + std::to_string((int)floor(attack*100.0f));
+            dLines[2] = "Decay: " + std::to_string((int)floor(decay*100.0f));
+            dLines[3] = "";
             dLines[4] = "";
         }
 
@@ -260,16 +275,13 @@ int main(void)
                
         //dLines[4] = std::to_string((int)floor(env.GetValue()*100.0f));
 
-        //Print message to display
-        dLines[0] = "Daisy Synth";
-
         //Print to display
         display.Fill(false);
-        display.SetCursor(0, 0);
+        display.SetCursor(44, 0);
         sprintf(strbuff, dLines[0].c_str());
-        display.WriteString(strbuff, Font_11x18, true);
+        display.WriteString(strbuff, Font_6x8, true);
         for(int d=1; d<5; d++){
-            display.SetCursor(0, 8 + d*11);
+            display.SetCursor(0, d*11);
             sprintf(strbuff, dLines[d].c_str());
             display.WriteString(strbuff, Font_6x8, true);
         }
