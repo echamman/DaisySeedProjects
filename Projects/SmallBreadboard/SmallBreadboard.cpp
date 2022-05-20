@@ -23,6 +23,9 @@ static Metro tick;
 static ReverbSc verb;
 static Overdrive oDrive;
 
+//Filters
+static MoogLadder mlf;
+
 enum AdcChannel {
     Knob0 = 0,
     Knob1,
@@ -92,11 +95,17 @@ int main(void)
     bool klock[6] = {false};
     float offset = 0.0f;
     float octave = 1.0f;
+    //Envelope
     float attack = 0.1f;
     float decay = 0.5f;
+    //Effects
     float reverb = 0.0f;
     float delay = 0.0f;
     float drive = 0.0f;
+    //MoogLadder
+    float mlfRes = 0.0f;
+    float mlfCutoff = 10000.0f;
+    bool mlfOn = false;
 
     // initialize seed hardware and oscillator daisysp module
     float sample_rate;
@@ -121,6 +130,11 @@ int main(void)
     verb.SetLpFreq(18000.0f);
     oDrive.Init();
     oDrive.SetDrive(drive);
+
+    //Initialize Filters
+    mlf.Init(sample_rate);
+    mlf.SetFreq(mlfCutoff);
+    mlf.SetRes(mlfRes);
 
     string dLines[5]; //Create an Array of strings for the OLED display
 
@@ -170,10 +184,10 @@ int main(void)
     //Display startup Screen
     display.Fill(false);
     display.SetCursor(0, 18);
-    sprintf(strbuff, "Daisy Synth");
+    sprintf(strbuff, "Eazaudio");
     display.WriteString(strbuff, Font_11x18, true);
     display.SetCursor(0, 36);
-    sprintf(strbuff, "By Ethan");
+    sprintf(strbuff, "DD-22");
     display.WriteString(strbuff, Font_7x10, true);
     display.Update();
     System::Delay(2000);
@@ -300,11 +314,44 @@ int main(void)
             dLines[3] = "";
             dLines[4] = "";
         }else if(menuScreen == filter){
+
+            //Toggle Filter
+            if(button[bsel].FallingEdge()){
+                mlfOn = mlfOn ? false : true;
+            }
+
             dLines[0] = "Filter";
-            dLines[1] = "";
-            dLines[2] = "";
-            dLines[3] = "";
+            if(mlfOn){
+                dLines[1] = "o|Enable: On";
+            }else{
+                dLines[1] = "o|Enable: Off";
+            }
+
+            if(!klock[0]){
+                mlfCutoff = K0*10000.0f;
+            }else{
+                if(abs(K0*10000.0f - mlfCutoff) < 20.0f){klock[0] = false;}
+            }
+
+            if(!klock[1]){
+                mlfRes = K1;
+            }else{
+                if(abs(K1 - mlfRes) < 0.2f){klock[1] = false;}
+            }
+
+            if(mlfOn){
+                mlf.SetFreq(mlfCutoff);
+                mlf.SetRes(mlfRes);
+            }else{
+                mlf.SetFreq(20000.0f);
+                mlf.SetRes(0.0f);
+            }
+            
+
+            dLines[2] = "1|Cutoff: " + std::to_string((int)floor(mlfCutoff));
+            dLines[3] = "2|Resonance: " + std::to_string((int)floor(mlfRes*100.0f));
             dLines[4] = "";
+
         }else if(menuScreen == LFO){
             dLines[0] = "LFO";
             dLines[1] = "";
