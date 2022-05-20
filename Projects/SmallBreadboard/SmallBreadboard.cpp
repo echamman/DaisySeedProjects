@@ -66,7 +66,7 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 
     for(size_t i = 0; i < size; i += 2)
     { 
-        sig = env.Process() * osc.Process() + (env.Process() * oDrive.Process(osc.Process()));
+        sig = mlf.Process(env.Process() * osc.Process()) + (env.Process() * oDrive.Process(osc.Process()));
 
         //Reverb add
         verb.Process(sig, sig, &out[i], &out[i + 1]);
@@ -104,7 +104,8 @@ int main(void)
     float drive = 0.0f;
     //MoogLadder
     float mlfRes = 0.0f;
-    float mlfCutoff = 10000.0f;
+    float mlfCutoffCoarse = 10000.0f;
+    float mlfCutoffFine = 1000.0f;
     bool mlfOn = false;
 
     // initialize seed hardware and oscillator daisysp module
@@ -133,7 +134,7 @@ int main(void)
 
     //Initialize Filters
     mlf.Init(sample_rate);
-    mlf.SetFreq(mlfCutoff);
+    mlf.SetFreq(20000.0f);
     mlf.SetRes(mlfRes);
 
     string dLines[5]; //Create an Array of strings for the OLED display
@@ -328,19 +329,25 @@ int main(void)
             }
 
             if(!klock[0]){
-                mlfCutoff = K0*10000.0f;
+                mlfCutoffCoarse = K0*10000.0f;
             }else{
-                if(abs(K0*10000.0f - mlfCutoff) < 20.0f){klock[0] = false;}
+                if(abs(K0*10000.0f - mlfCutoffCoarse) < 20.0f){klock[0] = false;}
             }
 
             if(!klock[1]){
-                mlfRes = K1;
+                mlfCutoffCoarse = K1*1000.0f;
             }else{
-                if(abs(K1 - mlfRes) < 0.2f){klock[1] = false;}
+                if(abs(K1*1000.0f - mlfCutoffCoarse) < 20.0f){klock[1] = false;}
+            }
+
+            if(!klock[2]){
+                mlfRes = K2 > 0.9f ? 0.9f : K1; //Limit resonance at 0.9
+            }else{
+                if(abs(K2 - mlfRes) < 0.2f){klock[2] = false;}
             }
 
             if(mlfOn){
-                mlf.SetFreq(mlfCutoff);
+                mlf.SetFreq(mlfCutoffCoarse + mlfCutoffFine);
                 mlf.SetRes(mlfRes);
             }else{
                 mlf.SetFreq(20000.0f);
@@ -348,9 +355,9 @@ int main(void)
             }
             
 
-            dLines[2] = "1|Cutoff: " + std::to_string((int)floor(mlfCutoff));
-            dLines[3] = "2|Resonance: " + std::to_string((int)floor(mlfRes*100.0f));
-            dLines[4] = "";
+            dLines[2] = "1|Cutoff Coarse";
+            dLines[3] = "2|Cutoff Fine: " + std::to_string((int)floor(mlfCutoffCoarse + mlfCutoffFine));
+            dLines[4] = "3|Resonance: " + std::to_string((int)floor(mlfRes*100.0f));
 
         }else if(menuScreen == LFO){
             dLines[0] = "LFO";
