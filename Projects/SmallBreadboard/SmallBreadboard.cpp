@@ -329,21 +329,21 @@ int main(void)
             }
 
             if(!klock[0]){
-                mlfCutoffCoarse = K0*10000.0f;
+                mlfCutoffCoarse = floor(K0*100.0f) * 100.0f;
             }else{
                 if(abs(K0*10000.0f - mlfCutoffCoarse) < 20.0f){klock[0] = false;}
             }
 
             if(!klock[1]){
-                mlfCutoffCoarse = K1*1000.0f;
+                mlfCutoffFine = floor(K1*100.0f) * 10.0f;
             }else{
-                if(abs(K1*1000.0f - mlfCutoffCoarse) < 20.0f){klock[1] = false;}
+                if(abs(K1*1000.0f - mlfCutoffFine) < 20.0f){klock[1] = false;}
             }
 
             if(!klock[2]){
-                mlfRes = K2 > 0.9f ? 0.9f : K1; //Limit resonance at 0.9
+                mlfRes = K2 > 0.9f ? 0.9f : K2; //Limit resonance at 0.9
             }else{
-                if(abs(K2 - mlfRes) < 0.2f){klock[2] = false;}
+                if(abs(K2 - mlfRes) < 0.1f){klock[2] = false;}
             }
 
             if(mlfOn){
