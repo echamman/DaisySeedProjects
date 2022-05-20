@@ -38,7 +38,9 @@ enum AdcChannel {
 enum menu {
     wave = 0,
     envelope,
+    filter,
     fx,
+    LFO,
     NUM_MENUS
 };
 
@@ -89,6 +91,7 @@ int main(void)
     //Menu Variables
     bool klock[6] = {false};
     float offset = 0.0f;
+    float octave = 1.0f;
     float attack = 0.1f;
     float decay = 0.5f;
     float reverb = 0.0f;
@@ -202,7 +205,6 @@ int main(void)
     
         if(menuScreen == wave){
             dLines[0] = "Wave";
-            dLines[3] = "";
             dLines[4] = "";
 
             //Adjust offset based on knob, unless locked after menu change
@@ -211,7 +213,15 @@ int main(void)
             }else{
                 if(abs((int)floor(K0*100.00f) - (int)floor(offset*100.0f)) < 2){klock[0] = false;}
             }
-            dLines[2] = "Offset: " + std::to_string((int)floor(offset*100.0f));
+            dLines[2] = "1|Offset: " + std::to_string((int)floor(offset*100.0f));
+
+            //Octave adjust
+            if(button[bup].FallingEdge()){
+                octave = octave > 2.9f ? 3.0f : octave + 1.0f;
+            }else if(button[bdown].FallingEdge()){
+                octave = octave < 0.1f ? 0.0f : octave - 1.0f;
+            }
+            dLines[3] = "^|Octave: " + std::to_string((int)floor(octave));
 
             //Wave Selector 
             if(button[bsel].FallingEdge()){
@@ -225,19 +235,19 @@ int main(void)
             switch(wf1){
                 case 0:
                     osc.SetWaveform(osc.WAVE_SIN);
-                    dLines[1] = "Type: Sin";
+                    dLines[1] = "o|Type: Sin";
                     break;
                 case 1:
                     osc.SetWaveform(osc.WAVE_SAW);
-                    dLines[1] = "Type: Saw";
+                    dLines[1] = "o|Type: Saw";
                     break;
                 case 2:
                     osc.SetWaveform(osc.WAVE_SQUARE);
-                    dLines[1] = "Type: Square";
+                    dLines[1] = "o|Type: Square";
                     break;
                 case 3:
                     osc.SetWaveform(osc.WAVE_TRI);
-                    dLines[1] = "Type: Triangle";
+                    dLines[1] = "o|Type: Triangle";
                     break;
             }
 
@@ -260,8 +270,8 @@ int main(void)
                 if(abs(K1 - drive) < 0.2f){klock[1] = false;}
             }
             oDrive.SetDrive(drive);
-            dLines[1] = "Reverb: " + std::to_string((int)floor(reverb*100.00f));
-            dLines[2] = "Overdrive: " + std::to_string((int)floor(drive*100.00f));
+            dLines[1] = "1|Reverb: " + std::to_string((int)floor(reverb*100.00f));
+            dLines[2] = "2|Overdrive: " + std::to_string((int)floor(drive*100.00f));
             dLines[3] = "";
             dLines[4] = "";
 
@@ -285,8 +295,20 @@ int main(void)
 
             //Take care of display
             dLines[0] = "Envelope";
-            dLines[1] = "Attack: " + std::to_string((int)floor(attack*100.0f));
-            dLines[2] = "Decay: " + std::to_string((int)floor(decay*100.0f));
+            dLines[1] = "1|Attack: " + std::to_string((int)floor(attack*100.0f));
+            dLines[2] = "2|Decay: " + std::to_string((int)floor(decay*100.0f));
+            dLines[3] = "";
+            dLines[4] = "";
+        }else if(menuScreen == filter){
+            dLines[0] = "Filter";
+            dLines[1] = "";
+            dLines[2] = "";
+            dLines[3] = "";
+            dLines[4] = "";
+        }else if(menuScreen == LFO){
+            dLines[0] = "LFO";
+            dLines[1] = "";
+            dLines[2] = "";
             dLines[3] = "";
             dLines[4] = "";
         }
@@ -294,9 +316,9 @@ int main(void)
         //Process notes and key hits
         //Translate CV In to pitch
         if(cvPitch * 3.33f < 0.1f){
-            note = 1.0f;
+            note = octave;
         }else{
-            note = cvPitch * 3.33f + 1.0f + offset;
+            note = cvPitch * 3.33f + octave + offset;
         }
         osc.SetFreq(16.35f*(pow(2,note)));
 
@@ -304,7 +326,7 @@ int main(void)
             env.Trigger();
         }
                
-        dLines[4] = std::to_string((int)floor(note*100.0f));
+        //dLines[4] = std::to_string((int)floor(note*100.0f));
 
         //Print to display
         display.Fill(false);
