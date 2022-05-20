@@ -88,7 +88,7 @@ int main(void)
 
     //Menu Variables
     bool klock[6] = {false};
-    int offset = 0;
+    float offset = 0.0f;
     float attack = 0.1f;
     float decay = 0.5f;
     float reverb = 0.0f;
@@ -207,11 +207,11 @@ int main(void)
 
             //Adjust offset based on knob, unless locked after menu change
             if(!klock[0]){
-                offset = (int)floor(K0*100.00f);
+                offset = K0;
             }else{
-                if(abs((int)floor(K0*100.00f) - offset) < 2){klock[0] = false;}
+                if(abs((int)floor(K0*100.00f) - (int)floor(offset*100.0f)) < 2){klock[0] = false;}
             }
-            dLines[2] = "Offset: " + std::to_string(offset);
+            dLines[2] = "Offset: " + std::to_string((int)floor(offset*100.0f));
 
             //Wave Selector 
             if(button[bsel].FallingEdge()){
@@ -293,14 +293,18 @@ int main(void)
 
         //Process notes and key hits
         //Translate CV In to pitch
-        note = cvPitch * 5.0f + 1.0f;
-        osc.SetFreq(16.35f*(pow(2,note)));    
+        if(cvPitch * 3.33f < 0.1f){
+            note = 1.0f;
+        }else{
+            note = cvPitch * 3.33f + 1.0f + offset;
+        }
+        osc.SetFreq(16.35f*(pow(2,note)));
 
         if(cvGate < 0.1f && !(env.GetValue() > 0.98f)){
             env.Trigger();
         }
                
-        //dLines[4] = std::to_string((int)floor(env.GetValue()*100.0f));
+        dLines[4] = std::to_string((int)floor(note*100.0f));
 
         //Print to display
         display.Fill(false);
