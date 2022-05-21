@@ -16,7 +16,7 @@ MyOledDisplay display;
 static DaisySeed  hw;
 static Oscillator osc, lfo1, lfo2;
 
-static AdEnv env;
+static Adsr env;
 static Metro tick;
 
 //Effects
@@ -77,8 +77,10 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 
     for(size_t i = 0; i < size; i += 2)
     { 
-        sig = mlf.Process(env.Process() * osc.Process() + env.Process() * oDrive.Process(osc.Process()));
+        bool gate = hw.adc.GetFloat(CVGATE) < 0.1f;
 
+        sig = mlf.Process(env.Process(gate) * osc.Process() + env.Process(gate) * oDrive.Process(osc.Process()));
+        lfo1.Process();
         //Reverb add
         verb.Process(sig, sig, &out[i], &out[i + 1]);
 
@@ -98,7 +100,7 @@ int main(void)
     disp_cfg.driver_config.transport_config.i2c_config.pin_config.scl = hw.GetPin(11);
     
     //Declarations for while loop
-    float note;
+    float note, lastnote = 1;
     int wf1 = 0;
     int menuScreen = wave;
 
@@ -109,6 +111,9 @@ int main(void)
     //Envelope
     float attack = 0.1f;
     float decay = 0.5f;
+    float release = 0.5f;
+    float sustain = 0.5f;
+
     //Effects
     float reverb = 0.0f;
     float delay = 0.0f;
@@ -152,11 +157,11 @@ int main(void)
 
     //Initialize Envelope and Metro
     env.Init(sample_rate);
-    env.SetTime(ADENV_SEG_ATTACK,attack);
-    env.SetTime(ADENV_SEG_DECAY,decay);
-    env.SetMin(0.0);
-    env.SetMax(1.0);
-    env.SetCurve(0); // linear
+    env.SetTime(ADSR_SEG_ATTACK,attack);
+    env.SetTime(ADSR_SEG_DECAY,decay);
+    env.SetTime(ADSR_SEG_RELEASE,release);
+    env.SetSustainLevel(sustain);
+    bool keyHeld = false;
     tick.Init(1.0f, sample_rate);
 
     //Initialize Effects
@@ -337,15 +342,29 @@ int main(void)
                 if(abs(kVal[1] - kLockVals[1]) > 0.15f){klock[1] = false;}
             }
 
-            env.SetTime(ADENV_SEG_ATTACK,attack);
-            env.SetTime(ADENV_SEG_DECAY,decay);
+            if(!klock[2]){
+                sustain = kVal[2];
+            }else{
+                if(abs(kVal[2] - kLockVals[2]) > 0.15f){klock[2] = false;}
+            }
+
+            if(!klock[3]){
+                release = kVal[3]+0.01;
+            }else{
+                if(abs(kVal[3] - kLockVals[3]) > 0.15f){klock[3] = false;}
+            }
+
+            env.SetTime(ADSR_SEG_ATTACK,attack);
+            env.SetTime(ADSR_SEG_DECAY,decay);
+            env.SetTime(ADSR_SEG_RELEASE,release);
+            env.SetSustainLevel(sustain);
 
             //Take care of display
             dLines[0] = "Envelope";
             dLines[1] = "1|Attack: " + std::to_string((int)floor(attack*100.0f));
             dLines[2] = "2|Decay: " + std::to_string((int)floor(decay*100.0f));
-            dLines[3] = "";
-            dLines[4] = "";
+            dLines[3] = "3|Sustain: " + std::to_string((int)floor(sustain*100.0f));
+            dLines[4] = "4|Relase: " + std::to_string((int)floor(release*100.0f));
         }else if(menuScreen == filter){
 
             //Toggle Filter
@@ -460,11 +479,15 @@ int main(void)
         }else{
             note = cvPitch * 3.33f + octave + offset;
         }
-        
+
         osc.SetFreq(16.35f*(pow(2,note)));
 
-        if(cvGate < 0.1f && !(env.GetValue() > 0.98f)){
-            env.Trigger();
+        if(cvGate < 0.1f && (!keyHeld || abs(lastnote - note) > 0.08f)){
+            env.Retrigger(false);
+            lastnote = note;
+            keyHeld = true;
+        }else if(cvGate > 0.1f){
+            keyHeld = false;
         }
                
         //dLines[4] = std::to_string((int)floor(note*100.0f));
