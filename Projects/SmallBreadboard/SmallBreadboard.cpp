@@ -14,7 +14,7 @@ using namespace std;
 MyOledDisplay display;
 
 static DaisySeed  hw;
-static Oscillator osc;
+static Oscillator osc, lfo1, lfo2;
 
 static AdEnv env;
 static Metro tick;
@@ -43,7 +43,7 @@ enum menu {
     envelope,
     filter,
     fx,
-    LFO,
+    LFO1,
     NUM_MENUS
 };
 
@@ -54,6 +54,17 @@ enum buttons {
     bup,
     bsel,
     NUM_BUTTONS
+};
+
+enum LFOsends {
+    none = 0,
+    otherLFO,
+    pitch,
+    attack,
+    decay,
+    cutoff,
+    resonance,
+    NUM_LFO_SENDS
 };
 
 static Switch button[NUM_BUTTONS];
@@ -107,6 +118,16 @@ int main(void)
     float mlfCutoffCoarse = 10000.0f;
     float mlfCutoffFine = 1000.0f;
     bool mlfOn = false;
+    //LFO
+    float lfo1Amount = 0.0f;
+    float lfo1Freq = 0.0f;
+    int lfo1wave = 0;
+    int lfo1send = 0;
+    float lfo2Amount = 0.0f;
+    float lfo2Freq = 0.0f;
+    int lfo2wave = 0;
+    int lfo2send = 0;
+    string lfoNames[NUM_LFO_SENDS] = {"None", "LFO","Pitch","Attack","Decay","Cutoff","Resonance"};
 
     // initialize seed hardware and oscillator daisysp module
     float sample_rate;
@@ -114,7 +135,20 @@ int main(void)
     hw.Init();
     hw.SetAudioBlockSize(4);
     sample_rate = hw.AudioSampleRate();
+
+    // Set parameters for oscillator
     osc.Init(sample_rate);
+    osc.SetWaveform(osc.WAVE_SIN);
+    osc.SetFreq(440);
+
+    //Initialize LFOs
+    lfo1.Init(sample_rate);
+    lfo1.SetWaveform(osc.WAVE_SIN);
+    lfo1.SetFreq(10);
+    lfo2.Init(sample_rate);
+    lfo2.SetWaveform(osc.WAVE_SIN);
+    lfo2.SetFreq(10);
+
 
     //Initialize Envelope and Metro
     env.Init(sample_rate);
@@ -157,10 +191,6 @@ int main(void)
     button[bright].Init(hw.GetPin(6),1000);
     button[bup].Init(hw.GetPin(10),1000);
     button[bsel].Init(hw.GetPin(7),1000);
-
-    // Set parameters for oscillator
-    osc.SetWaveform(osc.WAVE_SIN);
-    osc.SetFreq(440);
 
     // start callback
     hw.adc.Start();
@@ -361,12 +391,58 @@ int main(void)
             dLines[3] = "2|Cutoff Fine: " + std::to_string((int)floor(mlfCutoffCoarse + mlfCutoffFine));
             dLines[4] = "3|Resonance: " + std::to_string((int)floor(mlfRes*100.0f));
 
-        }else if(menuScreen == LFO){
-            dLines[0] = "LFO";
-            dLines[1] = "";
-            dLines[2] = "";
-            dLines[3] = "";
-            dLines[4] = "";
+        }else if(menuScreen == LFO1){
+            dLines[0] = "LFO 1";
+
+            //LFO 1 Send Selector 
+            if(button[bsel].FallingEdge()){
+                lfo1send = lfo1send < NUM_LFO_SENDS-1 ? lfo1send + 1: 0;
+            }
+            //LFO1 selection
+            dLines[1] = "o|Send: " + lfoNames[lfo1send];
+
+            //Set amounts
+            if(!klock[0]){
+                lfo1Amount = floor(kVal[0]*100.0f);
+            }else{
+                if(abs(kVal[0] - kLockVals[0]) > 0.15f){klock[0] = false;}
+            }
+
+            if(!klock[1]){
+                lfo1Freq = floor(kVal[1]*100.0f);
+            }else{
+                if(abs(kVal[1] - kLockVals[1]) > 0.15f){klock[1] = false;}
+            }
+
+            lfo1.SetFreq(lfo1Freq);
+            lfo1.SetAmp(lfo1Amount);
+            
+            dLines[2] = "1|Amount: " + std::to_string((int)lfo1Amount);
+            dLines[3] = "2|Frequency: " + std::to_string((int)lfo1Freq);
+
+            //LFO 1 Wave Selector 
+            if(button[bup].FallingEdge()){
+                lfo1wave = lfo1wave < 3 ? lfo1wave + 1: 0;
+            }
+
+            switch(lfo1wave){
+                case 0:
+                    lfo1.SetWaveform(lfo1.WAVE_SIN);
+                    dLines[4] = "^|Wave: Sin";
+                    break;
+                case 1:
+                    lfo1.SetWaveform(lfo1.WAVE_SAW);
+                    dLines[4] = "^|Wave: Saw";
+                    break;
+                case 2:
+                    lfo1.SetWaveform(lfo1.WAVE_SQUARE);
+                    dLines[4] = "^|Wave: Square";
+                    break;
+                case 3:
+                    lfo1.SetWaveform(lfo1.WAVE_TRI);
+                     dLines[4] = "^|Wave: Triangle";
+                    break;
+            }
         }
 
         //Process notes and key hits
