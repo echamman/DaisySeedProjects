@@ -66,7 +66,7 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 
     for(size_t i = 0; i < size; i += 2)
     { 
-        sig = mlf.Process(env.Process() * osc.Process()) + (env.Process() * oDrive.Process(osc.Process()));
+        sig = mlf.Process(env.Process() * osc.Process() + env.Process() * oDrive.Process(osc.Process()));
 
         //Reverb add
         verb.Process(sig, sig, &out[i], &out[i + 1]);
@@ -89,7 +89,7 @@ int main(void)
     //Declarations for while loop
     float note;
     int wf1 = 0;
-    int menuScreen = wave, oldmenu = wave;
+    int menuScreen = wave;
 
     //Menu Variables
     bool klock[6] = {false};
@@ -167,12 +167,8 @@ int main(void)
     hw.StartAudio(AudioCallback);
 
     //Analog input vars
-    float K0;
-    float K1;
-    float K2;
-    float K3;
-    float K4;
-    float K5;
+    float kVal[6];
+    float kLockVals[6] = {0}; //For parameter locking
     float cvPitch;
     float cvGate;
 
@@ -200,22 +196,28 @@ int main(void)
         }
     
         //Get Analog input readings
-        K0 = 1.0f - hw.adc.GetFloat(Knob0);
-        K1 = 1.0f - hw.adc.GetFloat(Knob1);
-        K2 = 1.0f - hw.adc.GetFloat(Knob2);
-        K3 = 1.0f - hw.adc.GetFloat(Knob3);
-        K4 = 1.0f - hw.adc.GetFloat(Knob4);
-        K5 = 1.0f - hw.adc.GetFloat(Knob5);
+        kVal[0] = 1.0f - hw.adc.GetFloat(Knob0);
+        kVal[1] = 1.0f - hw.adc.GetFloat(Knob1);
+        kVal[2] = 1.0f - hw.adc.GetFloat(Knob2);
+        kVal[3] = 1.0f - hw.adc.GetFloat(Knob3);
+        kVal[4] = 1.0f - hw.adc.GetFloat(Knob4);
+        kVal[5] = 1.0f - hw.adc.GetFloat(Knob5);
         cvPitch = hw.adc.GetFloat(CVIN);
         cvGate = hw.adc.GetFloat(CVGATE);
 
         //Cycle through menu screens and parameter lock knobs on each cycle
         if(button[bright].FallingEdge()){
             menuScreen = (menuScreen + 1) % NUM_MENUS;
-            for(int kl = 0; kl < 6; kl++){ klock[kl] = true;}
+            for(int kl = 0; kl < 6; kl++){ 
+                klock[kl] = true;
+                kLockVals[kl] = kVal[kl];
+            }
         }else if(button[bleft].FallingEdge()){
             menuScreen = menuScreen == 0 ? NUM_MENUS - 1: menuScreen - 1;
-            for(int kl = 0; kl < 6; kl++){ klock[kl] = true;}
+            for(int kl = 0; kl < 6; kl++){ 
+                klock[kl] = true;
+                kLockVals[kl] = kVal[kl];
+            }
         }
     
         if(menuScreen == wave){
@@ -224,9 +226,9 @@ int main(void)
 
             //Adjust offset based on knob, unless locked after menu change
             if(!klock[0]){
-                offset = K0;
+                offset = kVal[0];
             }else{
-                if(abs((int)floor(K0*100.00f) - (int)floor(offset*100.0f)) < 2){klock[0] = false;}
+                if(abs(kVal[0] - kLockVals[0]) > 0.15f){klock[0] = false;}
             }
             dLines[2] = "1|Offset: " + std::to_string((int)floor(offset*100.0f));
 
@@ -272,17 +274,17 @@ int main(void)
 
             //Reverb adjust
             if(!klock[0]){
-                reverb = K0;
+                reverb = kVal[0];
             }else{
-                if(abs(K0 - reverb) < 0.2f){klock[0] = false;}
+                if(abs(kVal[0] - kLockVals[0]) > 0.15f){klock[0] = false;}
             }
             verb.SetFeedback(reverb);
 
             //OD adjust
             if(!klock[1]){
-                drive = K1;
+                drive = kVal[1];
             }else{
-                if(abs(K1 - drive) < 0.2f){klock[1] = false;}
+                if(abs(kVal[1] - kLockVals[1]) > 0.15f){klock[1] = false;}
             }
             oDrive.SetDrive(drive);
             dLines[1] = "1|Reverb: " + std::to_string((int)floor(reverb*100.00f));
@@ -294,15 +296,15 @@ int main(void)
             //Update envelope attack and decay
             //Adjust offset based on knob, unless locked after menu change
             if(!klock[0]){
-                attack = K0+0.01;
+                attack = kVal[0]+0.01;
             }else{
-                if(abs(K0+0.01 - attack) < 0.2f){klock[0] = false;}
+                if(abs(kVal[0] - kLockVals[0]) > 0.15f){klock[0] = false;}
             }
 
             if(!klock[1]){
-                decay = K1+0.01;
+                decay = kVal[1]+0.01;
             }else{
-                if(abs(K1+0.01 - decay) < 0.2f){klock[1] = false;}
+                if(abs(kVal[1] - kLockVals[1]) > 0.15f){klock[1] = false;}
             }
 
             env.SetTime(ADENV_SEG_ATTACK,attack);
@@ -329,21 +331,21 @@ int main(void)
             }
 
             if(!klock[0]){
-                mlfCutoffCoarse = floor(K0*100.0f) * 100.0f;
+                mlfCutoffCoarse = floor(kVal[0]*100.0f) * 100.0f;
             }else{
-                if(abs(K0*10000.0f - mlfCutoffCoarse) < 20.0f){klock[0] = false;}
+                if(abs(kVal[0] - kLockVals[0]) > 0.15f){klock[0] = false;}
             }
 
             if(!klock[1]){
-                mlfCutoffFine = floor(K1*100.0f) * 10.0f;
+                mlfCutoffFine = floor(kVal[1]*100.0f) * 10.0f;
             }else{
-                if(abs(K1*1000.0f - mlfCutoffFine) < 20.0f){klock[1] = false;}
+                if(abs(kVal[1] - kLockVals[1]) > 0.15f){klock[1] = false;}
             }
 
             if(!klock[2]){
-                mlfRes = K2 > 0.9f ? 0.9f : K2; //Limit resonance at 0.9
+                mlfRes = kVal[2] > 0.9f ? 0.9f : kVal[2]; //Limit resonance at 0.9
             }else{
-                if(abs(K2 - mlfRes) < 0.1f){klock[2] = false;}
+                if(abs(kVal[2] - kLockVals[2]) > 0.15f){klock[2] = false;}
             }
 
             if(mlfOn){
