@@ -403,7 +403,7 @@ int main(void)
 
             //Set amounts
             if(!klock[0]){
-                lfo1Amount = floor(kVal[0]*100.0f);
+                lfo1Amount = kVal[0];
             }else{
                 if(abs(kVal[0] - kLockVals[0]) > 0.15f){klock[0] = false;}
             }
@@ -416,8 +416,8 @@ int main(void)
 
             lfo1.SetFreq(lfo1Freq);
             lfo1.SetAmp(lfo1Amount);
-            
-            dLines[2] = "1|Amount: " + std::to_string((int)lfo1Amount);
+
+            dLines[2] = "1|Amount: " + std::to_string((int)floor(lfo1Amount*100.0f));
             dLines[3] = "2|Frequency: " + std::to_string((int)lfo1Freq);
 
             //LFO 1 Wave Selector 
@@ -445,6 +445,14 @@ int main(void)
             }
         }
 
+        /*//Process LFO1 Sends
+        switch(lfo1send){
+            case none:
+                break;
+            case pitch:
+
+        }*/
+
         //Process notes and key hits
         //Translate CV In to pitch
         if(cvPitch * 3.33f < 0.1f){
@@ -452,6 +460,7 @@ int main(void)
         }else{
             note = cvPitch * 3.33f + octave + offset;
         }
+        
         osc.SetFreq(16.35f*(pow(2,note)));
 
         if(cvGate < 0.1f && !(env.GetValue() > 0.98f)){
