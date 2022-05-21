@@ -14,7 +14,7 @@ using namespace std;
 MyOledDisplay display;
 
 static DaisySeed  hw;
-static Oscillator osc, lfo1, lfo2;
+static Oscillator osc, subosc, lfo1, lfo2;
 
 static Adsr env;
 static Metro tick;
@@ -74,13 +74,22 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
                           size_t                                size)
 {
     float sig;
+    bool gate;
+    float oscTotal;
+    float envProc; 
 
     for(size_t i = 0; i < size; i += 2)
     { 
-        bool gate = hw.adc.GetFloat(CVGATE) < 0.1f;
+        //Gates, and processes
+        gate = hw.adc.GetFloat(CVGATE) < 0.1f;
+        envProc = env.Process(gate);
+        oscTotal = osc.Process() + subosc.Process();
 
-        sig = mlf.Process(env.Process(gate) * osc.Process() + env.Process(gate) * oDrive.Process(osc.Process()));
-        lfo1.Process();
+        //Create signal
+        sig = mlf.Process(envProc * oscTotal + envProc * oDrive.Process(oscTotal));
+
+        //lfo1.Process();
+
         //Reverb add
         verb.Process(sig, sig, &out[i], &out[i + 1]);
 
@@ -100,7 +109,7 @@ int main(void)
     disp_cfg.driver_config.transport_config.i2c_config.pin_config.scl = hw.GetPin(11);
     
     //Declarations for while loop
-    float note, lastnote = 1;
+    float note, lastnote = 1, subNote;
     int wf1 = 0;
     int menuScreen = wave;
 
@@ -108,6 +117,8 @@ int main(void)
     bool klock[6] = {false};
     float offset = 0.0f;
     float octave = 1.0f;
+    int subOct = 0;
+
     //Envelope
     float attack = 0.1f;
     float decay = 0.5f;
@@ -145,6 +156,10 @@ int main(void)
     osc.Init(sample_rate);
     osc.SetWaveform(osc.WAVE_SIN);
     osc.SetFreq(440);
+    subosc.Init(sample_rate);
+    subosc.SetWaveform(subosc.WAVE_SIN);
+    subosc.SetFreq(440);
+    subosc.SetAmp(0);
 
     //Initialize LFOs
     lfo1.Init(sample_rate);
@@ -257,7 +272,6 @@ int main(void)
     
         if(menuScreen == wave){
             dLines[0] = "Wave";
-            dLines[4] = "";
 
             //Adjust offset based on knob, unless locked after menu change
             if(!klock[0]){
@@ -269,11 +283,32 @@ int main(void)
 
             //Octave adjust
             if(button[bup].FallingEdge()){
-                octave = octave > 2.9f ? 3.0f : octave + 1.0f;
-            }else if(button[bdown].FallingEdge()){
-                octave = octave < 0.1f ? 0.0f : octave - 1.0f;
+                octave = octave > 2.9f ? 0.0f : octave + 1.0f;
             }
+
+            if(button[bdown].FallingEdge()){
+                subOct = subOct == 3 ? 0 : subOct + 1;
+            }
+
             dLines[3] = "^|Octave: " + std::to_string((int)floor(octave));
+
+            switch(subOct){
+                case 0: 
+                    dLines[4] = "v|Sub Osc: Off";
+                    subosc.SetAmp(0.0f);
+                    break;
+                case 1:
+                    dLines[4] = "v|Sub Osc: -1";
+                    subosc.SetAmp(0.5f);
+                    break;
+                case 2:
+                    dLines[4] = "v|Sub Osc: -2";
+                    subosc.SetAmp(0.5f);
+                    break;
+                case 3:
+                    dLines[4] = "v|Sub Osc: -3";
+                    subosc.SetAmp(0.5f);
+            }
 
             //Wave Selector 
             if(button[bsel].FallingEdge()){
@@ -287,18 +322,22 @@ int main(void)
             switch(wf1){
                 case 0:
                     osc.SetWaveform(osc.WAVE_SIN);
+                    subosc.SetWaveform(osc.WAVE_SIN);
                     dLines[1] = "o|Type: Sin";
                     break;
                 case 1:
                     osc.SetWaveform(osc.WAVE_SAW);
+                    subosc.SetWaveform(osc.WAVE_SAW);
                     dLines[1] = "o|Type: Saw";
                     break;
                 case 2:
                     osc.SetWaveform(osc.WAVE_SQUARE);
+                    subosc.SetWaveform(osc.WAVE_SQUARE);
                     dLines[1] = "o|Type: Square";
                     break;
                 case 3:
                     osc.SetWaveform(osc.WAVE_TRI);
+                    subosc.SetWaveform(osc.WAVE_TRI);
                     dLines[1] = "o|Type: Triangle";
                     break;
             }
@@ -480,7 +519,10 @@ int main(void)
             note = cvPitch * 3.33f + octave + offset;
         }
 
+        subNote = note - static_cast<float>(subOct);
+
         osc.SetFreq(16.35f*(pow(2,note)));
+        subosc.SetFreq(16.35f*(pow(2,subNote)));
 
         if(cvGate < 0.1f && (!keyHeld || abs(lastnote - note) > 0.08f)){
             env.Retrigger(false);
