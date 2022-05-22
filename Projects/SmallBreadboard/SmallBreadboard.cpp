@@ -84,6 +84,19 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 
     for(size_t i = 0; i < size; i += 2)
     { 
+        //Set process of lfo1 for use in main
+        params.setLFO1Process(lfo1.Process());
+
+        if(params.getLFO1Send() == pitchLFO){
+                osc.SetFreq(16.35f*(pow(2,params.getNote()+params.getLFO1Process())));
+                subosc.SetFreq(16.35f*(pow(2,params.getSubNote()+params.getLFO1Process())));
+        }else{
+            osc.SetFreq(16.35f*(pow(2,params.getNote())));
+            subosc.SetFreq(16.35f*(pow(2,params.getSubNote())));
+        }
+
+
+
         //Gates, and processes
         gate = hw.adc.GetFloat(CVGATE) < 0.1f;
         envProc = env.Process(gate);
@@ -91,8 +104,6 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 
         //Create signal
         sig = mlf.Process(envProc * oscTotal + envProc * oDrive.Process(oscTotal));
-
-        //lfo1.Process();
 
         //Reverb add
         verb.Process(sig, sig, &out[i], &out[i + 1]);
@@ -143,11 +154,8 @@ int main(void)
     //Initialize LFOs
     lfo1.Init(sample_rate);
     lfo1.SetWaveform(osc.WAVE_SIN);
-    lfo1.SetFreq(10);
-    lfo2.Init(sample_rate);
-    lfo2.SetWaveform(osc.WAVE_SIN);
-    lfo2.SetFreq(10);
-
+    lfo1.SetFreq(params.getLFO1Freq());
+    lfo1.SetAmp(params.getLFO1Amount());
 
     //Initialize Envelope and Metro
     env.Init(sample_rate);
@@ -170,7 +178,7 @@ int main(void)
     mlf.SetFreq(20000.0f);
     mlf.SetRes(params.getmlfRes());
 
-    string dLines[5]; //Create an Array of strings for the OLED display
+    string dLines[6]; //Create an Array of strings for the OLED display
 
     //Analog Inputs
     AdcChannelConfig adcConfig[NUM_ADC_CHANNELS];
@@ -500,9 +508,6 @@ int main(void)
 
         params.setSubNote(params.getNote() - static_cast<float>(params.getSubOctave()));
 
-        osc.SetFreq(16.35f*(pow(2,params.getNote())));
-        subosc.SetFreq(16.35f*(pow(2,params.getSubNote())));
-
         if(cvGate < 0.1f && (!keyHeld || abs(lastnote - params.getNote()) > 0.08f)){
             env.Retrigger(false);
             lastnote = params.getNote();
@@ -511,14 +516,14 @@ int main(void)
             keyHeld = false;
         }
                
-        //dLines[4] = std::to_string((int)floor(note*100.0f));
+        dLines[5] = std::to_string((int)floor(params.getLFO1Process()*100.0f));
 
         //Print to display
         display.Fill(false);
         display.SetCursor(44, 0);
         sprintf(strbuff, dLines[0].c_str());
         display.WriteString(strbuff, Font_6x8, true);
-        for(int d=1; d<5; d++){
+        for(int d=1; d<6; d++){
             display.SetCursor(0, d*11);
             sprintf(strbuff, dLines[d].c_str());
             display.WriteString(strbuff, Font_6x8, true);

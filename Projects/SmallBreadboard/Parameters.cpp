@@ -30,10 +30,8 @@ class dd22Params {
         float lfo1Freq = 0.0f;
         int lfo1wave = 0;
         int lfo1send = 0;
-        float lfo2Amount = 0.0f;
-        float lfo2Freq = 0.0f;
-        int lfo2wave = 0;
-        int lfo2send = 0;
+        float lfo1Process = 0;
+
     public:
         //Getters and Setters
         float getNote(){
@@ -194,6 +192,14 @@ class dd22Params {
 
         void incLFO1Send(int MAX_SENDS){
             lfo1send = lfo1send < MAX_SENDS-1 ? lfo1send + 1: 0;
+        }
+
+        float getLFO1Process(){
+            return lfo1Process;
+        }
+
+        void setLFO1Process(float newLFO1Process){
+            lfo1Process = newLFO1Process;
         }
         
 };
