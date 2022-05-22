@@ -4,21 +4,18 @@
 #include "daisy_seed.h"
 #include "dev/oled_ssd130x.h"
 #include "Parameters.cpp"
+#include "LittleOLED.cpp"
 
 using namespace daisysp;
 using namespace daisy;
-using MyOledDisplay = OledDisplay<SSD130xI2c128x64Driver>;
 using namespace std;
-
-#define MAX_OLED_LINE 12
-
-MyOledDisplay display;
 
 static DaisySeed  hw;
 static Oscillator osc, subosc, lfo1, lfo2;
 
 //Holds all values, can be accessed from main and audio func
 static dd22Params params;
+static lilOled screen;
 
 static Adsr env;
 static Metro tick;
@@ -79,7 +76,6 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
     float sig;
     bool gate;
     float oscTotal;
-    float envProc; 
 
     for(size_t i = 0; i < size; i += 2)
     { 
@@ -98,11 +94,11 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 
         //Gates, and processes
         gate = hw.adc.GetFloat(CVGATE) < 0.1f;
-        envProc = env.Process(gate);
+        params.setEnvProc(env.Process(gate));
         oscTotal = osc.Process() + subosc.Process();
-
+        
         //Create signal
-        sig = mlf.Process(envProc * oscTotal + envProc * oDrive.Process(oscTotal));
+        sig = mlf.Process(params.getEnvProc() * oscTotal + params.getEnvProc() * oDrive.Process(oscTotal));
 
         //Reverb add
         verb.Process(sig, sig, &out[i], &out[i + 1]);
@@ -116,12 +112,7 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 }
 
 int main(void)
-{
-    /** Configure the Display */
-    MyOledDisplay::Config disp_cfg;
-    disp_cfg.driver_config.transport_config.i2c_config.pin_config.sda = hw.GetPin(12);
-    disp_cfg.driver_config.transport_config.i2c_config.pin_config.scl = hw.GetPin(11);
-    
+{    
     //Declarations for while loop
     float lastnote = 1;
     int wf1 = 0;
@@ -183,10 +174,8 @@ int main(void)
     AdcChannelConfig adcConfig[NUM_ADC_CHANNELS];
     adcConfig[Knob0].InitSingle(hw.GetPin(25));
     adcConfig[Knob1].InitSingle(hw.GetPin(24));
-    adcConfig[Knob2].InitSingle(hw.GetPin(23));
-    adcConfig[Knob3].InitSingle(hw.GetPin(22));
-    adcConfig[Knob4].InitSingle(hw.GetPin(21));
-    adcConfig[Knob5].InitSingle(hw.GetPin(20));
+    adcConfig[Knob2].InitSingle(hw.GetPin(21));
+    adcConfig[Knob3].InitSingle(hw.GetPin(20));
     adcConfig[CVIN].InitSingle(hw.GetPin(15));
     adcConfig[CVGATE].InitSingle(hw.GetPin(16));
     hw.adc.Init(adcConfig, NUM_ADC_CHANNELS);
@@ -203,26 +192,15 @@ int main(void)
     hw.StartAudio(AudioCallback);
 
     //Analog input vars
-    float kVal[6];
-    float kLockVals[6] = {0}; //For parameter locking
+    float kVal[4];
+    float kLockVals[4] = {0}; //For parameter locking
     float cvPitch;
     float cvGate;
 
     //Allow the OLED to start up
     System::Delay(100);
     /** And Initialize */
-    display.Init(disp_cfg);
-    char strbuff[128];
-
-    //Display startup Screen
-    display.Fill(false);
-    display.SetCursor(0, 18);
-    sprintf(strbuff, "Eazaudio");
-    display.WriteString(strbuff, Font_11x18, true);
-    display.SetCursor(0, 36);
-    sprintf(strbuff, "DD-22");
-    display.WriteString(strbuff, Font_7x10, true);
-    display.Update();
+    screen.Init(&hw);
     System::Delay(2000);
 
     while(1) {
@@ -236,21 +214,19 @@ int main(void)
         kVal[1] = 1.0f - hw.adc.GetFloat(Knob1);
         kVal[2] = 1.0f - hw.adc.GetFloat(Knob2);
         kVal[3] = 1.0f - hw.adc.GetFloat(Knob3);
-        kVal[4] = 1.0f - hw.adc.GetFloat(Knob4);
-        kVal[5] = 1.0f - hw.adc.GetFloat(Knob5);
         cvPitch = hw.adc.GetFloat(CVIN);
         cvGate = hw.adc.GetFloat(CVGATE);
 
         //Cycle through menu screens and parameter lock knobs on each cycle
         if(button[bright].FallingEdge()){
             menuScreen = (menuScreen + 1) % NUM_MENUS;
-            for(int kl = 0; kl < 6; kl++){ 
+            for(int kl = 0; kl < 4; kl++){ 
                 klock[kl] = true;
                 kLockVals[kl] = kVal[kl];
             }
         }else if(button[bleft].FallingEdge()){
             menuScreen = menuScreen == 0 ? NUM_MENUS - 1: menuScreen - 1;
-            for(int kl = 0; kl < 6; kl++){ 
+            for(int kl = 0; kl < 4; kl++){ 
                 klock[kl] = true;
                 kLockVals[kl] = kVal[kl];
             }
@@ -506,19 +482,9 @@ int main(void)
         }else if(cvGate > 0.1f){
             keyHeld = false;
         }
-               
-        //dLines[5] = std::to_string((int)floor(params.getLFO1Process()*100.0f));
 
+        //dLines[5] = std::to_string((int)floor(params.getLFO1Process()*100.0f));
         //Print to display
-        display.Fill(false);
-        display.SetCursor(44, 0);
-        sprintf(strbuff, dLines[0].c_str());
-        display.WriteString(strbuff, Font_6x8, true);
-        for(int d=1; d<6; d++){
-            display.SetCursor(0, d*11);
-            sprintf(strbuff, dLines[d].c_str());
-            display.WriteString(strbuff, Font_6x8, true);
-        }
-        display.Update();
+        screen.print(dLines, 6);
     }
 }
