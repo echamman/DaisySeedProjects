@@ -141,6 +141,17 @@ int main(void)
     hw.SetAudioBlockSize(4);
     sample_rate = hw.AudioSampleRate();
 
+    // init DAC outputs
+	DacHandle::Config cfg;
+	cfg.bitdepth   = DacHandle::BitDepth::BITS_12;
+	cfg.buff_state = DacHandle::BufferState::ENABLED;
+	cfg.mode       = DacHandle::Mode::POLLING;
+	cfg.chn        = DacHandle::Channel::BOTH;
+	hw.dac.Init(cfg);
+	hw.dac.WriteValue(DacHandle::Channel::BOTH, 0);
+	hw.dac.WriteValue(DacHandle::Channel::ONE, 200); // CV0
+	hw.dac.WriteValue(DacHandle::Channel::TWO, 4095); // CV1
+
     // Set parameters for oscillator
     osc.Init(sample_rate);
     osc.SetWaveform(osc.WAVE_SIN);
@@ -183,10 +194,8 @@ int main(void)
     AdcChannelConfig adcConfig[NUM_ADC_CHANNELS];
     adcConfig[Knob0].InitSingle(hw.GetPin(25));
     adcConfig[Knob1].InitSingle(hw.GetPin(24));
-    adcConfig[Knob2].InitSingle(hw.GetPin(23));
-    adcConfig[Knob3].InitSingle(hw.GetPin(22));
-    adcConfig[Knob4].InitSingle(hw.GetPin(21));
-    adcConfig[Knob5].InitSingle(hw.GetPin(20));
+    adcConfig[Knob2].InitSingle(hw.GetPin(21));
+    adcConfig[Knob3].InitSingle(hw.GetPin(20));
     adcConfig[CVIN].InitSingle(hw.GetPin(15));
     adcConfig[CVGATE].InitSingle(hw.GetPin(16));
     hw.adc.Init(adcConfig, NUM_ADC_CHANNELS);
@@ -203,8 +212,8 @@ int main(void)
     hw.StartAudio(AudioCallback);
 
     //Analog input vars
-    float kVal[6];
-    float kLockVals[6] = {0}; //For parameter locking
+    float kVal[4];
+    float kLockVals[4] = {0}; //For parameter locking
     float cvPitch;
     float cvGate;
 
@@ -236,21 +245,19 @@ int main(void)
         kVal[1] = 1.0f - hw.adc.GetFloat(Knob1);
         kVal[2] = 1.0f - hw.adc.GetFloat(Knob2);
         kVal[3] = 1.0f - hw.adc.GetFloat(Knob3);
-        kVal[4] = 1.0f - hw.adc.GetFloat(Knob4);
-        kVal[5] = 1.0f - hw.adc.GetFloat(Knob5);
         cvPitch = hw.adc.GetFloat(CVIN);
         cvGate = hw.adc.GetFloat(CVGATE);
 
         //Cycle through menu screens and parameter lock knobs on each cycle
         if(button[bright].FallingEdge()){
             menuScreen = (menuScreen + 1) % NUM_MENUS;
-            for(int kl = 0; kl < 6; kl++){ 
+            for(int kl = 0; kl < 4; kl++){ 
                 klock[kl] = true;
                 kLockVals[kl] = kVal[kl];
             }
         }else if(button[bleft].FallingEdge()){
             menuScreen = menuScreen == 0 ? NUM_MENUS - 1: menuScreen - 1;
-            for(int kl = 0; kl < 6; kl++){ 
+            for(int kl = 0; kl < 4; kl++){ 
                 klock[kl] = true;
                 kLockVals[kl] = kVal[kl];
             }
