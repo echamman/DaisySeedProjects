@@ -132,17 +132,6 @@ int main(void)
     hw.SetAudioBlockSize(4);
     sample_rate = hw.AudioSampleRate();
 
-    // init DAC outputs
-	DacHandle::Config cfg;
-	cfg.bitdepth   = DacHandle::BitDepth::BITS_12;
-	cfg.buff_state = DacHandle::BufferState::ENABLED;
-	cfg.mode       = DacHandle::Mode::POLLING;
-	cfg.chn        = DacHandle::Channel::BOTH;
-	hw.dac.Init(cfg);
-	hw.dac.WriteValue(DacHandle::Channel::BOTH, 0);
-	//hw.dac.WriteValue(DacHandle::Channel::ONE, 200); // CV0
-	//hw.dac.WriteValue(DacHandle::Channel::TWO, 4095); // CV1
-
     // Set parameters for oscillator
     osc.Init(sample_rate);
     osc.SetWaveform(osc.WAVE_SIN);
@@ -493,8 +482,6 @@ int main(void)
         }else if(cvGate > 0.1f){
             keyHeld = false;
         }
-               
-        //hw.dac.WriteValue(DacHandle::Channel::TWO, params.getEnvProc()*4095);
 
         //dLines[5] = std::to_string((int)floor(params.getLFO1Process()*100.0f));
         //Print to display
