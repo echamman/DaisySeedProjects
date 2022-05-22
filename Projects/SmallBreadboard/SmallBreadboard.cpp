@@ -62,7 +62,6 @@ enum buttons {
 
 enum LFOsends {
     none = 0,
-    otherLFO,
     pitchLFO,
     attackLFO,
     decayLFO,
@@ -133,7 +132,7 @@ int main(void)
 
     //LFO
     int lfo1wave = 0;
-    string lfoNames[NUM_LFO_SENDS] = {"None", "LFO","Pitch","Attack","Decay","Cutoff","Resonance"};
+    string lfoNames[NUM_LFO_SENDS] = {"None","Pitch","Attack","Decay","Cutoff","Resonance"};
 
     // initialize seed hardware and oscillator daisysp module
     float sample_rate;
@@ -490,14 +489,6 @@ int main(void)
             }
         }
 
-        /*//Process LFO1 Sends
-        switch(lfo1send){
-            case none:
-                break;
-            case pitch:
-
-        }*/
-
         //Process notes and key hits
         //Translate CV In to pitch
         if(cvPitch * 3.33f < 0.1f){
@@ -516,7 +507,7 @@ int main(void)
             keyHeld = false;
         }
                
-        dLines[5] = std::to_string((int)floor(params.getLFO1Process()*100.0f));
+        //dLines[5] = std::to_string((int)floor(params.getLFO1Process()*100.0f));
 
         //Print to display
         display.Fill(false);
