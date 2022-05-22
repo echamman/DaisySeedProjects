@@ -3,6 +3,7 @@
 #include "daisysp.h"
 #include "daisy_seed.h"
 #include "dev/oled_ssd130x.h"
+#include "Parameters.cpp"
 
 using namespace daisysp;
 using namespace daisy;
@@ -15,6 +16,9 @@ MyOledDisplay display;
 
 static DaisySeed  hw;
 static Oscillator osc, subosc, lfo1, lfo2;
+
+//Holds all values, can be accessed from main and audio func
+static dd22Params params;
 
 static Adsr env;
 static Metro tick;
@@ -59,11 +63,11 @@ enum buttons {
 enum LFOsends {
     none = 0,
     otherLFO,
-    pitch,
-    attack,
-    decay,
-    cutoff,
-    resonance,
+    pitchLFO,
+    attackLFO,
+    decayLFO,
+    cutoffLFO,
+    resonanceLFO,
     NUM_LFO_SENDS
 };
 
@@ -109,40 +113,15 @@ int main(void)
     disp_cfg.driver_config.transport_config.i2c_config.pin_config.scl = hw.GetPin(11);
     
     //Declarations for while loop
-    float note, lastnote = 1, subNote;
+    float lastnote = 1;
     int wf1 = 0;
     int menuScreen = wave;
 
     //Menu Variables
     bool klock[6] = {false};
-    float offset = 0.0f;
-    float octave = 1.0f;
-    int subOct = 0;
 
-    //Envelope
-    float attack = 0.1f;
-    float decay = 0.5f;
-    float release = 0.5f;
-    float sustain = 0.5f;
-
-    //Effects
-    float reverb = 0.0f;
-    float delay = 0.0f;
-    float drive = 0.0f;
-    //MoogLadder
-    float mlfRes = 0.0f;
-    float mlfCutoffCoarse = 10000.0f;
-    float mlfCutoffFine = 1000.0f;
-    bool mlfOn = false;
     //LFO
-    float lfo1Amount = 0.0f;
-    float lfo1Freq = 0.0f;
     int lfo1wave = 0;
-    int lfo1send = 0;
-    float lfo2Amount = 0.0f;
-    float lfo2Freq = 0.0f;
-    int lfo2wave = 0;
-    int lfo2send = 0;
     string lfoNames[NUM_LFO_SENDS] = {"None", "LFO","Pitch","Attack","Decay","Cutoff","Resonance"};
 
     // initialize seed hardware and oscillator daisysp module
@@ -172,24 +151,24 @@ int main(void)
 
     //Initialize Envelope and Metro
     env.Init(sample_rate);
-    env.SetTime(ADSR_SEG_ATTACK,attack);
-    env.SetTime(ADSR_SEG_DECAY,decay);
-    env.SetTime(ADSR_SEG_RELEASE,release);
-    env.SetSustainLevel(sustain);
+    env.SetTime(ADSR_SEG_ATTACK,params.getAttack());
+    env.SetTime(ADSR_SEG_DECAY,params.getDecay());
+    env.SetTime(ADSR_SEG_RELEASE,params.getRelease());
+    env.SetSustainLevel(params.getSustain());
     bool keyHeld = false;
     tick.Init(1.0f, sample_rate);
 
     //Initialize Effects
     verb.Init(sample_rate);
-    verb.SetFeedback(reverb);
+    verb.SetFeedback(params.getReverb());
     verb.SetLpFreq(18000.0f);
     oDrive.Init();
-    oDrive.SetDrive(drive);
+    oDrive.SetDrive(params.getDrive());
 
     //Initialize Filters
     mlf.Init(sample_rate);
     mlf.SetFreq(20000.0f);
-    mlf.SetRes(mlfRes);
+    mlf.SetRes(params.getmlfRes());
 
     string dLines[5]; //Create an Array of strings for the OLED display
 
@@ -275,24 +254,24 @@ int main(void)
 
             //Adjust offset based on knob, unless locked after menu change
             if(!klock[0]){
-                offset = kVal[0];
+                params.setOffset(kVal[0]);
             }else{
                 if(abs(kVal[0] - kLockVals[0]) > 0.15f){klock[0] = false;}
             }
-            dLines[2] = "1|Offset: " + std::to_string((int)floor(offset*100.0f));
+            dLines[2] = "1|Offset: " + std::to_string((int)floor(params.getOffset()*100.0f));
 
             //Octave adjust
             if(button[bup].FallingEdge()){
-                octave = octave > 2.9f ? 0.0f : octave + 1.0f;
+                params.setOctave(params.getOctave() > 2.9f ? 0.0f : params.getOctave() + 1.0f);
             }
 
             if(button[bdown].FallingEdge()){
-                subOct = subOct == 3 ? 0 : subOct + 1;
+                params.setSubOctave(params.getSubOctave() == 3 ? 0 : params.getSubOctave() + 1);
             }
 
-            dLines[3] = "^|Octave: " + std::to_string((int)floor(octave));
+            dLines[3] = "^|Octave: " + std::to_string((int)floor(params.getOctave()));
 
-            switch(subOct){
+            switch(params.getSubOctave()){
                 case 0: 
                     dLines[4] = "v|Sub Osc: Off";
                     subosc.SetAmp(0.0f);
@@ -348,21 +327,21 @@ int main(void)
 
             //Reverb adjust
             if(!klock[0]){
-                reverb = kVal[0];
+                params.setReverb(kVal[0]);
             }else{
                 if(abs(kVal[0] - kLockVals[0]) > 0.15f){klock[0] = false;}
             }
-            verb.SetFeedback(reverb);
+            verb.SetFeedback(params.getReverb());
 
             //OD adjust
             if(!klock[1]){
-                drive = kVal[1];
+                params.setDrive(kVal[1]);
             }else{
                 if(abs(kVal[1] - kLockVals[1]) > 0.15f){klock[1] = false;}
             }
-            oDrive.SetDrive(drive);
-            dLines[1] = "1|Reverb: " + std::to_string((int)floor(reverb*100.00f));
-            dLines[2] = "2|Overdrive: " + std::to_string((int)floor(drive*100.00f));
+            oDrive.SetDrive(params.getDrive());
+            dLines[1] = "1|Reverb: " + std::to_string((int)floor(params.getReverb()*100.00f));
+            dLines[2] = "2|Overdrive: " + std::to_string((int)floor(params.getDrive()*100.00f));
             dLines[3] = "";
             dLines[4] = "";
 
@@ -370,75 +349,75 @@ int main(void)
             //Update envelope attack and decay
             //Adjust offset based on knob, unless locked after menu change
             if(!klock[0]){
-                attack = kVal[0]+0.01;
+                params.setAttack(kVal[0]+0.01);
             }else{
                 if(abs(kVal[0] - kLockVals[0]) > 0.15f){klock[0] = false;}
             }
 
             if(!klock[1]){
-                decay = kVal[1]+0.01;
+                params.setDecay(kVal[1]+0.01);
             }else{
                 if(abs(kVal[1] - kLockVals[1]) > 0.15f){klock[1] = false;}
             }
 
             if(!klock[2]){
-                sustain = kVal[2];
+                params.setSustain(kVal[2]);
             }else{
                 if(abs(kVal[2] - kLockVals[2]) > 0.15f){klock[2] = false;}
             }
 
             if(!klock[3]){
-                release = kVal[3]+0.01;
+                params.setRelease(kVal[3]+0.01);
             }else{
                 if(abs(kVal[3] - kLockVals[3]) > 0.15f){klock[3] = false;}
             }
 
-            env.SetTime(ADSR_SEG_ATTACK,attack);
-            env.SetTime(ADSR_SEG_DECAY,decay);
-            env.SetTime(ADSR_SEG_RELEASE,release);
-            env.SetSustainLevel(sustain);
+            env.SetTime(ADSR_SEG_ATTACK,params.getAttack());
+            env.SetTime(ADSR_SEG_DECAY,params.getDecay());
+            env.SetTime(ADSR_SEG_RELEASE,params.getRelease());
+            env.SetSustainLevel(params.getSustain());
 
             //Take care of display
             dLines[0] = "Envelope";
-            dLines[1] = "1|Attack: " + std::to_string((int)floor(attack*100.0f));
-            dLines[2] = "2|Decay: " + std::to_string((int)floor(decay*100.0f));
-            dLines[3] = "3|Sustain: " + std::to_string((int)floor(sustain*100.0f));
-            dLines[4] = "4|Relase: " + std::to_string((int)floor(release*100.0f));
+            dLines[1] = "1|Attack: " + std::to_string((int)floor(params.getAttack()*100.0f));
+            dLines[2] = "2|Decay: " + std::to_string((int)floor(params.getDecay()*100.0f));
+            dLines[3] = "3|Sustain: " + std::to_string((int)floor(params.getSustain()*100.0f));
+            dLines[4] = "4|Relase: " + std::to_string((int)floor(params.getRelease()*100.0f));
         }else if(menuScreen == filter){
 
             //Toggle Filter
             if(button[bsel].FallingEdge()){
-                mlfOn = mlfOn ? false : true;
+                params.togglemlfOn();
             }
 
             dLines[0] = "Filter";
-            if(mlfOn){
+            if(params.getmlfOn()){
                 dLines[1] = "o|Enable: On";
             }else{
                 dLines[1] = "o|Enable: Off";
             }
 
             if(!klock[0]){
-                mlfCutoffCoarse = floor(kVal[0]*100.0f) * 100.0f;
+                params.setmlfCutoffCoarse(floor(kVal[0]*100.0f) * 100.0f);
             }else{
                 if(abs(kVal[0] - kLockVals[0]) > 0.15f){klock[0] = false;}
             }
 
             if(!klock[1]){
-                mlfCutoffFine = floor(kVal[1]*100.0f) * 10.0f;
+                params.setmlfCutoffFine(floor(kVal[1]*100.0f) * 10.0f);
             }else{
                 if(abs(kVal[1] - kLockVals[1]) > 0.15f){klock[1] = false;}
             }
 
             if(!klock[2]){
-                mlfRes = kVal[2] > 0.9f ? 0.9f : kVal[2]; //Limit resonance at 0.9
+                params.setmlfRes(kVal[2] > 0.9f ? 0.9f : kVal[2]); //Limit resonance at 0.9
             }else{
                 if(abs(kVal[2] - kLockVals[2]) > 0.15f){klock[2] = false;}
             }
 
-            if(mlfOn){
-                mlf.SetFreq(mlfCutoffCoarse + mlfCutoffFine);
-                mlf.SetRes(mlfRes);
+            if(params.getmlfOn()){
+                mlf.SetFreq(params.getmlfCutoffCoarse() + params.getmlfCutoffFine());
+                mlf.SetRes(params.getmlfRes());
             }else{
                 mlf.SetFreq(20000.0f);
                 mlf.SetRes(0.0f);
@@ -446,37 +425,37 @@ int main(void)
             
 
             dLines[2] = "1|Cutoff Coarse";
-            dLines[3] = "2|Cutoff Fine: " + std::to_string((int)floor(mlfCutoffCoarse + mlfCutoffFine));
-            dLines[4] = "3|Resonance: " + std::to_string((int)floor(mlfRes*100.0f));
+            dLines[3] = "2|Cutoff Fine: " + std::to_string((int)floor(params.getmlfCutoffCoarse() + params.getmlfCutoffFine()));
+            dLines[4] = "3|Resonance: " + std::to_string((int)floor(params.getmlfRes()*100.0f));
 
         }else if(menuScreen == LFO1){
             dLines[0] = "LFO 1";
 
             //LFO 1 Send Selector 
             if(button[bsel].FallingEdge()){
-                lfo1send = lfo1send < NUM_LFO_SENDS-1 ? lfo1send + 1: 0;
+                params.incLFO1Send(NUM_LFO_SENDS);
             }
             //LFO1 selection
-            dLines[1] = "o|Send: " + lfoNames[lfo1send];
+            dLines[1] = "o|Send: " + lfoNames[params.getLFO1Send()];
 
             //Set amounts
             if(!klock[0]){
-                lfo1Amount = kVal[0];
+                params.setLFO1Amount(kVal[0]);
             }else{
                 if(abs(kVal[0] - kLockVals[0]) > 0.15f){klock[0] = false;}
             }
 
             if(!klock[1]){
-                lfo1Freq = floor(kVal[1]*100.0f);
+                params.setLFO1Freq(floor(kVal[1]*100.0f));
             }else{
                 if(abs(kVal[1] - kLockVals[1]) > 0.15f){klock[1] = false;}
             }
 
-            lfo1.SetFreq(lfo1Freq);
-            lfo1.SetAmp(lfo1Amount);
+            lfo1.SetFreq(params.getLFO1Freq());
+            lfo1.SetAmp(params.getLFO1Amount());
 
-            dLines[2] = "1|Amount: " + std::to_string((int)floor(lfo1Amount*100.0f));
-            dLines[3] = "2|Frequency: " + std::to_string((int)lfo1Freq);
+            dLines[2] = "1|Amount: " + std::to_string((int)floor(params.getLFO1Amount()*100.0f));
+            dLines[3] = "2|Frequency: " + std::to_string((int)params.getLFO1Freq());
 
             //LFO 1 Wave Selector 
             if(button[bup].FallingEdge()){
@@ -514,19 +493,19 @@ int main(void)
         //Process notes and key hits
         //Translate CV In to pitch
         if(cvPitch * 3.33f < 0.1f){
-            note = octave;
+            params.setNote(params.getOctave());
         }else{
-            note = cvPitch * 3.33f + octave + offset;
+            params.setNote(cvPitch * 3.33f + params.getOctave() + params.getOffset());
         }
 
-        subNote = note - static_cast<float>(subOct);
+        params.setSubNote(params.getNote() - static_cast<float>(params.getSubOctave()));
 
-        osc.SetFreq(16.35f*(pow(2,note)));
-        subosc.SetFreq(16.35f*(pow(2,subNote)));
+        osc.SetFreq(16.35f*(pow(2,params.getNote())));
+        subosc.SetFreq(16.35f*(pow(2,params.getSubNote())));
 
-        if(cvGate < 0.1f && (!keyHeld || abs(lastnote - note) > 0.08f)){
+        if(cvGate < 0.1f && (!keyHeld || abs(lastnote - params.getNote()) > 0.08f)){
             env.Retrigger(false);
-            lastnote = note;
+            lastnote = params.getNote();
             keyHeld = true;
         }else if(cvGate > 0.1f){
             keyHeld = false;
