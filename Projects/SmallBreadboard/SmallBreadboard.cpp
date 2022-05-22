@@ -4,21 +4,18 @@
 #include "daisy_seed.h"
 #include "dev/oled_ssd130x.h"
 #include "Parameters.cpp"
+#include "LittleOLED.cpp"
 
 using namespace daisysp;
 using namespace daisy;
-using MyOledDisplay = OledDisplay<SSD130xI2c128x64Driver>;
 using namespace std;
-
-#define MAX_OLED_LINE 12
-
-MyOledDisplay display;
 
 static DaisySeed  hw;
 static Oscillator osc, subosc, lfo1, lfo2;
 
 //Holds all values, can be accessed from main and audio func
 static dd22Params params;
+static lilOled screen;
 
 static Adsr env;
 static Metro tick;
@@ -115,12 +112,7 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 }
 
 int main(void)
-{
-    /** Configure the Display */
-    MyOledDisplay::Config disp_cfg;
-    disp_cfg.driver_config.transport_config.i2c_config.pin_config.sda = hw.GetPin(12);
-    disp_cfg.driver_config.transport_config.i2c_config.pin_config.scl = hw.GetPin(11);
-    
+{    
     //Declarations for while loop
     float lastnote = 1;
     int wf1 = 0;
@@ -219,18 +211,7 @@ int main(void)
     //Allow the OLED to start up
     System::Delay(100);
     /** And Initialize */
-    display.Init(disp_cfg);
-    char strbuff[128];
-
-    //Display startup Screen
-    display.Fill(false);
-    display.SetCursor(0, 18);
-    sprintf(strbuff, "Eazaudio");
-    display.WriteString(strbuff, Font_11x18, true);
-    display.SetCursor(0, 36);
-    sprintf(strbuff, "DD-22");
-    display.WriteString(strbuff, Font_7x10, true);
-    display.Update();
+    screen.Init(&hw);
     System::Delay(2000);
 
     while(1) {
@@ -517,15 +498,6 @@ int main(void)
 
         //dLines[5] = std::to_string((int)floor(params.getLFO1Process()*100.0f));
         //Print to display
-        display.Fill(false);
-        display.SetCursor(44, 0);
-        sprintf(strbuff, dLines[0].c_str());
-        display.WriteString(strbuff, Font_6x8, true);
-        for(int d=1; d<6; d++){
-            display.SetCursor(0, d*11);
-            sprintf(strbuff, dLines[d].c_str());
-            display.WriteString(strbuff, Font_6x8, true);
-        }
-        display.Update();
+        screen.print(dLines, 6);
     }
 }
