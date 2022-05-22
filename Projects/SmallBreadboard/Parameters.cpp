@@ -30,7 +30,10 @@ class dd22Params {
         float lfo1Freq = 0.0f;
         int lfo1wave = 0;
         int lfo1send = 0;
+
+        //Processes
         float lfo1Process = 0;
+        float envProcess = 0;
 
     public:
         //Getters and Setters
@@ -202,4 +205,11 @@ class dd22Params {
             lfo1Process = newLFO1Process;
         }
         
+        float getEnvProc(){
+            return envProcess;
+        }
+
+        void setEnvProc(float newEnvProc){
+            envProcess = newEnvProc;
+        }
 };

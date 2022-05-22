@@ -79,7 +79,6 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
     float sig;
     bool gate;
     float oscTotal;
-    float envProc; 
 
     for(size_t i = 0; i < size; i += 2)
     { 
@@ -98,11 +97,11 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 
         //Gates, and processes
         gate = hw.adc.GetFloat(CVGATE) < 0.1f;
-        envProc = env.Process(gate);
+        params.setEnvProc(env.Process(gate));
         oscTotal = osc.Process() + subosc.Process();
-
+        
         //Create signal
-        sig = mlf.Process(envProc * oscTotal + envProc * oDrive.Process(oscTotal));
+        sig = mlf.Process(params.getEnvProc() * oscTotal + params.getEnvProc() * oDrive.Process(oscTotal));
 
         //Reverb add
         verb.Process(sig, sig, &out[i], &out[i + 1]);
@@ -149,8 +148,8 @@ int main(void)
 	cfg.chn        = DacHandle::Channel::BOTH;
 	hw.dac.Init(cfg);
 	hw.dac.WriteValue(DacHandle::Channel::BOTH, 0);
-	hw.dac.WriteValue(DacHandle::Channel::ONE, 200); // CV0
-	hw.dac.WriteValue(DacHandle::Channel::TWO, 4095); // CV1
+	//hw.dac.WriteValue(DacHandle::Channel::ONE, 200); // CV0
+	//hw.dac.WriteValue(DacHandle::Channel::TWO, 4095); // CV1
 
     // Set parameters for oscillator
     osc.Init(sample_rate);
@@ -514,8 +513,9 @@ int main(void)
             keyHeld = false;
         }
                
-        //dLines[5] = std::to_string((int)floor(params.getLFO1Process()*100.0f));
+        //hw.dac.WriteValue(DacHandle::Channel::TWO, params.getEnvProc()*4095);
 
+        //dLines[5] = std::to_string((int)floor(params.getLFO1Process()*100.0f));
         //Print to display
         display.Fill(false);
         display.SetCursor(44, 0);
