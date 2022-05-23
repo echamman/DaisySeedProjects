@@ -8,6 +8,7 @@
 *.cache
 *.idb
 *.ipch
+*.bk
 Log/
 Debug/
 Release/
