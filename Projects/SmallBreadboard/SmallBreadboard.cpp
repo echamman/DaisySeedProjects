@@ -32,8 +32,6 @@ enum AdcChannel {
     Knob1,
     Knob2,
     Knob3,
-    Knob4,
-    Knob5,
     CVIN,
     CVGATE,
     NUM_ADC_CHANNELS
@@ -96,7 +94,7 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         gate = hw.adc.GetFloat(CVGATE) < 0.1f;
         params.setEnvProc(env.Process(gate));
         oscTotal = osc.Process() + subosc.Process();
-        
+
         //Create signal
         sig = mlf.Process(params.getEnvProc() * oscTotal + params.getEnvProc() * oDrive.Process(oscTotal));
 
@@ -112,7 +110,7 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 }
 
 int main(void)
-{    
+{
     //Declarations for while loop
     float lastnote = 1;
     int wf1 = 0;
@@ -482,7 +480,7 @@ int main(void)
         }else if(cvGate > 0.1f){
             keyHeld = false;
         }
-
+               
         //dLines[5] = std::to_string((int)floor(params.getLFO1Process()*100.0f));
         //Print to display
         screen.print(dLines, 6);
