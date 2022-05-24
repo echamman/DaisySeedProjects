@@ -25,7 +25,7 @@ static ReverbSc verb;
 static Overdrive oDrive;
 
 //Filters
-static MoogLadder mlf;
+static Svf filt;
 
 enum AdcChannel {
     Knob0 = 0,
@@ -74,6 +74,7 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
     float sig;
     bool gate;
     float oscTotal;
+    float resTotal;
 
     for(size_t i = 0; i < size; i += 2)
     { 
@@ -81,11 +82,23 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         params.setLFO1Process(lfo1.Process());
 
         if(params.getLFO1Send() == pitchLFO){
-                osc.SetFreq(16.35f*(pow(2,params.getNote()+params.getLFO1Process())));
-                subosc.SetFreq(16.35f*(pow(2,params.getSubNote()+params.getLFO1Process())));
+            osc.SetFreq(16.35f*(pow(2,params.getNote()+params.getLFO1Process())));
+            subosc.SetFreq(16.35f*(pow(2,params.getSubNote()+params.getLFO1Process())));
         }else{
             osc.SetFreq(16.35f*(pow(2,params.getNote())));
             subosc.SetFreq(16.35f*(pow(2,params.getSubNote())));
+        }
+
+        if(params.getLFO1Send() == cutoffLFO){
+            filt.SetFreq(params.getLFO1Process() * params.getFiltFreq() + params.getFiltFreq());
+        }else if(params.getLFO1Send() == resonanceLFO){
+            resTotal = params.getRes() * params.getLFO1Process() + params.getRes();
+            if(resTotal < 0.0f){
+                resTotal = 0.0f;
+            }else if(resTotal > 1.0f){
+                resTotal = 1.0f;
+            }
+            filt.SetRes(resTotal);
         }
 
         //Gates, and processes
@@ -94,7 +107,18 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         oscTotal = osc.Process() + subosc.Process();
 
         //Create signal
-        sig = mlf.Process(params.getEnvProc() * oscTotal + params.getEnvProc() * oDrive.Process(oscTotal));
+        sig = params.getEnvProc() * oscTotal + params.getEnvProc() * oDrive.Process(oscTotal);
+        filt.Process(sig);
+        switch (params.getFilter()){
+            case 1:
+                sig = filt.Low();
+                break;
+            case 2:
+                sig = filt.High();
+                break;
+            case 3: 
+                sig = filt.Band();
+        }
 
         //Reverb add
         verb.Process(sig, sig, &out[i], &out[i + 1]);
@@ -161,9 +185,10 @@ int main(void)
     oDrive.SetDrive(params.getDrive());
 
     //Initialize Filters
-    mlf.Init(sample_rate);
-    mlf.SetFreq(20000.0f);
-    mlf.SetRes(params.getmlfRes());
+    filt.Init(sample_rate);
+    filt.SetFreq(params.getFiltFreq());
+    filt.SetRes(params.getRes());
+    filt.SetDrive(params.getFilterDrive());
 
     string dLines[6]; //Create an Array of strings for the OLED display
 
@@ -389,46 +414,49 @@ int main(void)
 
             //Toggle Filter
             if(button[bsel].FallingEdge()){
-                params.togglemlfOn();
+                params.incFilter();
             }
 
             dLines[0] = "Filter";
-            if(params.getmlfOn()){
-                dLines[1] = "o|Enable: On";
-            }else{
-                dLines[1] = "o|Enable: Off";
+            switch(params.getFilter()){
+                case 0:
+                    dLines[1] = "o|Filter: Off";
+                    break;
+                case 1:
+                    dLines[1] = "o|Filter: LPF";
+                    break;
+                case 2:
+                    dLines[1] = "o|Filter: HPF";
+                    break;
+                case 3:
+                    dLines[1] = "o|Filter: BPF";
             }
 
             if(!klock[0]){
-                params.setmlfCutoffCoarse(floor(kVal[0]*100.0f) * 100.0f);
+                params.setFiltFreq(floor(kVal[0]*100.0f) * 100.0f);
             }else{
                 if(abs(kVal[0] - kLockVals[0]) > 0.15f){klock[0] = false;}
             }
 
             if(!klock[1]){
-                params.setmlfCutoffFine(floor(kVal[1]*100.0f) * 10.0f);
+                params.setRes(kVal[1]);
             }else{
                 if(abs(kVal[1] - kLockVals[1]) > 0.15f){klock[1] = false;}
             }
 
             if(!klock[2]){
-                params.setmlfRes(kVal[2] > 0.9f ? 0.9f : kVal[2]); //Limit resonance at 0.9
+                params.setFilterDrive(kVal[2]);
             }else{
                 if(abs(kVal[2] - kLockVals[2]) > 0.15f){klock[2] = false;}
             }
-
-            if(params.getmlfOn()){
-                mlf.SetFreq(params.getmlfCutoffCoarse() + params.getmlfCutoffFine());
-                mlf.SetRes(params.getmlfRes());
-            }else{
-                mlf.SetFreq(20000.0f);
-                mlf.SetRes(0.0f);
-            }
             
+            filt.SetFreq(params.getFiltFreq());
+            filt.SetRes(params.getRes());
+            filt.SetDrive(params.getFilterDrive());
 
-            dLines[2] = "1|Cutoff Coarse";
-            dLines[3] = "2|Cutoff Fine: " + std::to_string((int)floor(params.getmlfCutoffCoarse() + params.getmlfCutoffFine()));
-            dLines[4] = "3|Resonance: " + std::to_string((int)floor(params.getmlfRes()*100.0f));
+            dLines[2] = "1|Cutoff: " + std::to_string((int)floor(params.getFiltFreq()));
+            dLines[3] = "2|Resonance: " + std::to_string((int)floor(params.getRes()*100.0f));
+            dLines[4] = "3|Drive: " + std::to_string((int)floor(params.getFilterDrive()*100.0f));
             dLines[5] = "";
 
         }else if(menuScreen == LFO1){

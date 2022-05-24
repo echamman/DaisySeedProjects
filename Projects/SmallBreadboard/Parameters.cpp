@@ -20,11 +20,13 @@ class dd22Params {
         float reverb = 0.0f;
         float delay = 0.0f;
         float drive = 0.0f;
-        //MoogLadder
-        float mlfRes = 0.0f;
-        float mlfCutoffCoarse = 10000.0f;
-        float mlfCutoffFine = 1000.0f;
-        bool mlfOn = false;
+
+        //Filters
+        float filtFreq = 1000.0f;
+        int filterType = 0;
+        float filterRes = 0.0f;
+        float filterDrive = 0.0f;
+
         //LFO
         float lfo1Amount = 0.0f;
         float lfo1Freq = 0.0f;
@@ -133,42 +135,6 @@ class dd22Params {
             drive = newDrive;
         }
 
-        float getmlfRes(){
-            return mlfRes;
-        }
-        
-        void setmlfRes(float newResonance){
-            mlfRes = newResonance;
-        }
-
-        float getmlfCutoffCoarse(){
-            return mlfCutoffCoarse;
-        }
-        
-        void setmlfCutoffCoarse(float newCoarse){
-            mlfCutoffCoarse = newCoarse;
-        }
-
-        float getmlfCutoffFine(){
-            return mlfCutoffFine;
-        }
-        
-        void setmlfCutoffFine(float newFine){
-            mlfCutoffFine = newFine;
-        }
-
-        bool getmlfOn(){
-            return mlfOn;
-        }
-        
-        void setmlfOn(bool on){
-            mlfOn = on;
-        }
-
-        void togglemlfOn(){
-            mlfOn = mlfOn ? false : true;
-        }
-
         float getLFO1Amount(){
             return lfo1Amount;
         }
@@ -211,5 +177,35 @@ class dd22Params {
 
         void setEnvProc(float newEnvProc){
             envProcess = newEnvProc;
+        }
+
+        float getFiltFreq(){
+            return filtFreq;
+        }
+
+        void setFiltFreq(float newFreq){
+            filtFreq = newFreq;
+        }
+
+        int getFilter(){
+            return filterType;
+        }
+
+        void incFilter(){
+            filterType = filterType < 3 ? filterType + 1 : 0;
+        }
+
+        float getRes(){
+            return filterRes;
+        }
+        void setRes(float newResonance){
+            filterRes = newResonance;
+        }
+
+        float getFilterDrive(){
+            return filterDrive;
+        }
+        void setFilterDrive(float newDrive){
+            filterDrive = newDrive;
         }
 };
