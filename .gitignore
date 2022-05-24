@@ -9,6 +9,7 @@
 *.idb
 *.ipch
 *.bk
+*.log
 Log/
 Debug/
 Release/

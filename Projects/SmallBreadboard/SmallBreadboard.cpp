@@ -100,10 +100,10 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         verb.Process(sig, sig, &out[i], &out[i + 1]);
 
         //left out
-        out[i] += sig;// + vOut[i];
+        out[i] += sig;
 
         // right out
-        out[i + 1] += sig;// + vOut[i + 1];
+        out[i + 1] += sig;
     }
 }
 
