@@ -74,6 +74,7 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
     float sig;
     bool gate;
     float oscTotal;
+    float resTotal;
 
     for(size_t i = 0; i < size; i += 2)
     { 
@@ -81,11 +82,23 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         params.setLFO1Process(lfo1.Process());
 
         if(params.getLFO1Send() == pitchLFO){
-                osc.SetFreq(16.35f*(pow(2,params.getNote()+params.getLFO1Process())));
-                subosc.SetFreq(16.35f*(pow(2,params.getSubNote()+params.getLFO1Process())));
+            osc.SetFreq(16.35f*(pow(2,params.getNote()+params.getLFO1Process())));
+            subosc.SetFreq(16.35f*(pow(2,params.getSubNote()+params.getLFO1Process())));
         }else{
             osc.SetFreq(16.35f*(pow(2,params.getNote())));
             subosc.SetFreq(16.35f*(pow(2,params.getSubNote())));
+        }
+
+        if(params.getLFO1Send() == cutoffLFO){
+            filt.SetFreq(params.getLFO1Process() * params.getFiltFreq() + params.getFiltFreq());
+        }else if(params.getLFO1Send() == resonanceLFO){
+            resTotal = params.getRes() * params.getLFO1Process() + params.getRes();
+            if(resTotal < 0.0f){
+                resTotal = 0.0f;
+            }else if(resTotal > 1.0f){
+                resTotal = 1.0f;
+            }
+            filt.SetRes(resTotal);
         }
 
         //Gates, and processes
