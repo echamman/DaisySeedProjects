@@ -20,6 +20,7 @@ class dd22Params {
         float reverb = 0.0f;
         float delay = 0.0f;
         float drive = 0.0f;
+        float noise = 0.0f;
 
         //Filters
         float filtFreq = 1000.0f;
@@ -207,5 +208,13 @@ class dd22Params {
         }
         void setFilterDrive(float newDrive){
             filterDrive = newDrive;
+        }
+
+        float getNoise(){
+            return noise;
+        }
+
+        void setNoise(float newNoise){
+            noise = newNoise;
         }
 };

@@ -23,6 +23,7 @@ static Metro tick;
 //Effects
 static ReverbSc verb;
 static Overdrive oDrive;
+static WhiteNoise noise;
 
 //Filters
 static Svf filt;
@@ -104,7 +105,7 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         //Gates, and processes
         gate = hw.adc.GetFloat(CVGATE) < 0.1f;
         params.setEnvProc(env.Process(gate));
-        oscTotal = osc.Process() + subosc.Process();
+        oscTotal = osc.Process() + subosc.Process() + noise.Process();
 
         //Create signal
         sig = params.getEnvProc() * oscTotal + params.getEnvProc() * oDrive.Process(oscTotal);
@@ -183,6 +184,8 @@ int main(void)
     verb.SetLpFreq(18000.0f);
     oDrive.Init();
     oDrive.SetDrive(params.getDrive());
+    noise.Init();
+    noise.SetAmp(params.getNoise());
 
     //Initialize Filters
     filt.Init(sample_rate);
@@ -269,13 +272,13 @@ int main(void)
             if(!klock[1]){
                 params.setOctave(floor(kVal[1] * 3.0f));
             }else{
-                if(abs(kVal[1] - kLockVals[1]) > 0.15f){klock[0] = false;}
+                if(abs(kVal[1] - kLockVals[1]) > 0.15f){klock[1] = false;}
             }
 
             if(!klock[2]){
                 params.setSubOctave(floor(kVal[2] * 3.0f));
             }else{
-                if(abs(kVal[2] - kLockVals[2]) > 0.15f){klock[0] = false;}
+                if(abs(kVal[2] - kLockVals[2]) > 0.15f){klock[2] = false;}
             }
 
             dLines[3] = "2|Octave: " + std::to_string((int)floor(params.getOctave()));
@@ -365,10 +368,20 @@ int main(void)
             }else{
                 if(abs(kVal[1] - kLockVals[1]) > 0.15f){klock[1] = false;}
             }
+
+            //Noise adjust
+            if(!klock[2]){
+                params.setNoise(kVal[2] * 0.5f);
+            }else{
+                if(abs(kVal[2] - kLockVals[2]) > 0.15f){klock[2] = false;}
+            }
+
             oDrive.SetDrive(params.getDrive());
+            noise.SetAmp(params.getNoise());
+
             dLines[1] = "1|Reverb: " + std::to_string((int)floor(params.getReverb()*100.00f));
             dLines[2] = "2|Overdrive: " + std::to_string((int)floor(params.getDrive()*100.00f));
-            dLines[3] = "";
+            dLines[3] = "3|Noise: " + std::to_string((int)floor(params.getNoise()*100.00f));
             dLines[4] = "";
 
         }else if(menuScreen == envelope){
