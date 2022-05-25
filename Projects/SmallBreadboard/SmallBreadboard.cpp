@@ -139,9 +139,7 @@ int main(void)
     int oscWave = 0;
     int subOscWave = 0;
     int menuScreen = wave;
-
-    //Menu Variables
-    bool klock[4] = {true};
+    float lockThresh = 0.1f;
 
     //LFO
     int lfo1wave = 0;
@@ -218,6 +216,7 @@ int main(void)
 
     //Analog input vars
     float kVal[4];
+    bool klock[4] = {false};
     float kLockVals[4] = {0}; //For parameter locking
     float cvPitch;
     float cvGate;
@@ -264,7 +263,7 @@ int main(void)
             if(!klock[0]){
                 params.setOffset(kVal[0]);
             }else{
-                if(abs(kVal[0] - kLockVals[0]) > 0.15f){klock[0] = false;}
+                if(abs(kVal[0] - kLockVals[0]) > lockThresh){klock[0] = false;}
             }
             dLines[2] = "1|Offset: " + std::to_string((int)floor(params.getOffset()*100.0f));
 
@@ -272,13 +271,13 @@ int main(void)
             if(!klock[1]){
                 params.setOctave(floor(kVal[1] * 3.0f));
             }else{
-                if(abs(kVal[1] - kLockVals[1]) > 0.15f){klock[1] = false;}
+                if(abs(kVal[1] - kLockVals[1]) > lockThresh){klock[1] = false;}
             }
 
             if(!klock[2]){
                 params.setSubOctave(floor(kVal[2] * 3.0f));
             }else{
-                if(abs(kVal[2] - kLockVals[2]) > 0.15f){klock[2] = false;}
+                if(abs(kVal[2] - kLockVals[2]) > lockThresh){klock[2] = false;}
             }
 
             dLines[3] = "2|Octave: " + std::to_string((int)floor(params.getOctave()));
@@ -358,7 +357,7 @@ int main(void)
             if(!klock[0]){
                 params.setReverb(kVal[0]);
             }else{
-                if(abs(kVal[0] - kLockVals[0]) > 0.15f){klock[0] = false;}
+                if(abs(kVal[0] - kLockVals[0]) > lockThresh){klock[0] = false;}
             }
             verb.SetFeedback(params.getReverb());
 
@@ -366,14 +365,14 @@ int main(void)
             if(!klock[1]){
                 params.setDrive(kVal[1]);
             }else{
-                if(abs(kVal[1] - kLockVals[1]) > 0.15f){klock[1] = false;}
+                if(abs(kVal[1] - kLockVals[1]) > lockThresh){klock[1] = false;}
             }
 
             //Noise adjust
             if(!klock[2]){
                 params.setNoise(kVal[2] * 0.5f);
             }else{
-                if(abs(kVal[2] - kLockVals[2]) > 0.15f){klock[2] = false;}
+                if(abs(kVal[2] - kLockVals[2]) > lockThresh){klock[2] = false;}
             }
 
             oDrive.SetDrive(params.getDrive());
@@ -390,25 +389,25 @@ int main(void)
             if(!klock[0]){
                 params.setAttack(kVal[0]+0.01);
             }else{
-                if(abs(kVal[0] - kLockVals[0]) > 0.15f){klock[0] = false;}
+                if(abs(kVal[0] - kLockVals[0]) > lockThresh){klock[0] = false;}
             }
 
             if(!klock[1]){
                 params.setDecay(kVal[1]+0.01);
             }else{
-                if(abs(kVal[1] - kLockVals[1]) > 0.15f){klock[1] = false;}
+                if(abs(kVal[1] - kLockVals[1]) > lockThresh){klock[1] = false;}
             }
 
             if(!klock[2]){
                 params.setSustain(kVal[2]);
             }else{
-                if(abs(kVal[2] - kLockVals[2]) > 0.15f){klock[2] = false;}
+                if(abs(kVal[2] - kLockVals[2]) > lockThresh){klock[2] = false;}
             }
 
             if(!klock[3]){
                 params.setRelease(kVal[3]+0.01);
             }else{
-                if(abs(kVal[3] - kLockVals[3]) > 0.15f){klock[3] = false;}
+                if(abs(kVal[3] - kLockVals[3]) > lockThresh){klock[3] = false;}
             }
 
             env.SetTime(ADSR_SEG_ATTACK,params.getAttack());
@@ -448,19 +447,19 @@ int main(void)
             if(!klock[0]){
                 params.setFiltFreq(floor(kVal[0]*100.0f) * 100.0f);
             }else{
-                if(abs(kVal[0] - kLockVals[0]) > 0.15f){klock[0] = false;}
+                if(abs(kVal[0] - kLockVals[0]) > lockThresh){klock[0] = false;}
             }
 
             if(!klock[1]){
                 params.setRes(kVal[1]);
             }else{
-                if(abs(kVal[1] - kLockVals[1]) > 0.15f){klock[1] = false;}
+                if(abs(kVal[1] - kLockVals[1]) > lockThresh){klock[1] = false;}
             }
 
             if(!klock[2]){
                 params.setFilterDrive(kVal[2]);
             }else{
-                if(abs(kVal[2] - kLockVals[2]) > 0.15f){klock[2] = false;}
+                if(abs(kVal[2] - kLockVals[2]) > lockThresh){klock[2] = false;}
             }
             
             filt.SetFreq(params.getFiltFreq());
@@ -486,13 +485,13 @@ int main(void)
             if(!klock[0]){
                 params.setLFO1Amount(kVal[0]);
             }else{
-                if(abs(kVal[0] - kLockVals[0]) > 0.15f){klock[0] = false;}
+                if(abs(kVal[0] - kLockVals[0]) > lockThresh){klock[0] = false;}
             }
 
             if(!klock[1]){
                 params.setLFO1Freq(floor(kVal[1]*100.0f));
             }else{
-                if(abs(kVal[1] - kLockVals[1]) > 0.15f){klock[1] = false;}
+                if(abs(kVal[1] - kLockVals[1]) > lockThresh){klock[1] = false;}
             }
 
             lfo1.SetFreq(params.getLFO1Freq());
@@ -541,7 +540,7 @@ int main(void)
             env.Retrigger(false);
             lastnote = params.getNote();
             keyHeld = true;
-        }else if(cvGate > 0.1f){
+        }else if(cvGate > lockThresh){
             keyHeld = false;
         }
                
