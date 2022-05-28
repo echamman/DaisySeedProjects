@@ -61,6 +61,8 @@ enum LFOsends {
     pitchLFO,
     attackLFO,
     decayLFO,
+    sustainLFO,
+    releaseLFO,
     cutoffLFO,
     resonanceLFO,
     NUM_LFO_SENDS
@@ -76,12 +78,14 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
     bool gate;
     float oscTotal;
     float resTotal;
+    float envTotal;
 
     for(size_t i = 0; i < size; i += 2)
     { 
         //Set process of lfo1 for use in main
         params.setLFO1Process(lfo1.Process());
 
+        //LFO for Pitch
         if(params.getLFO1Send() == pitchLFO){
             osc.SetFreq(16.35f*(pow(2,params.getNote()+params.getLFO1Process())));
             subosc.SetFreq(16.35f*(pow(2,params.getSubNote()+params.getLFO1Process())));
@@ -90,6 +94,7 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
             subosc.SetFreq(16.35f*(pow(2,params.getSubNote())));
         }
 
+        //LFO for Filter
         if(params.getLFO1Send() == cutoffLFO){
             filt.SetFreq(params.getLFO1Process() * params.getFiltFreq() + params.getFiltFreq());
         }else if(params.getLFO1Send() == resonanceLFO){
@@ -100,6 +105,35 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
                 resTotal = 1.0f;
             }
             filt.SetRes(resTotal);
+        }
+
+        //LFO for Envelope
+        if(params.getLFO1Send() == attackLFO){
+            envTotal = params.getAttack() * params.getLFO1Process() + params.getAttack();
+            if(envTotal < 0.01f){
+                envTotal = 0.01f;
+            }
+            env.SetTime(ADSR_SEG_ATTACK,envTotal);
+        }else if(params.getLFO1Send() == decayLFO){
+            envTotal = params.getDecay() * params.getLFO1Process() + params.getDecay();
+            if(envTotal < 0.01f){
+                envTotal = 0.01f;
+            }
+            env.SetTime(ADSR_SEG_DECAY,envTotal);
+        }else if(params.getLFO1Send() == sustainLFO){
+            envTotal = params.getSustain() * params.getLFO1Process() + params.getSustain();
+            if(envTotal < 0.01f){
+                envTotal = 0.01f;
+            }else if(envTotal > 1.0f){
+                envTotal = 1.0f;
+            }
+            env.SetSustainLevel(envTotal);
+        }else if(params.getLFO1Send() == releaseLFO){
+            envTotal = params.getRelease() * params.getLFO1Process() + params.getRelease();
+            if(envTotal < 0.01f){
+                envTotal = 0.01f;
+            }
+            env.SetTime(ADSR_SEG_RELEASE,envTotal);
         }
 
         //Gates, and processes
@@ -143,7 +177,7 @@ int main(void)
 
     //LFO
     int lfo1wave = 0;
-    string lfoNames[NUM_LFO_SENDS] = {"None","Pitch","Attack","Decay","Cutoff","Resonance"};
+    string lfoNames[NUM_LFO_SENDS] = {"None","Pitch","Attack","Decay","Sustain","Release","Cutoff","Resonance"};
 
     // initialize seed hardware and oscillator daisysp module
     float sample_rate;
