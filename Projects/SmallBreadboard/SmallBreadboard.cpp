@@ -61,6 +61,8 @@ enum LFOsends {
     pitchLFO,
     attackLFO,
     decayLFO,
+    sustainLFO,
+    releaseLFO,
     cutoffLFO,
     resonanceLFO,
     NUM_LFO_SENDS
@@ -76,12 +78,14 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
     bool gate;
     float oscTotal;
     float resTotal;
+    float envTotal;
 
     for(size_t i = 0; i < size; i += 2)
     { 
         //Set process of lfo1 for use in main
         params.setLFO1Process(lfo1.Process());
 
+        //LFO for Pitch
         if(params.getLFO1Send() == pitchLFO){
             osc.SetFreq(16.35f*(pow(2,params.getNote()+params.getLFO1Process())));
             subosc.SetFreq(16.35f*(pow(2,params.getSubNote()+params.getLFO1Process())));
@@ -90,6 +94,7 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
             subosc.SetFreq(16.35f*(pow(2,params.getSubNote())));
         }
 
+        //LFO for Filter
         if(params.getLFO1Send() == cutoffLFO){
             filt.SetFreq(params.getLFO1Process() * params.getFiltFreq() + params.getFiltFreq());
         }else if(params.getLFO1Send() == resonanceLFO){
@@ -100,6 +105,35 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
                 resTotal = 1.0f;
             }
             filt.SetRes(resTotal);
+        }
+
+        //LFO for Envelope
+        if(params.getLFO1Send() == attackLFO){
+            envTotal = params.getAttack() * params.getLFO1Process() + params.getAttack();
+            if(envTotal < 0.01f){
+                envTotal = 0.01f;
+            }
+            env.SetTime(ADSR_SEG_ATTACK,envTotal);
+        }else if(params.getLFO1Send() == decayLFO){
+            envTotal = params.getDecay() * params.getLFO1Process() + params.getDecay();
+            if(envTotal < 0.01f){
+                envTotal = 0.01f;
+            }
+            env.SetTime(ADSR_SEG_DECAY,envTotal);
+        }else if(params.getLFO1Send() == sustainLFO){
+            envTotal = params.getSustain() * params.getLFO1Process() + params.getSustain();
+            if(envTotal < 0.01f){
+                envTotal = 0.01f;
+            }else if(envTotal > 1.0f){
+                envTotal = 1.0f;
+            }
+            env.SetSustainLevel(envTotal);
+        }else if(params.getLFO1Send() == releaseLFO){
+            envTotal = params.getRelease() * params.getLFO1Process() + params.getRelease();
+            if(envTotal < 0.01f){
+                envTotal = 0.01f;
+            }
+            env.SetTime(ADSR_SEG_RELEASE,envTotal);
         }
 
         //Gates, and processes
@@ -139,11 +173,11 @@ int main(void)
     int oscWave = 0;
     int subOscWave = 0;
     int menuScreen = wave;
-    float lockThresh = 0.1f;
+    float lockThresh = 0.05f;
 
     //LFO
     int lfo1wave = 0;
-    string lfoNames[NUM_LFO_SENDS] = {"None","Pitch","Attack","Decay","Cutoff","Resonance"};
+    string lfoNames[NUM_LFO_SENDS] = {"None","Pitch","Attack","Decay","Sustain","Release","Cutoff","Resonance"};
 
     // initialize seed hardware and oscillator daisysp module
     float sample_rate;
@@ -489,7 +523,14 @@ int main(void)
             }
 
             if(!klock[1]){
-                params.setLFO1Freq(floor(kVal[1]*100.0f));
+                
+                //1 to 50
+                if(kVal[1] > 0.5f){
+                    params.setLFO1Freq(floor(kVal[1]*50.0f-24.0f));
+                }else{
+                    params.setLFO1Freq(1.0f / ceil(10.0f - kVal[1]*20.0f));
+                }
+                
             }else{
                 if(abs(kVal[1] - kLockVals[1]) > lockThresh){klock[1] = false;}
             }
@@ -498,12 +539,16 @@ int main(void)
             lfo1.SetAmp(params.getLFO1Amount());
 
             dLines[2] = "1|Amount: " + std::to_string((int)floor(params.getLFO1Amount()*100.0f));
-            dLines[3] = "2|Frequency: " + std::to_string((int)params.getLFO1Freq());
+            if(params.getLFO1Freq() < 1.0f && params.getLFO1Freq() > 0.0f){
+                dLines[3] = "2|Frequency: 1/" + std::to_string((int)(1.0f / params.getLFO1Freq()));
+            }else{
+                dLines[3] = "2|Frequency: " + std::to_string((int)params.getLFO1Freq());
+            }
             dLines[5] = "";
 
             //LFO 1 Wave Selector 
             if(button[bup].FallingEdge()){
-                lfo1wave = lfo1wave < 3 ? lfo1wave + 1: 0;
+                lfo1wave = lfo1wave < 4 ? lfo1wave + 1: 0;
             }
 
             switch(lfo1wave){
@@ -520,6 +565,10 @@ int main(void)
                     dLines[4] = "^|Wave: Square";
                     break;
                 case 3:
+                    lfo1.SetWaveform(lfo1.WAVE_RAMP);
+                     dLines[4] = "^|Wave: Ramp";
+                    break;
+                case 4:
                     lfo1.SetWaveform(lfo1.WAVE_TRI);
                      dLines[4] = "^|Wave: Triangle";
                     break;
