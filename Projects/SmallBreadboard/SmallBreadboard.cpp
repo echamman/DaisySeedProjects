@@ -158,11 +158,11 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         //Reverb add
         verb.Process(sig, sig, &out[i], &out[i + 1]);
 
-        //left out
+        //left out goes to Delay circuit
         out[i] += sig;
 
-        // right out
-        out[i + 1] += sig;
+        //right out to output
+        out[i + 1] += (1.0f - params.getDelay()) * sig + params.getDelay() * in[i];
     }
 }
 
@@ -402,11 +402,18 @@ int main(void)
                 if(abs(kVal[1] - kLockVals[1]) > lockThresh){klock[1] = false;}
             }
 
-            //Noise adjust
+            //Delay adjust
             if(!klock[2]){
-                params.setNoise(kVal[2] * 0.5f);
+                params.setDelay(kVal[2]);
             }else{
                 if(abs(kVal[2] - kLockVals[2]) > lockThresh){klock[2] = false;}
+            }
+
+            //Noise adjust
+            if(!klock[3]){
+                params.setNoise(kVal[3] * 0.5f);
+            }else{
+                if(abs(kVal[3] - kLockVals[3]) > lockThresh){klock[3] = false;}
             }
 
             oDrive.SetDrive(params.getDrive());
@@ -414,8 +421,8 @@ int main(void)
 
             dLines[1] = "1|Reverb: " + std::to_string((int)floor(params.getReverb()*100.00f));
             dLines[2] = "2|Overdrive: " + std::to_string((int)floor(params.getDrive()*100.00f));
-            dLines[3] = "3|Noise: " + std::to_string((int)floor(params.getNoise()*100.00f));
-            dLines[4] = "";
+            dLines[3] = "3|Delay: " + std::to_string((int)floor(params.getDelay()*100.00f));
+            dLines[4] = "4|Noise: " + std::to_string((int)floor(params.getNoise()*100.00f));
 
         }else if(menuScreen == envelope){
             //Update envelope attack and decay
