@@ -41,11 +41,11 @@ class lilOled{
     //Print to Display
     public: void print(string dLines[], int max){
         display.Fill(false);
-        display.SetCursor(44, 0);
+        display.SetCursor(0, 0);
         sprintf(strbuff, dLines[0].c_str());
-        display.WriteString(strbuff, Font_6x8, true);
+        display.WriteString(strbuff, Font_7x10, true);
         for(int d=1; d<max; d++){
-            display.SetCursor(0, d*11);
+            display.SetCursor(0, d*11+2);
             sprintf(strbuff, dLines[d].c_str());
             display.WriteString(strbuff, Font_6x8, true);
         }
