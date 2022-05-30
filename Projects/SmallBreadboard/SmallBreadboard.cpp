@@ -39,7 +39,8 @@ enum AdcChannel {
 };
 
 enum menu {
-    wave = 0,
+    oscillatorMenu = 0,
+    suboscillatorMenu,
     envelope,
     filter,
     fx,
@@ -172,7 +173,7 @@ int main(void)
     float lastnote = 1;
     int oscWave = 0;
     int subOscWave = 0;
-    int menuScreen = wave;
+    int menuScreen = oscillatorMenu;
     float lockThresh = 0.05f;
 
     //LFO
@@ -290,8 +291,9 @@ int main(void)
             }
         }
     
-        if(menuScreen == wave){
-            dLines[0] = "Wave";
+        if(menuScreen == oscillatorMenu){
+            dLines[0] = "Oscillator";
+            dLines[5] = "";
 
             //Adjust offset based on knob, unless locked after menu change
             if(!klock[0]){
@@ -308,78 +310,99 @@ int main(void)
                 if(abs(kVal[1] - kLockVals[1]) > lockThresh){klock[1] = false;}
             }
 
+            //Amplitude adjust
             if(!klock[2]){
-                params.setSubOctave(floor(kVal[2] * 3.0f));
+                params.setOscAmp(kVal[2] * 0.5f);
             }else{
                 if(abs(kVal[2] - kLockVals[2]) > lockThresh){klock[2] = false;}
             }
 
-            dLines[3] = "2|Octave: " + std::to_string((int)floor(params.getOctave()));
+            osc.SetAmp(params.getOscAmp());
 
-            switch(params.getSubOctave()){
-                case 0: 
-                    dLines[5] = "3|Sub Octave: Off";
-                    subosc.SetAmp(0.0f);
-                    break;
-                case 1:
-                    dLines[5] = "3|Sub Octave: -1";
-                    subosc.SetAmp(0.5f);
-                    break;
-                case 2:
-                    dLines[5] = "3|Sub Octave: -2";
-                    subosc.SetAmp(0.5f);
-                    break;
-                case 3:
-                    dLines[5] = "3|Sub Octave: -3";
-                    subosc.SetAmp(0.5f);
-            }
+            dLines[3] = "2|Octave: " + std::to_string((int)floor(params.getOctave()));
+            dLines[4] = "3|Amplitude: "  + std::to_string((int)floor(params.getOscAmp() * 200.0f));
 
             //Wave Selector 
-            if(button[bup].FallingEdge()){
+            if(button[bsel].FallingEdge()){
                 oscWave = oscWave < 3 ? oscWave + 1 : 0;
             }
 
             switch(oscWave){
                 case 0:
                     osc.SetWaveform(osc.WAVE_SIN);
-                    dLines[1] = "^|Type: Sin";
+                    dLines[1] = "o|Type: Sin";
                     break;
                 case 1:
                     osc.SetWaveform(osc.WAVE_SAW);
-                    dLines[1] = "^|Type: Saw";
+                    dLines[1] = "o|Type: Saw";
                     break;
                 case 2:
                     osc.SetWaveform(osc.WAVE_SQUARE);
-                    dLines[1] = "^|Type: Square";
+                    dLines[1] = "o|Type: Square";
                     break;
                 case 3:
                     osc.SetWaveform(osc.WAVE_TRI);
-                    dLines[1] = "^|Type: Triangle";
+                    dLines[1] = "o|Type: Triangle";
                     break;
             }
 
+        }else if(menuScreen == suboscillatorMenu){
+            dLines[0] = "Sub Oscillator";
+            dLines[4] = "";
+            dLines[5] = "";
+
+            if(!klock[0]){
+                params.setSubOctave(floor(kVal[0] * 3.0f));
+            }else{
+                if(abs(kVal[0] - kLockVals[0]) > lockThresh){klock[0] = false;}
+            }
+
+            //Amplitude adjust
+            if(!klock[1]){
+                params.setSubOscAmp(kVal[1] * 0.5f);
+            }else{
+                if(abs(kVal[1] - kLockVals[1]) > lockThresh){klock[1] = false;}
+            }
+
+            subosc.SetAmp(params.getSubOscAmp());
+            dLines[3] = "2|Amplitude: "  + std::to_string((int)floor(params.getSubOscAmp() * 200.0f));
             //Sub Wave Selector 
-            if(button[bdown].FallingEdge()){
+            if(button[bsel].FallingEdge()){
                 subOscWave = subOscWave < 3 ? subOscWave + 1 : 0;
             }
 
             switch(subOscWave){
                 case 0:
                     subosc.SetWaveform(subosc.WAVE_SIN);
-                    dLines[4] = "v|Sub Type: Sin";
+                    dLines[1] = "o|Sub Type: Sin";
                     break;
                 case 1:
                     subosc.SetWaveform(subosc.WAVE_SAW);
-                    dLines[4] = "v|Sub Type: Saw";
+                    dLines[1] = "o|Sub Type: Saw";
                     break;
                 case 2:
                     subosc.SetWaveform(subosc.WAVE_SQUARE);
-                    dLines[4] = "v|Sub Type: Square";
+                    dLines[1] = "o|Sub Type: Square";
                     break;
                 case 3:
                     subosc.SetWaveform(subosc.WAVE_TRI);
-                    dLines[4] = "v|Sub Type: Triangle";
+                    dLines[1] = "o|Sub Type: Triangle";
                     break;
+            }
+
+            switch(params.getSubOctave()){
+                case 0: 
+                    dLines[2] = "1|Sub Octave: Off";
+                    subosc.SetAmp(0.0f);
+                    break;
+                case 1:
+                    dLines[2] = "1|Sub Octave: -1";
+                    break;
+                case 2:
+                    dLines[2] = "1|Sub Octave: -2";
+                    break;
+                case 3:
+                    dLines[2] = "1|Sub Octave: -3";
             }
 
         }else if(menuScreen == fx){
