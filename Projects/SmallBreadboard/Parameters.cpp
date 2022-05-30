@@ -9,6 +9,8 @@ class dd22Params {
         float offset = 0.0f;
         float octave = 1.0f;
         int subOct = 0;
+        float oscAmp = 0.5;
+        float subOscAmp = 0.5;
 
          //Envelope
         float attack = 0.1f;
@@ -78,6 +80,22 @@ class dd22Params {
         
         void setSubOctave(int newSubOctave){
             subOct = newSubOctave;
+        }
+
+        float getOscAmp(){
+            return oscAmp;
+        }
+        
+        void setOscAmp(float newOscAmp){
+            oscAmp = newOscAmp;
+        }
+
+        float getSubOscAmp(){
+            return subOscAmp;
+        }
+        
+        void setSubOscAmp(float newSubOscAmp){
+            subOscAmp = newSubOscAmp;
         }
 
         float getAttack(){
