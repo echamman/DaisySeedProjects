@@ -12,6 +12,7 @@ using namespace std;
 
 static DaisySeed  hw;
 static Oscillator osc, subosc, lfo1, lfo2;
+static MidiUartHandler midi;
 
 //Holds all values, can be accessed from main and audio func
 static dd22Params params;
@@ -54,6 +55,8 @@ enum buttons {
     bright,
     bup,
     bsel,
+    bsave,
+    bload,
     NUM_BUTTONS
 };
 
@@ -167,6 +170,26 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
     }
 }
 
+void HandleMidiMessage(MidiEvent m){
+    switch(m.type){
+        case NoteOn: {
+            NoteOnEvent p = m.AsNoteOn();
+            if(m.data[1] != 0)
+            {
+                p = m.AsNoteOn();
+                params.setNoise(mtof(p.note));
+                osc.SetFreq(mtof(p.note));
+                env.Retrigger(false);                                                                                                                         
+                
+                //osc.SetAmp((p.velocity / 127.0f));
+            }
+        }
+        break;
+        default: 
+            break;
+    }
+}
+
 int main(void)
 {
     //Declarations for while loop
@@ -186,6 +209,10 @@ int main(void)
     hw.Init();
     hw.SetAudioBlockSize(4);
     sample_rate = hw.AudioSampleRate();
+
+    //Initialize Midi port
+    MidiUartHandler::Config MidiConfig;
+    midi.Init(MidiConfig);
 
     // Set parameters for oscillator
     osc.Init(sample_rate);
@@ -248,6 +275,7 @@ int main(void)
     // start callback
     hw.adc.Start();
     hw.StartAudio(AudioCallback);
+    midi.Listen();
 
     //Analog input vars
     float kVal[4];
@@ -605,12 +633,18 @@ int main(void)
             }
         }
 
+        /* Old CV way to handle notes
         //Process notes and key hits
         //Translate CV In to pitch
         if(cvPitch * 3.33f < 0.1f){
             params.setNote(params.getOctave());
         }else{
             params.setNote(cvPitch * 3.33f + params.getOctave() + params.getOffset());
+        }*/
+
+        //Cool new MIDI note handling
+        while(midi.HasEvents()){
+            HandleMidiMessage(midi.PopEvent());
         }
 
         params.setSubNote(params.getNote() - static_cast<float>(params.getSubOctave()));
