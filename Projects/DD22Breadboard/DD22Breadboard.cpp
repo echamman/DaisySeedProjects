@@ -141,13 +141,12 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         }
 
         //Gates, and processes
-        gate = hw.adc.GetFloat(CVGATE) < 0.1f;
-        params.setEnvProc(env.Process(gate));
+        params.setEnvProc(env.Process(params.getEnvGate()));
         oscTotal = osc.Process() + subosc.Process() + noise.Process();
 
         //Create signal
-        //sig = params.getEnvProc() * oscTotal + params.getEnvProc() * oDrive.Process(oscTotal);
-        sig = oscTotal;
+        sig = params.getEnvProc() * oscTotal + params.getEnvProc() * oDrive.Process(oscTotal);
+        //sig = oscTotal;
         filt.Process(sig);
         switch (params.getFilter()){
             case 1:
@@ -171,16 +170,20 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
     }
 }
 
+//Translate MIDI messages to notes
 void HandleMidiMessage(MidiEvent m){
     switch(m.type){
         case NoteOn: {
             NoteOnEvent p = m.AsNoteOn();
-            params.setNoise(mtof(p.note));
+            params.setNote(mtof(p.note));
             osc.SetFreq(mtof(p.note));
             env.Retrigger(false);
+            params.setEnvGate(true);
             //osc.SetAmp((p.velocity / 127.0f));
         }
         break;
+        case NoteOff:
+            params.setEnvGate(false);
         default: 
             break;
     }
@@ -630,15 +633,6 @@ int main(void)
             }
         }
 
-        /* Old CV way to handle notes
-        //Process notes and key hits
-        //Translate CV In to pitch
-        if(cvPitch * 3.33f < 0.1f){
-            params.setNote(params.getOctave());
-        }else{
-            params.setNote(cvPitch * 3.33f + params.getOctave() + params.getOffset());
-        }*/
-
         //Cool new MIDI note handling
         midi.Listen();
         while(midi.HasEvents()){
@@ -646,14 +640,6 @@ int main(void)
         }
 
         params.setSubNote(params.getNote() - static_cast<float>(params.getSubOctave()));
-
-        if(cvGate < 0.1f && (!keyHeld || abs(lastnote - params.getNote()) > 0.08f)){
-            env.Retrigger(false);
-            lastnote = params.getNote();
-            keyHeld = true;
-        }else if(cvGate > lockThresh){
-            keyHeld = false;
-        }
                
         //dLines[5] = std::to_string((int)floor(params.getLFO1Process()*100.0f));
         //Print to display

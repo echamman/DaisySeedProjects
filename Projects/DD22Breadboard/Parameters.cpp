@@ -17,6 +17,7 @@ class dd22Params {
         float decay = 0.5f;
         float release = 0.5f;
         float sustain = 0.5f;
+        bool gate = false;
 
         //Effects
         float reverb = 0.0f;
@@ -196,6 +197,14 @@ class dd22Params {
 
         void setEnvProc(float newEnvProc){
             envProcess = newEnvProc;
+        }
+
+        bool getEnvGate(){
+            return gate;
+        }
+
+        void setEnvGate(bool newGate){
+            gate = newGate;
         }
 
         float getFiltFreq(){
