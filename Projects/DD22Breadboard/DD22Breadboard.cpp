@@ -12,7 +12,7 @@ using namespace std;
 
 static DaisySeed  hw;
 static Oscillator osc, subosc, lfo1, lfo2;
-static MidiUartHandler midi;
+static MidiUsbHandler midi;
 
 //Holds all values, can be accessed from main and audio func
 static dd22Params params;
@@ -89,14 +89,14 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         //Set process of lfo1 for use in main
         params.setLFO1Process(lfo1.Process());
 
-        //LFO for Pitch
+        /*LFO for Pitch
         if(params.getLFO1Send() == pitchLFO){
             osc.SetFreq(16.35f*(pow(2,params.getNote()+params.getLFO1Process())));
             subosc.SetFreq(16.35f*(pow(2,params.getSubNote()+params.getLFO1Process())));
         }else{
             osc.SetFreq(16.35f*(pow(2,params.getNote())));
             subosc.SetFreq(16.35f*(pow(2,params.getSubNote())));
-        }
+        }*/
 
         //LFO for Filter
         if(params.getLFO1Send() == cutoffLFO){
@@ -146,7 +146,8 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         oscTotal = osc.Process() + subosc.Process() + noise.Process();
 
         //Create signal
-        sig = params.getEnvProc() * oscTotal + params.getEnvProc() * oDrive.Process(oscTotal);
+        //sig = params.getEnvProc() * oscTotal + params.getEnvProc() * oDrive.Process(oscTotal);
+        sig = oscTotal;
         filt.Process(sig);
         switch (params.getFilter()){
             case 1:
@@ -174,15 +175,10 @@ void HandleMidiMessage(MidiEvent m){
     switch(m.type){
         case NoteOn: {
             NoteOnEvent p = m.AsNoteOn();
-            if(m.data[1] != 0)
-            {
-                p = m.AsNoteOn();
-                params.setNoise(mtof(p.note));
-                osc.SetFreq(mtof(p.note));
-                env.Retrigger(false);                                                                                                                         
-                
-                //osc.SetAmp((p.velocity / 127.0f));
-            }
+            params.setNoise(mtof(p.note));
+            osc.SetFreq(mtof(p.note));
+            env.Retrigger(false);
+            //osc.SetAmp((p.velocity / 127.0f));
         }
         break;
         default: 
@@ -211,8 +207,9 @@ int main(void)
     sample_rate = hw.AudioSampleRate();
 
     //Initialize Midi port
-    MidiUartHandler::Config MidiConfig;
+    MidiUsbHandler::Config MidiConfig;
     midi.Init(MidiConfig);
+    System::Delay(250);
 
     // Set parameters for oscillator
     osc.Init(sample_rate);
@@ -275,7 +272,7 @@ int main(void)
     // start callback
     hw.adc.Start();
     hw.StartAudio(AudioCallback);
-    midi.Listen();
+    midi.StartReceive();
 
     //Analog input vars
     float kVal[4];
@@ -643,6 +640,7 @@ int main(void)
         }*/
 
         //Cool new MIDI note handling
+        midi.Listen();
         while(midi.HasEvents()){
             HandleMidiMessage(midi.PopEvent());
         }
