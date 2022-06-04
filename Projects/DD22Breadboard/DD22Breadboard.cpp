@@ -179,14 +179,9 @@ void HandleMidiMessage(MidiEvent m){
 
             params.noteOn(mtof(p.note));
 
-            //Only play highest held note
-            if(params.getHighestNote() - mtof(p.note) > 0.01f) { 
-                params.setNote(params.getHighestNote()); 
-            }else{ 
-                params.setNote(mtof(p.note)); 
-                env.Retrigger(false);
-                params.setEnvGate(true);
-            }
+            params.setNote(mtof(p.note)); 
+            env.Retrigger(false);
+            params.setEnvGate(true);
 
         }
         break;
@@ -197,7 +192,7 @@ void HandleMidiMessage(MidiEvent m){
 
             //If no highest, no notes pressed
             if(params.notesHeld()){
-                params.setNote(params.getHighestNote());
+                params.setNote(params.getLastNote());
             }else{
                 params.setEnvGate(false);
             }
@@ -216,6 +211,7 @@ int main(void)
     int subOscWave = 0;
     int menuScreen = oscillatorMenu;
     float lockThresh = 0.05f;
+    bool firstBoot = true;
 
     //LFO
     int lfo1wave = 0;
@@ -298,8 +294,11 @@ int main(void)
 
     //Analog input vars
     float kVal[4];
-    bool klock[4] = {false};
-    float kLockVals[4] = {0}; //For parameter locking
+    bool klock[4] = {true};
+    float kLockVals[4];
+    for(int k = 0; k < 4; k++){
+        kLockVals[k] = 1.0f - hw.adc.GetFloat(k);
+    }
     float cvPitch;
     float cvGate;
 
@@ -343,25 +342,25 @@ int main(void)
             dLines[5] = "";
 
             //Adjust offset based on knob, unless locked after menu change
-            if(!klock[0]){
+            if(!klock[0] && !firstBoot){
                 params.setOffset(kVal[0]);
             }else{
-                if(abs(kVal[0] - kLockVals[0]) > lockThresh){klock[0] = false;}
+                if(abs(kVal[0] - kLockVals[0]) > lockThresh){klock[0] = false; firstBoot = false;}
             }
             dLines[2] = "1|Offset: " + std::to_string((int)floor(params.getOffset()*100.0f));
 
             //Octave adjust
-            if(!klock[1]){
+            if(!klock[1] && !firstBoot){
                 params.setOctave(floor(kVal[1] * 3.0f));
             }else{
-                if(abs(kVal[1] - kLockVals[1]) > lockThresh){klock[1] = false;}
+                if(abs(kVal[1] - kLockVals[1]) > lockThresh){klock[1] = false; firstBoot = false;}
             }
 
             //Amplitude adjust
-            if(!klock[2]){
+            if(!klock[2] && !firstBoot){
                 params.setOscAmp(kVal[2] * 0.5f);
             }else{
-                if(abs(kVal[2] - kLockVals[2]) > lockThresh){klock[2] = false;}
+                if(abs(kVal[2] - kLockVals[2]) > lockThresh){klock[2] = false; firstBoot = false;}
             }
 
             osc.SetAmp(params.getOscAmp());

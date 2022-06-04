@@ -81,8 +81,7 @@ class dd22Params {
             }
         }
 
-        float getHighestNote(){
-            sort(heldNotes.begin(), heldNotes.end());
+        float getLastNote(){
             return *(heldNotes.end()-1);
         }
 
