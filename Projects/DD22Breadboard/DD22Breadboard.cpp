@@ -215,14 +215,11 @@ void HandleMidiMessage(MidiEvent m){
 int main(void)
 {
     //Declarations for while loop
-    int oscWave = 0;
-    int subOscWave = 0;
     int menuScreen = oscillatorMenu;
     float lockThresh = 0.05f;
     bool firstBoot = true;
 
     //LFO
-    int lfo1wave = 0;
     string lfoNames[NUM_LFO_SENDS] = {"None","Pitch","Attack","Decay","Sustain","Release","Cutoff","Resonance"};
 
     // initialize seed hardware and oscillator daisysp module
@@ -311,6 +308,9 @@ int main(void)
         kLockVals[k] = 1.0f - hw.adc.GetFloat(k);
     }
 
+    //Save initial settings
+    params.savePatch();
+
     while(1) {
         //Debounce buttons together
         for(int b = 0; b < NUM_BUTTONS; b++){
@@ -371,10 +371,10 @@ int main(void)
 
             //Wave Selector 
             if(button[butA].FallingEdge()){
-                oscWave = oscWave < 3 ? oscWave + 1 : 0;
+                params.incWave(4);
             }
 
-            switch(oscWave){
+            switch(params.getWave()){
                 case 0:
                     osc.SetWaveform(osc.WAVE_SIN);
                     dLines[1] = "A|Type: Sin";
@@ -415,10 +415,10 @@ int main(void)
             dLines[3] = "2|Amplitude: "  + std::to_string((int)floor(params.getSubOscAmp() * 200.0f));
             //Sub Wave Selector 
             if(button[butA].FallingEdge()){
-                subOscWave = subOscWave < 3 ? subOscWave + 1 : 0;
+                params.incSubWave(4);
             }
 
-            switch(subOscWave){
+            switch(params.getSubWave()){
                 case 0:
                     subosc.SetWaveform(subosc.WAVE_SIN);
                     dLines[1] = "A|Sub Type: Sin";
@@ -556,7 +556,7 @@ int main(void)
             }
 
             if(!klock[0]){
-                params.setFiltFreq(floor(kVal[0]*100.0f) * 100.0f);
+                params.setFiltFreq(floor(kVal[0]*100.0f) * 100.0f + 100.0f);
             }else{
                 if(abs(kVal[0] - kLockVals[0]) > lockThresh){klock[0] = false;}
             }
@@ -625,10 +625,10 @@ int main(void)
 
             //LFO 1 Wave Selector 
             if(button[butB].FallingEdge()){
-                lfo1wave = lfo1wave < 4 ? lfo1wave + 1: 0;
+                params.incLFO1Wave(5);
             }
 
-            switch(lfo1wave){
+            switch(params.getLFO1Wave()){
                 case 0:
                     lfo1.SetWaveform(lfo1.WAVE_SIN);
                     dLines[2] = "B|Wave: Sin";

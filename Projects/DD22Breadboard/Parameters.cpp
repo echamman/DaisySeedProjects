@@ -3,6 +3,10 @@ This file contains all the parameters for the DD-22
 */
 #include <vector>
 #include <algorithm>
+
+#define numFloats 17
+#define numInts 6
+
 using namespace std;
 
 class dd22Params {
@@ -16,6 +20,8 @@ class dd22Params {
         int subOct = 0;
         float oscAmp = 0.5;
         float subOscAmp = 0.5;
+        int wave = 0;
+        int subWave = 0;
 
          //Envelope
         float attack = 0.1f;
@@ -46,6 +52,10 @@ class dd22Params {
         float lfo1Process = 0;
         float envProcess = 0;
 
+        //Patch Saving
+        float savedFloats[numFloats];
+        int savedInts[numInts];
+
     public:
         //Getters and Setters
         float getNote(){
@@ -63,32 +73,6 @@ class dd22Params {
         void setSubNote(float newSubNote){
             subNote = newSubNote;
         }
-
-        //Handling held notes from midi
-        //Add note to vector
-        void noteOn(float newNote){
-            heldNotes.push_back(newNote);
-        }
-
-        //Delete note from vector
-        void noteOff(float newNote){
-            for(int i = 0; i < heldNotes.size(); i++){
-                if(abs(heldNotes.at(i) - newNote) < 0.01f){
-                    toDelete = heldNotes.begin() + i;
-                    heldNotes.erase(toDelete);
-                    break;
-                }
-            }
-        }
-
-        float getLastNote(){
-            return *(heldNotes.end()-1);
-        }
-
-        bool notesHeld(){
-            return !heldNotes.empty();
-        }
-        //End midi handling
 
         float getOffset(){
             return offset;
@@ -128,6 +112,30 @@ class dd22Params {
         
         void setSubOscAmp(float newSubOscAmp){
             subOscAmp = newSubOscAmp;
+        }
+
+        void setWave(int newWave){
+            wave = newWave;
+        }
+
+        void incWave(int MAX_WAVES){
+            wave = wave < MAX_WAVES-1 ? wave + 1: 0;
+        }
+
+        int getWave(){
+            return wave;
+        }
+
+        void setSubWave(int newWave){
+            subWave = newWave;
+        }
+
+        void incSubWave(int MAX_WAVES){
+            subWave = subWave < MAX_WAVES-1 ? subWave + 1: 0;
+        }
+
+        int getSubWave(){
+            return subWave;
         }
 
         float getAttack(){
@@ -214,6 +222,18 @@ class dd22Params {
             lfo1send = lfo1send < MAX_SENDS-1 ? lfo1send + 1: 0;
         }
 
+        void setLFO1Wave(int newWave){
+            lfo1wave = newWave;
+        }
+
+        void incLFO1Wave(int MAX_WAVES){
+            lfo1wave = lfo1wave < MAX_WAVES-1 ? lfo1wave + 1: 0;
+        }
+
+        int getLFO1Wave(){
+            return lfo1wave;
+        }
+
         float getLFO1Process(){
             return lfo1Process;
         }
@@ -254,6 +274,10 @@ class dd22Params {
             filterType = filterType < 3 ? filterType + 1 : 0;
         }
 
+        void setFilter(int fType){
+            filterType = fType;
+        }
+
         float getRes(){
             return filterRes;
         }
@@ -274,5 +298,87 @@ class dd22Params {
 
         void setNoise(float newNoise){
             noise = newNoise;
+        }
+
+        //Handling held notes from midi
+        //Add note to vector
+        void noteOn(float newNote){
+            heldNotes.push_back(newNote);
+        }
+
+        //Delete note from vector
+        void noteOff(float newNote){
+            for(int i = 0; i < heldNotes.size(); i++){
+                if(abs(heldNotes.at(i) - newNote) < 0.01f){
+                    toDelete = heldNotes.begin() + i;
+                    heldNotes.erase(toDelete);
+                    break;
+                }
+            }
+        }
+
+        float getLastNote(){
+            return *(heldNotes.end()-1);
+        }
+
+        bool notesHeld(){
+            return !heldNotes.empty();
+        }
+        //End midi handling
+
+        //Patch saving and restoring functions
+        void savePatch(){
+            savedFloats[0] = offset;
+            savedFloats[1] = octave;
+            savedFloats[2] = oscAmp;
+            savedFloats[3] = subOscAmp;
+            savedFloats[4] = attack;
+            savedFloats[5] = decay;
+            savedFloats[6] = release;
+            savedFloats[7] = sustain;
+            savedFloats[8] = reverb;
+            savedFloats[9] = delay;
+            savedFloats[10] = drive;
+            savedFloats[11] = noise;
+            savedFloats[12] = filtFreq;
+            savedFloats[13] = filterRes;
+            savedFloats[14] = filterDrive;
+            savedFloats[15] = lfo1Amount;
+            savedFloats[16] = lfo1Freq;
+
+            savedInts[0] = subOct;
+            savedInts[1] = filterType;
+            savedInts[2] = lfo1wave;
+            savedInts[3] = lfo1send;
+            savedInts[4] = wave;
+            savedInts[5] = subWave;
+
+        }
+
+        void restorePatch(){
+            setOffset(savedFloats[0]);
+            setOctave(savedFloats[1]);
+            setOscAmp(savedFloats[2]);
+            setSubOscAmp(savedFloats[3]);
+            setAttack(savedFloats[4]);
+            setDecay(savedFloats[5]);
+            setRelease(savedFloats[6]);
+            setSustain(savedFloats[7]);
+            setReverb(savedFloats[8]);
+            setDelay(savedFloats[9]);
+            setDrive(savedFloats[10]);
+            setNoise(savedFloats[11]);
+            setFiltFreq(savedFloats[12]);
+            setRes(savedFloats[13]);
+            setFilterDrive(savedFloats[14]);
+            setLFO1Amount(savedFloats[15]);
+            setLFO1Freq(savedFloats[16]);
+
+            setSubOctave(savedInts[0]);
+            setFilter(savedInts[1]);
+            setLFO1Wave(savedInts[2]);
+            setLFO1Send(savedInts[3]);
+            setWave(savedInts[4]);
+            setSubWave(savedInts[5]);
         }
 };
