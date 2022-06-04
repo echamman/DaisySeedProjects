@@ -34,8 +34,6 @@ enum AdcChannel {
     Knob1,
     Knob2,
     Knob3,
-    CVIN,
-    CVGATE,
     NUM_ADC_CHANNELS
 };
 
@@ -79,7 +77,6 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
                           size_t                                size)
 {
     float sig;
-    bool gate;
     float oscTotal;
     float resTotal;
     float envTotal;
@@ -101,7 +98,7 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         }else{
             note = (params.getNote() *  pow(2, params.getOctave()));
             note += note * params.getOffset();
-            
+
             subNote = params.getSubNote() *  pow(2, params.getOctave());
             subNote += subNote * params.getOffset();
         }
@@ -218,7 +215,6 @@ void HandleMidiMessage(MidiEvent m){
 int main(void)
 {
     //Declarations for while loop
-    float lastnote = 1;
     int oscWave = 0;
     int subOscWave = 0;
     int menuScreen = oscillatorMenu;
@@ -262,7 +258,6 @@ int main(void)
     env.SetTime(ADSR_SEG_DECAY,params.getDecay());
     env.SetTime(ADSR_SEG_RELEASE,params.getRelease());
     env.SetSustainLevel(params.getSustain());
-    bool keyHeld = false;
     tick.Init(1.0f, sample_rate);
 
     //Initialize Effects
@@ -288,8 +283,6 @@ int main(void)
     adcConfig[Knob1].InitSingle(hw.GetPin(24));
     adcConfig[Knob2].InitSingle(hw.GetPin(21));
     adcConfig[Knob3].InitSingle(hw.GetPin(20));
-    adcConfig[CVIN].InitSingle(hw.GetPin(15));
-    adcConfig[CVGATE].InitSingle(hw.GetPin(16));
     hw.adc.Init(adcConfig, NUM_ADC_CHANNELS);
 
     //buttons
@@ -304,6 +297,12 @@ int main(void)
     hw.StartAudio(AudioCallback);
     midi.StartReceive();
 
+    //Allow the OLED to start up
+    System::Delay(100);
+    /** And Initialize */
+    screen.Init(&hw);
+    System::Delay(2000);
+
     //Analog input vars
     float kVal[4];
     bool klock[4] = {true};
@@ -311,14 +310,6 @@ int main(void)
     for(int k = 0; k < 4; k++){
         kLockVals[k] = 1.0f - hw.adc.GetFloat(k);
     }
-    float cvPitch;
-    float cvGate;
-
-    //Allow the OLED to start up
-    System::Delay(100);
-    /** And Initialize */
-    screen.Init(&hw);
-    System::Delay(2000);
 
     while(1) {
         //Debounce buttons together
@@ -331,8 +322,6 @@ int main(void)
         kVal[1] = 1.0f - hw.adc.GetFloat(Knob1);
         kVal[2] = 1.0f - hw.adc.GetFloat(Knob2);
         kVal[3] = 1.0f - hw.adc.GetFloat(Knob3);
-        cvPitch = hw.adc.GetFloat(CVIN);
-        cvGate = hw.adc.GetFloat(CVGATE);
 
         //Cycle through menu screens and parameter lock knobs on each cycle
         if(button[bright].FallingEdge()){

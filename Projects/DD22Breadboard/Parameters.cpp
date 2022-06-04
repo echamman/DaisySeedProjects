@@ -12,7 +12,7 @@ class dd22Params {
         vector<float> heldNotes;
         vector<float>::iterator toDelete;
         float offset = 0.0f;
-        float octave = 1.0f;
+        float octave = 0.0f;
         int subOct = 0;
         float oscAmp = 0.5;
         float subOscAmp = 0.5;
