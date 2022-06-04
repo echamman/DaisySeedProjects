@@ -1,11 +1,16 @@
 /*
 This file contains all the parameters for the DD-22
 */
+#include <vector>
+#include <algorithm>
+using namespace std;
 
 class dd22Params {
     private:
         //Oscillator Variables
         float note, subNote;
+        vector<float> heldNotes;
+        vector<float>::iterator toDelete;
         float offset = 0.0f;
         float octave = 1.0f;
         int subOct = 0;
@@ -58,6 +63,33 @@ class dd22Params {
         void setSubNote(float newSubNote){
             subNote = newSubNote;
         }
+
+        //Handling held notes from midi
+        //Add note to vector
+        void noteOn(float newNote){
+            heldNotes.push_back(newNote);
+        }
+
+        //Delete note from vector
+        void noteOff(float newNote){
+            for(int i = 0; i < heldNotes.size(); i++){
+                if(abs(heldNotes.at(i) - newNote) < 0.01f){
+                    toDelete = heldNotes.begin() + i;
+                    heldNotes.erase(toDelete);
+                    break;
+                }
+            }
+        }
+
+        float getHighestNote(){
+            sort(heldNotes.begin(), heldNotes.end());
+            return *(heldNotes.end()-1);
+        }
+
+        bool notesHeld(){
+            return !heldNotes.empty();
+        }
+        //End midi handling
 
         float getOffset(){
             return offset;

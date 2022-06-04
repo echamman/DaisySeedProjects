@@ -89,14 +89,14 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         //Set process of lfo1 for use in main
         params.setLFO1Process(lfo1.Process());
 
-        /*LFO for Pitch
+        //LFO for Pitch
         if(params.getLFO1Send() == pitchLFO){
-            osc.SetFreq(16.35f*(pow(2,params.getNote()+params.getLFO1Process())));
-            subosc.SetFreq(16.35f*(pow(2,params.getSubNote()+params.getLFO1Process())));
+            osc.SetFreq(params.getNote() + params.getNote() * params.getLFO1Process());
+            subosc.SetFreq(params.getSubNote()+ params.getSubNote() * params.getLFO1Process());
         }else{
-            osc.SetFreq(16.35f*(pow(2,params.getNote())));
-            subosc.SetFreq(16.35f*(pow(2,params.getSubNote())));
-        }*/
+            osc.SetFreq(params.getNote());
+            subosc.SetFreq(params.getSubNote());
+        }
 
         //LFO for Filter
         if(params.getLFO1Send() == cutoffLFO){
@@ -172,18 +172,37 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 
 //Translate MIDI messages to notes
 void HandleMidiMessage(MidiEvent m){
+
     switch(m.type){
         case NoteOn: {
             NoteOnEvent p = m.AsNoteOn();
-            params.setNote(mtof(p.note));
-            osc.SetFreq(mtof(p.note));
-            env.Retrigger(false);
-            params.setEnvGate(true);
-            //osc.SetAmp((p.velocity / 127.0f));
+
+            params.noteOn(mtof(p.note));
+
+            //Only play highest held note
+            if(params.getHighestNote() - mtof(p.note) > 0.01f) { 
+                params.setNote(params.getHighestNote()); 
+            }else{ 
+                params.setNote(mtof(p.note)); 
+                env.Retrigger(false);
+                params.setEnvGate(true);
+            }
+
         }
         break;
-        case NoteOff:
-            params.setEnvGate(false);
+        case NoteOff: {
+            NoteOffEvent o = m.AsNoteOff();
+
+            params.noteOff(mtof(o.note));
+
+            //If no highest, no notes pressed
+            if(params.notesHeld()){
+                params.setNote(params.getHighestNote());
+            }else{
+                params.setEnvGate(false);
+            }
+        }
+        break;
         default: 
             break;
     }
@@ -639,7 +658,7 @@ int main(void)
             HandleMidiMessage(midi.PopEvent());
         }
 
-        params.setSubNote(params.getNote() - static_cast<float>(params.getSubOctave()));
+        params.setSubNote(params.getNote() / pow(2.0f, static_cast<float>(params.getSubOctave())));
                
         //dLines[5] = std::to_string((int)floor(params.getLFO1Process()*100.0f));
         //Print to display
