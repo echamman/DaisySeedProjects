@@ -49,10 +49,10 @@ enum menu {
 
 enum buttons {
     bleft = 0,
-    bdown,
+    butShift,
     bright,
-    bup,
-    bsel,
+    butB,
+    butA,
     bsave,
     bload,
     NUM_BUTTONS
@@ -287,10 +287,10 @@ int main(void)
 
     //buttons
     button[bleft].Init(hw.GetPin(8),1000);
-    button[bdown].Init(hw.GetPin(9),1000);
+    button[butShift].Init(hw.GetPin(9),1000);
     button[bright].Init(hw.GetPin(6),1000);
-    button[bup].Init(hw.GetPin(10),1000);
-    button[bsel].Init(hw.GetPin(7),1000);
+    button[butB].Init(hw.GetPin(10),1000);
+    button[butA].Init(hw.GetPin(7),1000);
 
     // start callback
     hw.adc.Start();
@@ -370,26 +370,26 @@ int main(void)
             dLines[4] = "3|Amplitude: "  + std::to_string((int)floor(params.getOscAmp() * 200.0f));
 
             //Wave Selector 
-            if(button[bsel].FallingEdge()){
+            if(button[butA].FallingEdge()){
                 oscWave = oscWave < 3 ? oscWave + 1 : 0;
             }
 
             switch(oscWave){
                 case 0:
                     osc.SetWaveform(osc.WAVE_SIN);
-                    dLines[1] = "o|Type: Sin";
+                    dLines[1] = "A|Type: Sin";
                     break;
                 case 1:
                     osc.SetWaveform(osc.WAVE_SAW);
-                    dLines[1] = "o|Type: Saw";
+                    dLines[1] = "A|Type: Saw";
                     break;
                 case 2:
                     osc.SetWaveform(osc.WAVE_SQUARE);
-                    dLines[1] = "o|Type: Square";
+                    dLines[1] = "A|Type: Square";
                     break;
                 case 3:
                     osc.SetWaveform(osc.WAVE_TRI);
-                    dLines[1] = "o|Type: Triangle";
+                    dLines[1] = "A|Type: Triangle";
                     break;
             }
 
@@ -414,26 +414,26 @@ int main(void)
             subosc.SetAmp(params.getSubOscAmp());
             dLines[3] = "2|Amplitude: "  + std::to_string((int)floor(params.getSubOscAmp() * 200.0f));
             //Sub Wave Selector 
-            if(button[bsel].FallingEdge()){
+            if(button[butA].FallingEdge()){
                 subOscWave = subOscWave < 3 ? subOscWave + 1 : 0;
             }
 
             switch(subOscWave){
                 case 0:
                     subosc.SetWaveform(subosc.WAVE_SIN);
-                    dLines[1] = "o|Sub Type: Sin";
+                    dLines[1] = "A|Sub Type: Sin";
                     break;
                 case 1:
                     subosc.SetWaveform(subosc.WAVE_SAW);
-                    dLines[1] = "o|Sub Type: Saw";
+                    dLines[1] = "A|Sub Type: Saw";
                     break;
                 case 2:
                     subosc.SetWaveform(subosc.WAVE_SQUARE);
-                    dLines[1] = "o|Sub Type: Square";
+                    dLines[1] = "A|Sub Type: Square";
                     break;
                 case 3:
                     subosc.SetWaveform(subosc.WAVE_TRI);
-                    dLines[1] = "o|Sub Type: Triangle";
+                    dLines[1] = "A|Sub Type: Triangle";
                     break;
             }
 
@@ -536,23 +536,23 @@ int main(void)
         }else if(menuScreen == filter){
 
             //Toggle Filter
-            if(button[bsel].FallingEdge()){
+            if(button[butA].FallingEdge()){
                 params.incFilter();
             }
 
             dLines[0] = "Filter";
             switch(params.getFilter()){
                 case 0:
-                    dLines[1] = "o|Filter: Off";
+                    dLines[1] = "A|Filter: Off";
                     break;
                 case 1:
-                    dLines[1] = "o|Filter: LPF";
+                    dLines[1] = "A|Filter: LPF";
                     break;
                 case 2:
-                    dLines[1] = "o|Filter: HPF";
+                    dLines[1] = "A|Filter: HPF";
                     break;
                 case 3:
-                    dLines[1] = "o|Filter: BPF";
+                    dLines[1] = "A|Filter: BPF";
             }
 
             if(!klock[0]){
@@ -586,11 +586,11 @@ int main(void)
             dLines[0] = "LFO 1";
 
             //LFO 1 Send Selector 
-            if(button[bsel].FallingEdge()){
+            if(button[butA].FallingEdge()){
                 params.incLFO1Send(NUM_LFO_SENDS);
             }
             //LFO1 selection
-            dLines[1] = "o|Send: " + lfoNames[params.getLFO1Send()];
+            dLines[1] = "A|Send: " + lfoNames[params.getLFO1Send()];
 
             //Set amounts
             if(!klock[0]){
@@ -615,39 +615,39 @@ int main(void)
             lfo1.SetFreq(params.getLFO1Freq());
             lfo1.SetAmp(params.getLFO1Amount());
 
-            dLines[2] = "1|Amount: " + std::to_string((int)floor(params.getLFO1Amount()*100.0f));
+            dLines[3] = "1|Amount: " + std::to_string((int)floor(params.getLFO1Amount()*100.0f));
             if(params.getLFO1Freq() < 1.0f && params.getLFO1Freq() > 0.0f){
-                dLines[3] = "2|Frequency: 1/" + std::to_string((int)(1.0f / params.getLFO1Freq()));
+                dLines[4] = "2|Frequency: 1/" + std::to_string((int)(1.0f / params.getLFO1Freq()));
             }else{
-                dLines[3] = "2|Frequency: " + std::to_string((int)params.getLFO1Freq());
+                dLines[4] = "2|Frequency: " + std::to_string((int)params.getLFO1Freq());
             }
             dLines[5] = "";
 
             //LFO 1 Wave Selector 
-            if(button[bup].FallingEdge()){
+            if(button[butB].FallingEdge()){
                 lfo1wave = lfo1wave < 4 ? lfo1wave + 1: 0;
             }
 
             switch(lfo1wave){
                 case 0:
                     lfo1.SetWaveform(lfo1.WAVE_SIN);
-                    dLines[4] = "^|Wave: Sin";
+                    dLines[2] = "B|Wave: Sin";
                     break;
                 case 1:
                     lfo1.SetWaveform(lfo1.WAVE_SAW);
-                    dLines[4] = "^|Wave: Saw";
+                    dLines[2] = "B|Wave: Saw";
                     break;
                 case 2:
                     lfo1.SetWaveform(lfo1.WAVE_SQUARE);
-                    dLines[4] = "^|Wave: Square";
+                    dLines[2] = "B|Wave: Square";
                     break;
                 case 3:
                     lfo1.SetWaveform(lfo1.WAVE_RAMP);
-                     dLines[4] = "^|Wave: Ramp";
+                     dLines[2] = "B|Wave: Ramp";
                     break;
                 case 4:
                     lfo1.SetWaveform(lfo1.WAVE_TRI);
-                     dLines[4] = "^|Wave: Triangle";
+                     dLines[2] = "B|Wave: Triangle";
                     break;
             }
         }
