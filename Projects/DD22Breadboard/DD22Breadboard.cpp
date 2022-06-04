@@ -83,6 +83,8 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
     float oscTotal;
     float resTotal;
     float envTotal;
+    float note;
+    float subNote;
 
     for(size_t i = 0; i < size; i += 2)
     { 
@@ -91,12 +93,22 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 
         //LFO for Pitch
         if(params.getLFO1Send() == pitchLFO){
-            osc.SetFreq(params.getNote() + params.getNote() * params.getLFO1Process());
-            subosc.SetFreq(params.getSubNote()+ params.getSubNote() * params.getLFO1Process());
+            note = (params.getNote() *  pow(2, params.getOctave()));
+            note += note * params.getOffset() + note * params.getLFO1Process();
+
+            subNote = params.getSubNote() *  pow(2, params.getOctave());
+            subNote += subNote * params.getOffset() + subNote * params.getLFO1Process();
         }else{
-            osc.SetFreq(params.getNote());
-            subosc.SetFreq(params.getSubNote());
+            note = (params.getNote() *  pow(2, params.getOctave()));
+            note += note * params.getOffset();
+            
+            subNote = params.getSubNote() *  pow(2, params.getOctave());
+            subNote += subNote * params.getOffset();
         }
+
+        //Set frequencies
+        osc.SetFreq(note);
+        subosc.SetFreq(subNote);
 
         //LFO for Filter
         if(params.getLFO1Send() == cutoffLFO){
