@@ -212,6 +212,79 @@ void HandleMidiMessage(MidiEvent m){
     }
 }
 
+void updateParameters(){
+    osc.SetAmp(params.getOscAmp());
+    subosc.SetAmp(params.getSubOscAmp());
+
+    if(params.getSubOctave() == 0){
+        subosc.SetAmp(0.0f);
+    }
+
+    verb.SetFeedback(params.getReverb());
+    oDrive.SetDrive(params.getDrive());
+    noise.SetAmp(params.getNoise());
+
+    env.SetTime(ADSR_SEG_ATTACK,params.getAttack());
+    env.SetTime(ADSR_SEG_DECAY,params.getDecay());
+    env.SetTime(ADSR_SEG_RELEASE,params.getRelease());
+    env.SetSustainLevel(params.getSustain());
+
+    filt.SetFreq(params.getFiltFreq());
+    filt.SetRes(params.getRes());
+    filt.SetDrive(params.getFilterDrive());
+
+    lfo1.SetFreq(params.getLFO1Freq());
+    lfo1.SetAmp(params.getLFO1Amount());
+
+    switch(params.getSubWave()){
+        case 0:
+            subosc.SetWaveform(subosc.WAVE_SIN);
+            break;
+        case 1:
+            subosc.SetWaveform(subosc.WAVE_SAW);
+            break;
+        case 2:
+            subosc.SetWaveform(subosc.WAVE_SQUARE);
+            break;
+        case 3:
+            subosc.SetWaveform(subosc.WAVE_TRI);
+            break;
+    }
+
+    switch(params.getWave()){
+        case 0:
+            osc.SetWaveform(osc.WAVE_SIN);
+            break;
+        case 1:
+            osc.SetWaveform(osc.WAVE_SAW);
+            break;
+        case 2:
+            osc.SetWaveform(osc.WAVE_SQUARE);
+            break;
+        case 3:
+            osc.SetWaveform(osc.WAVE_TRI);
+            break;
+    }
+
+    switch(params.getLFO1Wave()){
+    case 0:
+        lfo1.SetWaveform(lfo1.WAVE_SIN);
+        break;
+    case 1:
+        lfo1.SetWaveform(lfo1.WAVE_SAW);
+        break;
+    case 2:
+        lfo1.SetWaveform(lfo1.WAVE_SQUARE);
+        break;
+    case 3:
+        lfo1.SetWaveform(lfo1.WAVE_RAMP);
+        break;
+    case 4:
+        lfo1.SetWaveform(lfo1.WAVE_TRI);
+        break;
+    }
+}
+
 int main(void)
 {
     //Declarations for while loop
@@ -323,14 +396,29 @@ int main(void)
         kVal[2] = 1.0f - hw.adc.GetFloat(Knob2);
         kVal[3] = 1.0f - hw.adc.GetFloat(Knob3);
 
+        //Save or reload patch settings
+        if(button[butA].FallingEdge() && button[butShift].Pressed()){
+            params.savePatch();
+        }
+        if(button[butB].FallingEdge() && button[butShift].Pressed()){
+            //lock paramaters and restore saved patch
+            for(int kl = 0; kl < 4; kl++){ 
+                klock[kl] = true;
+                kLockVals[kl] = kVal[kl];
+            }
+            params.restorePatch();
+            updateParameters();
+        }
+        
+
         //Cycle through menu screens and parameter lock knobs on each cycle
-        if(button[bright].FallingEdge()){
+        if(button[bright].FallingEdge() && !button[butShift].Pressed()){
             menuScreen = (menuScreen + 1) % NUM_MENUS;
             for(int kl = 0; kl < 4; kl++){ 
                 klock[kl] = true;
                 kLockVals[kl] = kVal[kl];
             }
-        }else if(button[bleft].FallingEdge()){
+        }else if(button[bleft].FallingEdge() && !button[butShift].Pressed()){
             menuScreen = menuScreen == 0 ? NUM_MENUS - 1: menuScreen - 1;
             for(int kl = 0; kl < 4; kl++){ 
                 klock[kl] = true;
@@ -370,7 +458,7 @@ int main(void)
             dLines[4] = "3|Amplitude: "  + std::to_string((int)floor(params.getOscAmp() * 200.0f));
 
             //Wave Selector 
-            if(button[butA].FallingEdge()){
+            if(button[butA].FallingEdge() && !button[butShift].Pressed()){
                 params.incWave(4);
             }
 
@@ -414,7 +502,7 @@ int main(void)
             subosc.SetAmp(params.getSubOscAmp());
             dLines[3] = "2|Amplitude: "  + std::to_string((int)floor(params.getSubOscAmp() * 200.0f));
             //Sub Wave Selector 
-            if(button[butA].FallingEdge()){
+            if(button[butA].FallingEdge() && !button[butShift].Pressed()){
                 params.incSubWave(4);
             }
 
@@ -536,7 +624,7 @@ int main(void)
         }else if(menuScreen == filter){
 
             //Toggle Filter
-            if(button[butA].FallingEdge()){
+            if(button[butA].FallingEdge() && !button[butShift].Pressed()){
                 params.incFilter();
             }
 
@@ -586,7 +674,7 @@ int main(void)
             dLines[0] = "LFO 1";
 
             //LFO 1 Send Selector 
-            if(button[butA].FallingEdge()){
+            if(button[butA].FallingEdge() && !button[butShift].Pressed()){
                 params.incLFO1Send(NUM_LFO_SENDS);
             }
             //LFO1 selection
@@ -624,7 +712,7 @@ int main(void)
             dLines[5] = "";
 
             //LFO 1 Wave Selector 
-            if(button[butB].FallingEdge()){
+            if(button[butB].FallingEdge() && !button[butShift].Pressed()){
                 params.incLFO1Wave(5);
             }
 
