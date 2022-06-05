@@ -1,0 +1,2 @@
+Midi pitch strip x
+Midi DIN port

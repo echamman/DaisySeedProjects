@@ -91,16 +91,22 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         //LFO for Pitch
         if(params.getLFO1Send() == pitchLFO){
             note = (params.getNote() *  pow(2, params.getOctave()));
-            note += note * params.getOffset() + note * params.getLFO1Process();
-
-            subNote = params.getSubNote() *  pow(2, params.getOctave());
-            subNote += subNote * params.getOffset() + subNote * params.getLFO1Process();
-        }else{
-            note = (params.getNote() *  pow(2, params.getOctave()));
             note += note * params.getOffset();
+            note += note * powf(2, params.getPitchBend());
+            note += note * params.getLFO1Process();
 
             subNote = params.getSubNote() *  pow(2, params.getOctave());
             subNote += subNote * params.getOffset();
+            subNote += subNote * powf(2, params.getPitchBend());
+            subNote += subNote * params.getLFO1Process();
+        }else{
+            note = (params.getNote() *  pow(2, params.getOctave()));
+            note += note * params.getOffset();
+            note *= powf(2, params.getPitchBend());
+
+            subNote = params.getSubNote() *  pow(2, params.getOctave());
+            subNote += subNote * params.getOffset();
+            subNote *= powf(2, params.getPitchBend());
         }
 
         //Set frequencies
@@ -207,6 +213,11 @@ void HandleMidiMessage(MidiEvent m){
             }
         }
         break;
+        case PitchBend: {
+            PitchBendEvent p = m.AsPitchBend();
+
+            params.setPitchBend(p.value/4096.0f);
+        }
         default: 
             break;
     }
@@ -748,7 +759,7 @@ int main(void)
 
         params.setSubNote(params.getNote() / pow(2.0f, static_cast<float>(params.getSubOctave())));
                
-        //dLines[5] = std::to_string((int)floor(params.getLFO1Process()*100.0f));
+        dLines[4] = "Pitch: " + std::to_string((int)(params.getPitchBend() * 100.0f));
         //Print to display
         screen.print(dLines, 6);
     }

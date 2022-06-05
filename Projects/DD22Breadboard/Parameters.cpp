@@ -12,7 +12,7 @@ using namespace std;
 class dd22Params {
     private:
         //Oscillator Variables
-        float note, subNote;
+        float note, subNote, pitchBend = 0.0f;
         vector<float> heldNotes;
         vector<float>::iterator toDelete;
         float offset = 0.0f;
@@ -72,6 +72,14 @@ class dd22Params {
         
         void setSubNote(float newSubNote){
             subNote = newSubNote;
+        }
+
+        float getPitchBend(){
+            return pitchBend;
+        }
+
+        void setPitchBend(float newBend){
+            pitchBend = newBend;
         }
 
         float getOffset(){
