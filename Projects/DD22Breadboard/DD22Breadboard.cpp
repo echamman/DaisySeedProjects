@@ -759,7 +759,7 @@ int main(void)
 
         params.setSubNote(params.getNote() / pow(2.0f, static_cast<float>(params.getSubOctave())));
                
-        dLines[4] = "Pitch: " + std::to_string((int)(params.getPitchBend() * 100.0f));
+        //dLines[4] = "Pitch: " + std::to_string((int)(params.getPitchBend() * 100.0f));
         //Print to display
         screen.print(dLines, 6);
     }
