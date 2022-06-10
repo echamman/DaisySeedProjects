@@ -61,6 +61,7 @@ enum buttons {
 enum LFOsends {
     none = 0,
     pitchLFO,
+    ampLFO,
     attackLFO,
     decayLFO,
     sustainLFO,
@@ -92,12 +93,12 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         if(params.getLFO1Send() == pitchLFO){
             note = (params.getNote() *  pow(2, params.getOctave()));
             note += note * params.getOffset();
-            note += note * powf(2, params.getPitchBend());
+            note *= powf(2, params.getPitchBend());
             note += note * params.getLFO1Process();
 
             subNote = params.getSubNote() *  pow(2, params.getOctave());
             subNote += subNote * params.getOffset();
-            subNote += subNote * powf(2, params.getPitchBend());
+            subNote *= powf(2, params.getPitchBend());
             subNote += subNote * params.getLFO1Process();
         }else{
             note = (params.getNote() *  pow(2, params.getOctave()));
@@ -161,6 +162,11 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 
         //Create signal
         sig = params.getEnvProc() * oscTotal + params.getEnvProc() * oDrive.Process(oscTotal);
+
+        if(params.getLFO1Send() == ampLFO){
+            sig = sig / 2.0f + (sig / 2.0f) * params.getLFO1Process();
+        }
+
         //sig = oscTotal;
         filt.Process(sig);
         switch (params.getFilter()){
@@ -178,7 +184,7 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         verb.Process(sig, sig, &out[i], &out[i + 1]);
 
         //left out goes to Delay circuit
-        out[i] += sig;
+        out[i] = sig;
 
         //right out to output
         out[i + 1] += (1.0f - params.getDelay()) * sig + params.getDelay() * in[i];
@@ -304,7 +310,7 @@ int main(void)
     bool firstBoot = true;
 
     //LFO
-    string lfoNames[NUM_LFO_SENDS] = {"None","Pitch","Attack","Decay","Sustain","Release","Cutoff","Resonance"};
+    string lfoNames[NUM_LFO_SENDS] = {"None","Pitch","Amp","Attack","Decay","Sustain","Release","Cutoff","Resonance"};
 
     // initialize seed hardware and oscillator daisysp module
     float sample_rate;
@@ -504,7 +510,7 @@ int main(void)
             }
 
             //Amplitude adjust
-            if(!klock[1]){
+            if(!klock[1] && params.getSubOctave() != 0){
                 params.setSubOscAmp(kVal[1] * 0.5f);
             }else{
                 if(abs(kVal[1] - kLockVals[1]) > lockThresh){klock[1] = false;}
@@ -539,7 +545,7 @@ int main(void)
             switch(params.getSubOctave()){
                 case 0: 
                     dLines[2] = "1|Sub Octave: Off";
-                    subosc.SetAmp(0.0f);
+                    params.setSubOscAmp(0.0f);
                     break;
                 case 1:
                     dLines[2] = "1|Sub Octave: -1";
