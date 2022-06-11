@@ -44,7 +44,7 @@ class dd22Params {
 
         //LFO
         float lfo1Amount = 0.0f;
-        float lfo1Freq = 0.0f;
+        float lfo1Freq = 1.0f;
         int lfo1wave = 0;
         int lfo1send = 0;
 

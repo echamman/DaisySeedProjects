@@ -73,6 +73,44 @@ enum LFOsends {
 
 static Switch button[NUM_BUTTONS];
 
+//Translate MIDI messages to notes
+void HandleMidiMessage(MidiEvent m){
+
+    switch(m.type){
+        case NoteOn: {
+            NoteOnEvent p = m.AsNoteOn();
+
+            params.noteOn(mtof(p.note));
+
+            params.setNote(mtof(p.note)); 
+            env.Retrigger(false);
+            params.setEnvGate(true);
+
+        }
+        break;
+        case NoteOff: {
+            NoteOffEvent o = m.AsNoteOff();
+
+            params.noteOff(mtof(o.note));
+
+            //If no highest, no notes pressed
+            if(params.notesHeld()){
+                params.setNote(params.getLastNote());
+            }else{
+                params.setEnvGate(false);
+            }
+        }
+        break;
+        case PitchBend: {
+            PitchBendEvent p = m.AsPitchBend();
+
+            params.setPitchBend(p.value/4096.0f);
+        }
+        default: 
+            break;
+    }
+}
+
 static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
                           AudioHandle::InterleavingOutputBuffer out,
                           size_t                                size)
@@ -86,6 +124,13 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 
     for(size_t i = 0; i < size; i += 2)
     { 
+
+        //Cool new MIDI note handling
+        midi.Listen();
+        while(midi.HasEvents()){
+            HandleMidiMessage(midi.PopEvent());
+        }
+
         //Set process of lfo1 for use in main
         params.setLFO1Process(lfo1.Process());
 
@@ -188,44 +233,6 @@ static void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 
         //right out to output
         out[i + 1] += (1.0f - params.getDelay()) * sig + params.getDelay() * in[i];
-    }
-}
-
-//Translate MIDI messages to notes
-void HandleMidiMessage(MidiEvent m){
-
-    switch(m.type){
-        case NoteOn: {
-            NoteOnEvent p = m.AsNoteOn();
-
-            params.noteOn(mtof(p.note));
-
-            params.setNote(mtof(p.note)); 
-            env.Retrigger(false);
-            params.setEnvGate(true);
-
-        }
-        break;
-        case NoteOff: {
-            NoteOffEvent o = m.AsNoteOff();
-
-            params.noteOff(mtof(o.note));
-
-            //If no highest, no notes pressed
-            if(params.notesHeld()){
-                params.setNote(params.getLastNote());
-            }else{
-                params.setEnvGate(false);
-            }
-        }
-        break;
-        case PitchBend: {
-            PitchBendEvent p = m.AsPitchBend();
-
-            params.setPitchBend(p.value/4096.0f);
-        }
-        default: 
-            break;
     }
 }
 
@@ -381,8 +388,8 @@ int main(void)
 
     // start callback
     hw.adc.Start();
-    hw.StartAudio(AudioCallback);
     midi.StartReceive();
+    hw.StartAudio(AudioCallback);
 
     //Allow the OLED to start up
     System::Delay(100);
@@ -755,12 +762,6 @@ int main(void)
                      dLines[2] = "B|Wave: Triangle";
                     break;
             }
-        }
-
-        //Cool new MIDI note handling
-        midi.Listen();
-        while(midi.HasEvents()){
-            HandleMidiMessage(midi.PopEvent());
         }
 
         params.setSubNote(params.getNote() / pow(2.0f, static_cast<float>(params.getSubOctave())));
