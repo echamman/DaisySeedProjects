@@ -15,6 +15,7 @@ Debug/
 Release/
 x64/
 .static/
+.vscode/
 *.prefs
 __MACOSX/
 _MACOSX/
