@@ -12,7 +12,7 @@ using namespace std;
 
 static DaisySeed  hw;
 static Oscillator osc, subosc, lfo1, lfo2;
-static MidiUsbHandler midi;
+static MidiUartHandler midi;
 
 //Holds all values, can be accessed from main and audio func
 static dd22Params params;
@@ -327,7 +327,7 @@ int main(void)
     sample_rate = hw.AudioSampleRate();
 
     //Initialize Midi port
-    MidiUsbHandler::Config MidiConfig;
+    MidiUartHandler::Config MidiConfig;
     midi.Init(MidiConfig);
     System::Delay(250);
 
