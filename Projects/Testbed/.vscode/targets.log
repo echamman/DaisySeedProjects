@@ -5,9 +5,8 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Sun Jun 05 14:19:42 2022
+# Make data base, printed on Sat Aug 13 11:54:57 2022
 
 # Variables
 
@@ -27,8 +26,6 @@ OCULUSBASE = C:\Program Files\Oculus\
 USERPROFILE = C:\Users\Ethan
 # environment
 LOCALAPPDATA = C:\Users\Ethan\AppData\Local
-# environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-b80153b2-29a7-4727-9099-7fc442f027f8-sock
 # makefile (from '../../libDaisy/core/Makefile', line 18)
 OCD = openocd
 # makefile (from '../../libDaisy/core/Makefile', line 20)
@@ -60,7 +57,7 @@ CPP_SOURCES = Testbed.cpp
 # makefile (from '../../libDaisy/core/Makefile', line 116)
 C_DEFS = -DUSE_HAL_DRIVER -DSTM32H750xx -DHSE_VALUE=16000000  -DCORE_CM7 -DSTM32H750IB -DARM_MATH_CM7 -DUSE_FULL_LL_DRIVER
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_50304_UXMVTKHPIGSNPVHN
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_24172_BMUMREHJALCLFKJD
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -69,12 +66,10 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 %D = $(patsubst %/,%,$(patsubst %\,%,$(dir $%)))
 # automatic
 ^D = $(patsubst %/,%,$(patsubst %\,%,$(dir $^)))
-# environment
-VSCODE_LOG_STACK = false
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = C:\Users\Ethan\AppData\Roaming\Code\CachedData\c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+VSCODE_CODE_CACHE_PATH = C:\Users\Ethan\AppData\Roaming\Code\CachedData\6d9b74a70ca9c7733b29f0456fd8195364076dda
 # makefile (from '../../libDaisy/core/Makefile', line 106)
 AS_DEFS = 
 # environment
@@ -99,14 +94,12 @@ C_STANDARD = -std=gnu11
 TARGET_BIN = $(TARGET).bin
 # makefile
 CURDIR := c:/Users/Ethan/Documents/DaisySeedProjects/Projects/Testbed
-# environment
-VSCODE_PIPE_LOGGING = true
 # makefile (from '../../libDaisy/core/Makefile', line 86)
 HEX = $(CP) -O ihex
 # makefile (from '../../libDaisy/core/Makefile', line 8)
 FLASH_ADDRESS = 0x08000000
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # makefile (from '../../libDaisy/core/Makefile', line 200)
 LDSCRIPT = $(SYSTEM_FILES_DIR)/STM32H750IB_flash.lds
 # automatic
@@ -128,9 +121,7 @@ ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffuncti
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_VERBOSE_LOGGING = true
-# environment
-VSCODE_PID = 50304
+VSCODE_PID = 24172
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # makefile (from '../../libDaisy/core/Makefile', line 128)
@@ -174,7 +165,7 @@ MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = C:\Program Files\Oculus\Support\oculus-runtime;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Users\Ethan\Downloads\liquidctl-1.5.0-bin-windows-x86_64;C:\Users\Ethan\Documents\PTools\platform-tools;C:\Program Files\Mullvad VPN\resources;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Users\Ethan\Documents\DaisyToolchain-0.3.2\windows\bin;C:\Users\Ethan\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\Ethan\AppData\Local\Programs\Python\Python310\;C:\Users\Ethan\AppData\Local\Microsoft\WindowsApps;C:\Users\Ethan\AppData\Local\Programs\Microsoft VS Code\bin;C:\altera\13.0sp1\modelsim_ase\win32aloem;C:\Users\Ethan\AppData\Local\Programs\Python\Python310;
+PATH = C:\Program Files\Oculus\Support\oculus-runtime;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Users\Ethan\Downloads\liquidctl-1.5.0-bin-windows-x86_64;C:\Users\Ethan\Documents\PTools\platform-tools;C:\Program Files\Mullvad VPN\resources;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files\PuTTY\;C:\Program Files (x86)\Tailscale IPN;C:\Users\Ethan\Documents\DaisyToolchain-0.3.2\windows\bin;C:\Users\Ethan\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\Ethan\AppData\Local\Programs\Python\Python310\;C:\Users\Ethan\AppData\Local\Microsoft\WindowsApps;C:\Users\Ethan\AppData\Local\Programs\Microsoft VS Code\bin;C:\altera\13.0sp1\modelsim_ase\win32aloem;C:\Users\Ethan\AppData\Local\Programs\Python\Python310;
 # environment
 COMPUTERNAME = DESKTOP-SQSB8HV
 # default
@@ -191,8 +182,6 @@ PROMPT = $P$G
 PREFIX = arm-none-eabi-
 # environment
 LOGONSERVER = \\DESKTOP-SQSB8HV
-# environment
-VSCODE_LOG_NATIVE = false
 # environment
 USERNAME = Ethan
 # makefile (from '../../libDaisy/core/Makefile', line 194)
@@ -230,7 +219,9 @@ OPT = -O2
 # makefile (from '../../libDaisy/core/Makefile', line 183)
 CPPFLAGS = $(CFLAGS) -fno-exceptions -fasm -finline -finline-functions-called-once -fshort-enums -fno-move-loop-invariants -fno-unwind-tables -Wno-register
 # environment
-PLATFORMIO_PATH = C:\Users\Ethan\.platformio\python3;C:\Program Files\Oculus\Support\oculus-runtime;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Users\Ethan\Downloads\liquidctl-1.5.0-bin-windows-x86_64;C:\Users\Ethan\Documents\PTools\platform-tools;C:\Program Files\Mullvad VPN\resources;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Users\Ethan\Documents\DaisyToolchain-0.3.2\windows\bin;C:\Users\Ethan\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\Ethan\AppData\Local\Programs\Python\Python310\;C:\Users\Ethan\AppData\Local\Microsoft\WindowsApps;C:\Users\Ethan\AppData\Local\Programs\Microsoft VS Code\bin;C:\altera\13.0sp1\modelsim_ase\win32aloem;C:\Users\Ethan\AppData\Local\Programs\Python\Python310;;C:\Program Files\Oculus\Support\oculus-runtime;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Users\Ethan\Downloads\liquidctl-1.5.0-bin-windows-x86_64;C:\Users\Ethan\Documents\PTools\platform-tools;C:\Program Files\Mullvad VPN\resources;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Users\Ethan\Documents\DaisyToolchain-0.3.2\windows\bin;C:\Users\Ethan\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\Ethan\AppData\Local\Programs\Python\Python310\;C:\Users\Ethan\AppData\Local\Microsoft\WindowsApps;C:\Users\Ethan\AppData\Local\Programs\Microsoft VS Code\bin;C:\altera\13.0sp1\modelsim_ase\win32aloem;C:\Users\Ethan\AppData\Local\Programs\Python\Python310;
+__COMPAT_LAYER = DetectorsAppHealth
+# environment
+PLATFORMIO_PATH = C:\Users\Ethan\.platformio\python3;C:\Program Files\Oculus\Support\oculus-runtime;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Users\Ethan\Downloads\liquidctl-1.5.0-bin-windows-x86_64;C:\Users\Ethan\Documents\PTools\platform-tools;C:\Program Files\Mullvad VPN\resources;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files\PuTTY\;C:\Program Files (x86)\Tailscale IPN;C:\Users\Ethan\Documents\DaisyToolchain-0.3.2\windows\bin;C:\Users\Ethan\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\Ethan\AppData\Local\Programs\Python\Python310\;C:\Users\Ethan\AppData\Local\Microsoft\WindowsApps;C:\Users\Ethan\AppData\Local\Programs\Microsoft VS Code\bin;C:\altera\13.0sp1\modelsim_ase\win32aloem;C:\Users\Ethan\AppData\Local\Programs\Python\Python310;;C:\Program Files\Oculus\Support\oculus-runtime;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Users\Ethan\Downloads\liquidctl-1.5.0-bin-windows-x86_64;C:\Users\Ethan\Documents\PTools\platform-tools;C:\Program Files\Mullvad VPN\resources;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files\PuTTY\;C:\Program Files (x86)\Tailscale IPN;C:\Users\Ethan\Documents\DaisyToolchain-0.3.2\windows\bin;C:\Users\Ethan\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\Ethan\AppData\Local\Programs\Python\Python310\;C:\Users\Ethan\AppData\Local\Microsoft\WindowsApps;C:\Users\Ethan\AppData\Local\Programs\Microsoft VS Code\bin;C:\altera\13.0sp1\modelsim_ase\win32aloem;C:\Users\Ethan\AppData\Local\Programs\Python\Python310;
 # makefile
 .DEFAULT_GOAL := all
 # default
@@ -272,7 +263,7 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # makefile (from '../../libDaisy/core/Makefile', line 41)
 BUILD_DIR = build
 # environment
-PLATFORMIO_IDE = 2.4.3
+PLATFORMIO_IDE = 2.5.2
 # environment
 COMMONPROGRAMFILES(X86) = C:\Program Files (x86)\Common Files
 # makefile (from 'Makefile', line 8)
@@ -282,7 +273,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 TEMP = C:\Users\Ethan\AppData\Local\Temp
 # environment
-VSCODE_IPC_HOOK = \\.\pipe\22fefbb933c80777ab973fdba083a407-1.67.2-main-sock
+VSCODE_IPC_HOOK = \\.\pipe\22fefbb933c80777ab973fdba083a407-1.70.1-main-sock
 # default
 .RECIPEPREFIX := 
 # automatic
@@ -312,7 +303,7 @@ DAISYSP_DIR = ../../DaisySP
 # environment
 PROCESSOR_IDENTIFIER = AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD
 # variable set hash-table stats:
-# Load=150/1024=15%, Rehash=0, Collisions=22/313=7%
+# Load=146/1024=14%, Rehash=0, Collisions=21/309=7%
 
 # Pattern-specific Variable Values
 
@@ -795,7 +786,8 @@ build/Testbed.d:
 #  File has been updated.
 #  Successfully updated.
 
-../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_iwdg.h:
+../../libDaisy/Drivers/STM32H7xx_H 
+AL_Driver/Inc/stm32h7xx_hal_iwdg.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-04-29 19:36:43
 #  File has been updated.
@@ -809,8 +801,7 @@ build/Testbed.d:
 
 ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_sdmmc.h:
 #  Implicit rule search has been done.
-#  Last mo 
-dified 2022-04-29 19:36:43
+#  Last modified 2022-04-29 19:36:43
 #  File has been updated.
 #  Successfully updated.
 
@@ -1761,8 +1752,7 @@ build/Testbed.hex:
 #  File has been updated.
 #  Successfully updated.
 
-build/startup_stm32h750xx.o: ../../libDaisy/core/startup_stm32h750xx.c Makefile ../../libDaisy/core/startup_stm32h750xx.c ../../libDaisy/Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h7xx.h ../../libDaisy/Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h750xx.h ../../libDaisy/Drivers/CMSIS/Include/core_cm7.h ../../libDaisy/Drivers/CMSIS/Include/cmsis_compiler.h ../../libDaisy/Drivers/CMSIS/Include/cmsis_gcc.h ../../libDaisy/Drivers/CMSIS/Device/ST/STM32H7xx/Include/system_stm32h7xx.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h ../../libDaisy/src/sys/stm32h7xx_hal_conf.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdma.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dcmi.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma2d.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dsi.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dfsdm.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_exti.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cortex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_adc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_fdcan.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cec.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_comp.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hrtim.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hsem.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sram.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_fmc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nor.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nand.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2s.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_iwdg.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_jpeg.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdios.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_sdmmc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_lptim.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_qspi.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ramecc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rng.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7 
-xx_hal_rtc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_delayblock.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sdram.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spdifrx.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_swpmi.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smbus.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_wwdg.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hcd.h | build
+build/startup_stm32h750xx.o: ../../libDaisy/core/startup_stm32h750xx.c Makefile ../../libDaisy/core/startup_stm32h750xx.c ../../libDaisy/Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h7xx.h ../../libDaisy/Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h750xx.h ../../libDaisy/Drivers/CMSIS/Include/core_cm7.h ../../libDaisy/Drivers/CMSIS/Include/cmsis_compiler.h ../../libDaisy/Drivers/CMSIS/Include/cmsis_gcc.h ../../libDaisy/Drivers/CMSIS/Device/ST/STM32H7xx/Include/system_stm32h7xx.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h ../../libDaisy/src/sys/stm32h7xx_hal_conf.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdma.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dcmi.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma2d.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dsi.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dfsdm.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_exti.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cortex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_adc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_fdcan.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cec.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_comp.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hrtim.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hsem.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sram.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_fmc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nor.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nand.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2s.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_iwdg.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_jpeg.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdios.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_sdmmc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_lptim.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_qspi.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ramecc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rng.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_delayblock.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sdram.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spdifrx.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_swpmi.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smbus.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_wwdg.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd_ex.h ../../libDaisy/Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hcd.h | build
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'startup_stm32h750xx'
 #  Last modified 2022-04-30 13:29:47
@@ -1994,6 +1984,6 @@ vpath %.c ../../libDaisy/core
 # strcache performance: lookups = 1843 / hit rate = 83%
 # hash-table stats:
 # Load=301/8192=4%, Rehash=0, Collisions=18/1843=1%
-# Finished Make data base on Sun Jun 05 14:19:42 2022
+# Finished Make data base on Sat Aug 13 11:54:57 2022
 
  

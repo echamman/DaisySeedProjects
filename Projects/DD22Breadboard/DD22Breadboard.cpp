@@ -373,18 +373,18 @@ int main(void)
 
     //Analog Inputs
     AdcChannelConfig adcConfig[NUM_ADC_CHANNELS];
-    adcConfig[Knob0].InitSingle(hw.GetPin(25));
-    adcConfig[Knob1].InitSingle(hw.GetPin(24));
-    adcConfig[Knob2].InitSingle(hw.GetPin(21));
-    adcConfig[Knob3].InitSingle(hw.GetPin(20));
+    adcConfig[Knob0].InitSingle(hw.GetPin(20));
+    adcConfig[Knob1].InitSingle(hw.GetPin(21));
+    adcConfig[Knob2].InitSingle(hw.GetPin(24));
+    adcConfig[Knob3].InitSingle(hw.GetPin(25));
     hw.adc.Init(adcConfig, NUM_ADC_CHANNELS);
 
     //buttons
-    button[bleft].Init(hw.GetPin(8),1000);
-    button[butShift].Init(hw.GetPin(9),1000);
-    button[bright].Init(hw.GetPin(6),1000);
-    button[butB].Init(hw.GetPin(10),1000);
-    button[butA].Init(hw.GetPin(7),1000);
+    button[bleft].Init(hw.GetPin(9),1000);
+    button[butShift].Init(hw.GetPin(10),1000);
+    button[bright].Init(hw.GetPin(7),1000);
+    button[butB].Init(hw.GetPin(6),1000);
+    button[butA].Init(hw.GetPin(8),1000);
 
     // start callback
     hw.adc.Start();
