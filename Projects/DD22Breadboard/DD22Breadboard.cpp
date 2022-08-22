@@ -374,9 +374,9 @@ int main(void)
     //Analog Inputs
     AdcChannelConfig adcConfig[NUM_ADC_CHANNELS];
     adcConfig[Knob0].InitSingle(hw.GetPin(20));
-    adcConfig[Knob1].InitSingle(hw.GetPin(21));
-    adcConfig[Knob2].InitSingle(hw.GetPin(24));
-    adcConfig[Knob3].InitSingle(hw.GetPin(25));
+    adcConfig[Knob1].InitSingle(hw.GetPin(25));
+    adcConfig[Knob2].InitSingle(hw.GetPin(21));
+    adcConfig[Knob3].InitSingle(hw.GetPin(24));
     hw.adc.Init(adcConfig, NUM_ADC_CHANNELS);
 
     //buttons
@@ -402,7 +402,7 @@ int main(void)
     bool klock[4] = {true};
     float kLockVals[4];
     for(int k = 0; k < 4; k++){
-        kLockVals[k] = 1.0f - hw.adc.GetFloat(k);
+        kLockVals[k] = hw.adc.GetFloat(k);
     }
 
     //Save initial settings
@@ -415,10 +415,10 @@ int main(void)
         }
     
         //Get Analog input readings
-        kVal[0] = 1.0f - hw.adc.GetFloat(Knob0);
-        kVal[1] = 1.0f - hw.adc.GetFloat(Knob1);
-        kVal[2] = 1.0f - hw.adc.GetFloat(Knob2);
-        kVal[3] = 1.0f - hw.adc.GetFloat(Knob3);
+        kVal[0] = hw.adc.GetFloat(Knob0);
+        kVal[1] = hw.adc.GetFloat(Knob1);
+        kVal[2] = hw.adc.GetFloat(Knob2);
+        kVal[3] = hw.adc.GetFloat(Knob3);
 
         //Save or reload patch settings
         if(button[butA].FallingEdge() && button[butShift].Pressed()){
